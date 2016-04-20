@@ -1,0 +1,137 @@
+---
+title: "APA-style word template"
+author: "Simon A Jackson"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  word_document:
+    reference_docx: "ref-docx/APA-style-01.docx"
+    fig_caption: true
+bibliography: "bib/example-bib.bib"
+---
+
+```{r setup, echo = FALSE}
+# set pander table-layout options -- ** NOT COFIRMED AS WORKING
+if (!require(pander, quietly = TRUE))
+  install.packages("pander", quiet = TRUE)
+library(pander, quietly = TRUE)
+panderOptions('table.alignment.default', function(df)
+    ifelse(sapply(df, is.numeric), 'right', 'left'))
+panderOptions('table.split.table', Inf)
+panderOptions('round', 2)                                 # Number of decimal places
+panderOptions('big.mark', ",")                            # Spearator for large numbers (e.g. 1,000)
+panderOptions('keep.trailing.zeros', TRUE)
+
+# A function for captioning and referencing images
+# Hidden so that rm() can be sued without affecting this
+.fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap = function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("*Figure ", i, "*. ", text, sep="")
+        },
+        ref = function(refName) {
+            ref[[refName]]
+        })
+})
+
+# A function for captioning and referencing tables
+# Hidden so that rm() can be sued without affecting this
+.tbl <- local({
+    i <- 0
+    ref <- list()
+    cap <- list()
+    list(
+        cap = function(refName, text = NULL) {
+            if(is.null(text)) {
+              cap[[refName]]
+            } else {
+              i <<- i + 1
+              ref[[refName]] <<- i
+              cap[[refName]] <<- paste("*Table ", i, "*. ", text, sep="")
+            }
+        },
+        ref = function(refName) {
+            ref[[refName]]
+        })
+})
+
+```
+
+This is a template R Markdown file for producing APA-style word documents. Note that it's not APA proper, but close enough for most purposes. It uses the styles set in the "reference_docx/APA-style-01.docx" word file. Using this file requires that you have Microsoft Word installed on your system.
+
+The following text is used to demonstrate the styles that this document has.
+
+R Markdown can output to lots of different formats.
+
+![](img/RMarkdownOutputFormats.png)
+
+But this template is designed specifically to output an APA-style word document.
+
+Learn about changing the word styling [HERE](http://rmarkdown.rstudio.com/articles_docx.html).
+
+# Header 1
+
+Learn Markdown basics, including heading structures, [HERE](http://rmarkdown.rstudio.com/authoring_basics.html).
+
+```{r cars, echo=FALSE, fig.cap=.fig$cap("cars", "Here you see some interesting stuff about cars and such.")}
+plot(cars)
+```
+
+What you always wanted to know about cars is shown in Figure `r .fig$ref("cars")`
+
+## Header 2
+
+```{r iris, echo=FALSE, fig.cap=.fig$cap("iris", "Here you see some interesting stuff about iris flowers.")}
+plot(iris)
+```
+
+But forget Figure `r .fig$ref("cars")`, what you really want to know is iris information, shown in Figure `r .fig$ref("iris")`.
+
+```{r air, echo=FALSE, tbl.cap=.tbl$cap("air", "Descriptive statistics for airquality")}
+m <- sapply(airquality, mean, na.rm = T)
+s <- sapply(airquality, sd, na.rm = T)
+var <- colnames(airquality)
+result <- data.frame(cbind(var, m*1000, s))
+set.caption(.tbl$cap("air"))
+pander(result)
+```
+
+Or perhaps you'd like to learn about airquality in Table `r .tbl$ref("air")`.
+
+Because in @Stodden2014, authors mentioned Word tables as one of the obstacles to effective collaboration.  That's right, tables were an obstacle [@Stodden2014], but we can produce them easily enough here. Learn more about citations and bibliographies [HERE](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html).
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare nisl nec pulvinar ultrices. Nam luctus molestie vehicula. Vestibulum congue feugiat lacus, consectetur scelerisque massa efficitur vulputate. Proin faucibus diam tellus, in auctor ex ullamcorper et.
+
+```{r iris_tbl, echo=FALSE, tbl.cap=.tbl$cap("iris_tbl", "More about iris flowers. ***p < .001")}
+set.caption(.tbl$cap("iris_tbl"))
+pander(head(iris))
+```
+
+Or more about iris flowers again in Table `r .tbl$ref("iris_tbl")`.
+
+For header levels 4 and 5, follow APA as follows:
+
+**Header 3**. This is how an APA Header at level 3 should be created.
+
+***Header 4***. This is how an APA Header at level 4 should be created.
+
+*Header 5*. This is how and APA Header at level 5 should be created.
+
+And use the R Markdown level 5 header (with five #s), to create a page break:
+
+#####
+
+Quisque metus felis, tempor nec dignissim quis, mollis eget urna. In eget est ligula. Duis ultricies velit ac arcu accumsan aliquet. Pellentesque sollicitudin diam eget augue tincidunt congue. In vulputate dignissim quam et dictum. Praesent sed erat euismod, dictum ligula quis, dapibus augue. Etiam hendrerit varius eros, ut consequat libero lacinia id.
+
+Quisque metus felis, tempor nec dignissim quis, mollis eget urna. In eget est ligula. Duis ultricies velit ac arcu accumsan aliquet. Pellentesque sollicitudin diam eget augue tincidunt congue. In vulputate dignissim quam et dictum. Praesent sed erat euismod, dictum ligula quis, dapibus augue. Etiam hendrerit varius eros, ut consequat libero lacinia id.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare nisl nec pulvinar ultrices. Nam luctus molestie vehicula. Vestibulum congue feugiat lacus, consectetur scelerisque massa efficitur vulputate. Proin faucibus diam tellus, in auctor ex ullamcorper et.
+
+Quisque metus felis, tempor nec dignissim quis, mollis eget urna. In eget est ligula. Duis ultricies velit ac arcu accumsan aliquet. Pellentesque sollicitudin diam eget augue tincidunt congue. In vulputate dignissim quam et dictum. Praesent sed erat euismod, dictum ligula quis, dapibus augue. Etiam hendrerit varius eros, ut consequat libero lacinia id.
+
+
+# References
+
