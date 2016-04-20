@@ -2,3 +2,4 @@
 .Rhistory
 .RData
 Rmd/*.docx
+Rmd/**/*.html
