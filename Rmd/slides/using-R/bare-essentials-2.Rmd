@@ -1,5 +1,5 @@
 ---
-title: "Using R: Data Structures"
+title: 'Using R: Bare Essentials 1'
 author: "Simon A Jackson"
 date: "21 April 2016"
 output: ioslides_presentation
@@ -10,11 +10,3 @@ require(knitr, quietly = TRUE)
 opts_knit$set(root.dir = '../../../')
 ```
 
-## R Data Structures
-
-```{r echo = FALSE, warning = FALSE}
-library(png)
-library(grid)
-img <- readPNG("Rmd/img/R-data-structure.png")
-grid.raster(img)
-```
