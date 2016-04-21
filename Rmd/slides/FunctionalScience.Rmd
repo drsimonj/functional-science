@@ -1,0 +1,58 @@
+---
+title: "Functional Science"
+author: "Simon A Jackson"
+date: "19 April 2016"
+output:
+  ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+# What is Functional Science?
+
+## Functional Programming
+
+The idea comes from thinking like a programmer, and a *functional programming* philosophy.
+
+In computer science, functional programming is a programming paradigm — a style of building the structure and elements of computer programs — that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data.
+
+In functional code, the output value of a function depends only on the arguments that are input to the function, **so calling a function *f* twice with the same value for an argument *x* will produce the same result *f(x)* each time**.
+
+## Functional Science?
+
+A style of conducting science that is:
+
+- Reliable/replicable
+- Valid
+- Sharable
+- Generalisable
+- Efficient
+
+# The Golden Rules
+
+## Rule 1: Outsource your memory
+
+Never depend on your memory to answer questions like:
+
+- What is this variable or how did I calculate it?
+- Why did I make this hypothesis or run this analysis?
+- Which file was I working on last or had the data I need?
+
+## Rule 2: Automate as much as you can
+
+Avoid having to do the same task over and over again. E.g.:
+
+- Write the same question stem.
+- Parse data
+- Copy and paste results and then format the table.
+
+## Rule 3: Be simple and be consistent
+
+Decide on an intuitive system and stick with it!
+
+- Folder structures
+- Naming files
+- Naming variables
