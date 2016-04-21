@@ -1,5 +1,5 @@
 ---
-title: 'Using R: Bare Essentials 1'
+title: 'Using R: Getting Started'
 author: "Simon A Jackson"
 date: "21 April 2016"
 output: ioslides_presentation

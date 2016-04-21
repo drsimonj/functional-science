@@ -37,11 +37,11 @@ grid.raster(img)
 ## Examples
 
 ```{r}
-# A Numeric vector
+# Numeric vector
 x <- c(1, 2, 6, 10)
 x
-# A 2 x 2 String Matrix
-m <- c("R", "is", "the", "best")
+# 2 x 3 String Matrix
+m <- c("R", "is", "the", "best", "stats", "program")
 m <- matrix(m, nrow = 2)
 m
 ```
@@ -79,12 +79,15 @@ Functions all have the same structure when called:
 Example:
 
 ```{r}
-mean(c(10, 20, 59.8, 299))
+v <- c(10, 20, 59.8, 299)  # c() is a function for creating vectors
+mean(v)
 ```
 
 ## Base functions
 
-There are lots of other functions already in R. Try these for yourself:
+There are lots of other functions already in R.
+
+Try these for yourself:
 
 ```{r, eval = F}
 v <- c(5, 10, 15,20)
@@ -94,6 +97,9 @@ sum(v)
 range(v)
 summary(v)
 ```
+
+Recall, you can get help by running the command  
+`?functionName`
 
 ## Custom functions
 
@@ -134,35 +140,19 @@ cMean(c(11, 27, 24.32, 89, 102))
 
 # Input and Output
 
-## Keyboard data
-
-We can create small data frames manually as before, OR:
-
-```{r, eval = F}
-d <- data.frame()
-d <- edit(d)
-```
-
 ## Reading Tabular Data
 
 Tabular data can be read with `read.table("path.to.data")` and variants. Most frequent variant is `read.csv()`
 
 ```{r}
-d <- read.csv("data/risk.csv")
+d <- read.csv("data/risk.csv")  # risk.csv is course material
+```
+```{r, eval = FALSE}
+View(d)  # Run this yourself
+```
+```{r}
 class(d)
 dim(d)
-```
-
-## Reading Tabular Data
-
-```{r}
-head(d)
-```
-
-## Reading Tabular Data
-
-```{r}
-summary(d)
 ```
 
 ## Reading Data
