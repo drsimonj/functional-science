@@ -59,25 +59,36 @@ d
 
 # Functions
 
+The vocabulary of R
+
 ## What are Functions?
 
 Functions encapsulate a series of commands, executed top to bottom, left to right, to perform a task and return a result.
 
 `mean()`, for example, is a function. It adds up all the elements of a vector, then divides them by the number of elements, and returns the result.
 
-Why use functions? Some major reasons:
+## Recognising a Function
 
-- Help break our task into sub steps
-- They’re reusable
-- Keep our workspace clean
+Functions all have the same structure when called:
+
+- A function name
+- An open parenthesis `(`
+- Comma separated arguments/inputs (if any)
+- Close parenthesis `)`
+
+Example:
+
+```{r}
+mean(c(10, 20, 59.8, 299))
+```
 
 ## Base functions
 
-There are lots of functions already in R. Try these for yourself:
+There are lots of other functions already in R. Try these for yourself:
 
 ```{r, eval = F}
 v <- c(5, 10, 15,20)
-mean(v)
+length(v)
 sd(v)
 sum(v)
 range(v)
@@ -112,8 +123,8 @@ Here's a custom function for `mean()`:
 ```{r}
 cMean <- function(v) {
   s <- sum(v)
-  l <- length(v)
-  m <- s / l
+  n <- length(v)
+  m <- s / n
   return (m)
 }
 
@@ -121,5 +132,56 @@ cMean(c(1, 2, 3))
 cMean(c(11, 27, 24.32, 89, 102))
 ```
 
-# The Recycling Rule
+# Input and Output
 
+## Keyboard data
+
+We can create small data frames manually as before, OR:
+
+```{r, eval = F}
+d <- data.frame()
+d <- edit(d)
+```
+
+## Reading Tabular Data
+
+Tabular data can be read with `read.table("path.to.data")` and variants. Most frequent variant is `read.csv()`
+
+```{r}
+d <- read.csv("data/risk.csv")
+class(d)
+dim(d)
+```
+
+## Reading Tabular Data
+
+```{r}
+head(d)
+```
+
+## Reading Tabular Data
+
+```{r}
+summary(d)
+```
+
+## Reading Data
+
+`*.csv` generally easiest, but you can import all sorts of data types:
+
+- Excel, SPSS, SAS, STATA, tab delimited, anything delimited, Fixed width, HTML (web scraping), MySQL, etc
+
+For alternatives, consult other resources such as [Quick-R](http://www.statmethods.net/input/importingdata.html).
+
+## Writing data
+
+You can easily save matrix or data frame variables as `*.csv` using `write.csv()`
+
+Example:
+
+```{r, eval = F} 
+m <- matrix(c(1, 2, 3, 4), nrow = 2)
+write.csv(m, file = "myMatrix.csv")
+```
+
+Of course, other options exist.
