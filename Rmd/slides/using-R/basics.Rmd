@@ -1,0 +1,182 @@
+---
+title: 'Using R: The Basics'
+author: "Simon A Jackson"
+date: "21 April 2016"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+# Variables
+
+## Setting Variables
+
+You’ll start wanting to save data/information as variables. This is done using `<-`
+
+You can see your variables in the Environment Tab of the RStudio Panel.
+
+```{r}
+x <- 2
+x
+y <- x + 3
+y
+```
+
+## Types of Variables
+
+```{r echo = FALSE, warning = FALSE}
+library(png)
+library(grid)
+img <- readPNG("Rmd/img/R-data-structure.png")
+grid.raster(img)
+```
+
+## Vectors (and Scalars)
+
+Create scalars and vectors with `c()`
+
+```{r, eval = F}
+# Numeric
+c(1, 2, 6, 10)
+# String
+c("R", "is", "the", "best")
+# Logical / Boolean
+c(TRUE, FALSE, FALSE, TRUE)
+```
+
+## Vector Comparisons
+
+Comparison operators include `== != < > <= >=`
+
+These compare **each element** in the vector against some value and returns a Boolean vector (TRUE/FALSE).
+
+```{r}
+v1 <- c(1, 2, 3, 4)
+v2 <- c("a", "b", "c")
+v1 > 2  # Which elements of v1 are greater than 2?
+v2 == "b"  # Which elements of v2 are equal to "b"?
+```
+
+## Selecting from Vectors
+
+Select from vectors with the square brackets `[]`
+
+```{r}
+v <- c(11, 22, 33, 44)
+v[1]  # select the first element of the vector
+v[-3]  # select all but the third element
+```
+
+## Selecting from Vectors
+
+Select from vectors using other vectors.
+
+```{r}
+v1 <- c(11, 22, 33, 44)
+v2 <- c(1, 3)
+v3 <- v1 > 25  # Recall this returns a vector of boolean values
+
+v1[v2]  # select the first and third elements
+v1[v3]  # Select the elements of v1 greater than 25
+
+```
+
+## Vector Arithmetic
+
+All arithmetic functions can be used on **each element** of a vector.
+
+```{r}
+v <- c(1, 2, 3, 4)
+v + 2  # Add 2 to each element
+v / 2  # Divide each element by 2
+```
+
+## Vector Arithmetic
+
+Conduct element-wise arithmetic on multiple vectors.
+
+```{r}
+v1 <- c(1, 2, 3, 4)
+v2 <- c(5, 6, 7, 8)
+v1 + v2  # Add the elements of the two vectors
+```
+
+## Test your self
+
+We'll come back to the more complex variable structures after we learn some other things. In the mean time, try todo the following:
+
+- Create two vectors each with four numbers.
+- Select the 3rd element of your vectors.
+- Add 22 to each vector element.
+- Find all the elements of your vectors that are divisible by 4.
+- Search for help on the sum() function. Use it to find the sum of values in your vectors.
+
+# Functions
+
+## What are Functions?
+
+Functions encapsulate a series of commands, executed top to bottom, left to right, to perform a task and return a result.
+
+`mean()`, for example, is a function. It adds up all the elements of a vector, then divides them by the number of elements, and returns the result.
+
+Why use functions? Some major reasons:
+
+- Help break our task into sub steps
+- They’re reusable
+- Keep our workspace clean
+
+## Base functions
+
+There are lots of functions already in R. Try these for yourself:
+
+```{r, eval = F}
+v <- c(5, 10, 15,20)
+mean(v)
+sd(v)
+sum(v)
+range(v)
+summary(v)
+```
+
+## Custom functions
+
+We can also write our own functions in this format:
+
+```{r, eval = F}
+functionName <- function(arg1, arg2, ..., argn) {
+  command 1
+  command 2
+  ...
+  command n
+  return (result)
+}
+
+```
+
+Once it's in our environment, we can call our function like this:
+
+```{r, eval = F}
+functionName(arg1, arg2, ..., argn)
+```
+
+## Custom Functions
+
+Here's a custom function for `mean()`:
+
+```{r}
+cMean <- function(v) {
+  s <- sum(v)
+  l <- length(v)
+  m <- s / l
+  return (m)
+}
+
+cMean(c(1, 2, 3))
+cMean(c(11, 27, 24.32, 89, 102))
+```
+
+# The Recycling Rule
+
