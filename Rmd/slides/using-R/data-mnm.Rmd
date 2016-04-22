@@ -1,0 +1,150 @@
+---
+title: "Data Frame Management & Manipulations (M&Ms)"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = F, warning = F}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+## Our Data Set
+
+Let's read in the risk data to practice.
+
+```{r}
+d <- read.csv("data/risk.csv")
+head(d)
+```
+
+# What's in our Data Frame?
+
+## Functions for Examining Data Frames
+
+We've seen some basics:
+
+```{r, eval = F}
+View(d)
+dim(d)
+head(d)
+```
+
+But how else can we examine information about our data?
+
+## Functions for Examining Data Frames
+
+```{r}
+colnames(d)  # Columns names
+str(d)  # Display Internal Structure
+```
+
+Notice many categorical variables are integers. We should change these to factors (later).
+
+# Subsetting
+
+## Selecting rows and columns
+
+data.frame rows and columns can be accessed with square brackets like `data.frame[rows, columns]`
+
+We can do this using index numbers (i.e., the i*th* row), or with names (e.g., columns "gender").
+
+Try these for yourself:
+
+```{r, eval = F}
+d[1, ]  # The first row
+d[, 5]  # The fifth column
+d[, "age"]  # The column called "age""
+d[1, "age"]  # First row, "age" column
+```
+
+You can also use `$` as a short hand for selecting **one column**. E.g., `d$age`
+
+## Selecting rows and columns
+
+Vectors can be used to select multiple rows and/or columns.
+
+```{r}
+row.vec <- c(1, 10, 20)  # Rows to select
+col.vec <- c("subid", "gender", "age")  # Columns to select
+d[row.vec, col.vec]
+```
+
+## Selecting rows and columns
+
+We can make conditional choices. Simple method is to use `subset()`. This function takes three main arguments:
+
+- `x` a data frame
+- `select` a vector of column names to choose
+- `subset` a condition determining rows to choose
+
+Try these:
+
+```{r, eval = F}
+subset(d, select = c("age", "gender"))  # Select age and gender columns
+subset(d, subset = c(age <= 18))  # Select all rows where age <= 18
+subset(d, select = c("subid", "gender", "risk"),
+          subset = c(gender == 0 & risk > 90))
+```
+
+## Selecting rows and columns
+
+Conditionals make greatest use of `== != < > <= >= & |`
+
+Test yourself. Subset the data to get all rows with a risk rating of less than 20, OR greater than or equal to 90, but NOT 100.
+
+## The answer
+
+```{r}
+# Create new variable to hold subsetted data
+x <- subset(d, subset = c(risk < 20 | risk >= 90 & risk != 100))
+hist(x$risk)  # Plot a Histogram of risk column
+```
+
+# Manipulating Data
+
+## Changing data in R
+
+Sometimes we need to make changes to our data (e.g., change values, create new columns, etc).
+
+One option is to do it manually (e.g., in the .csv file) on in another program.
+
+But this goes against The Golden Rule 1 of Function Science!
+
+We'll look at some common changes.
+
+## Changing a cell
+
+We can assign a value directly to a particular cell.
+
+```{r}
+d[1, "risk"]
+d[1, "risk"] <- 37
+d[1, "risk"]
+```
+
+## Creating new variables
+
+Create a new variable by giving it a name and assigning it a value.
+
+```{r}
+d$zero <- 0  # a column of all zeros
+d$age.100 <- d$age + 100  # Add 100 to everyone's age
+d$risk2 <- d$risk^2  # risk squared
+head(d)
+```
+
+## Converting to factor
+
+Convert to a factor with `factor()`, select your levels and give labels if needed. Be sure to check the "ordering".
+
+```{r}
+d$gender <- factor(d$gender,
+                   levels = c(0, 1),
+                   labels = c("female", "male"))
+table(d$gender)
+```
+
+
+
