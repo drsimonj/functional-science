@@ -124,12 +124,6 @@ d[1, "risk"] <- 37
 d[1, "risk"]
 ```
 
-## Removing a row or column
-
-```{r}
-
-```
-
 ## Creating new variables
 
 Create a new variable by giving it a name and assigning it a value.
