@@ -48,7 +48,7 @@ Notice many categorical variables are integers. We should change these to factor
 
 data.frame rows and columns can be accessed with square brackets like `data.frame[rows, columns]`
 
-We can do this using index numbers (i.e., the i*th* row), or with names (e.g., columns "gender").
+We can do this using numeric indices (i.e., the i*th* row), character names (e.g., columns "gender"), or boolean values (more later).
 
 Try these for yourself:
 
@@ -73,7 +73,7 @@ d[row.vec, col.vec]
 
 ## Conditionals
 
-Selecting rows based on conditions involves two steps (though the can be combined into one line of code).
+Selecting rows based on conditions involves two steps (though they can be combined into one line of code).
 
 1. Use a conditional statement to create a boolean vector corresponding to the rows of your data. This vector should be TRUE for the rows you wish to select.
 2. Use this vector in to select the rows.
@@ -93,7 +93,7 @@ d$risk <= 20 & d$ethnic != 1  # risk less than or equal to 20 AND
 d$risk < 20 | d$risk > 90  # risk less than 20 OR greater than 90
 ```
 
-For convenicence, you can assign this to a vector variable:
+For convenience, you can assign this to a vector variable:
 
 ```{r}
 row.vec <- d$subid == 917 & d$risk > 30
@@ -124,8 +124,7 @@ Subset the data to get all rows with a risk rating of less than 20, OR greater t
 
 ```{r}
 row.vec <- d$risk < 20 | d$risk >= 90 & d$risk != 100
-x <- d[row.vec, ]
-hist(x$risk)  # Plot a Histogram of risk column
+hist(d[row.vec, "risk"])  # Plot a Histogram of risk column
 ```
 
 # Manipulating Data
@@ -147,7 +146,6 @@ Changing data is like combining selection and variable assignment.
 For example, we can assign a value directly to a particular cell.
 
 ```{r}
-d[1, ]
 d[1, "risk"] <- 37
 d[1, ]
 ```
@@ -162,11 +160,12 @@ d[row.vec, "risk"] <- NA
 head(d[row.vec,])
 ```
 
-## Creating new variables
+## Overwrite and Create Columns
 
-Create a new variable by giving it a name and assigning it a value.
+Overwrite or create a column by assigning it a value.
 
 ```{r}
+d$subid <- d$subid + 1  # Overwrite subid as itself plus 1
 d$zero <- 0  # a column of all zeros
 d$age.100 <- d$age + 100  # Add 100 to everyone's age
 d$risk2 <- d$risk^2  # risk squared
@@ -178,8 +177,8 @@ head(d)
 Convert to a factor with `factor()`, select your levels and give labels if needed. Be sure to check the "ordering".
 
 ```{r}
-d$gender <- factor(d$gender,
-                   levels = c(0, 1),
-                   labels = c("female", "male"))
+d$gender <- factor(d$gender,  # A vector (itself in this case)
+                   levels = c(0, 1),  # Unique values in vector
+                   labels = c("female", "male"))  # Labels to assign
 table(d$gender)
 ```
