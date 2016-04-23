@@ -10,11 +10,45 @@ require(knitr, quietly = TRUE)
 opts_knit$set(root.dir = '../../../')
 ```
 
-# Variables
+# Objects & Variables
+
+## Main Types of Objects
+
+You'll typically work with three types of data objects, and one for missing values.
+
+**Numeric**
+
+```{r, eval = F}
+100
+0.0028
+```
+
+**Character**
+
+```{r, eval = F}
+"Hello"
+"I'm a character object in R"
+```
+
+## Main Types of Objects
+
+**Boolean**
+
+```{r, eval = F}
+TRUE
+FALSE
+```
+
+
+**Missing Values**
+
+```{r, eval = F}
+NA
+```
 
 ## Setting Variables
 
-You’ll start wanting to save data/information as variables. This is done using `<-`
+You’ll start wanting to save objects as variables. This is done using `<-`
 
 You can see your variables in the Environment Tab of the RStudio Panel.
 
@@ -40,7 +74,7 @@ grid.raster(img)
 # Numeric vector
 x <- c(1, 2, 6, 10)
 x
-# 2 x 3 String Matrix
+# 2 x 3 Character Matrix
 m <- c("R", "is", "the", "best", "stats", "program")
 m <- matrix(m, nrow = 2)
 m
@@ -85,7 +119,7 @@ mean(v)
 
 ## Base functions
 
-There are lots of other functions already in R.
+There are lots of functions already in R.
 
 Try these for yourself:
 

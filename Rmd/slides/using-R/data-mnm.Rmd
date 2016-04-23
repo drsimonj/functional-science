@@ -71,34 +71,60 @@ col.vec <- c("subid", "gender", "age")  # Columns to select
 d[row.vec, col.vec]
 ```
 
-## Selecting rows and columns
+## Conditionals
 
-We can make conditional choices. Simple method is to use `subset()`. This function takes three main arguments:
+Selecting rows based on conditions involves two steps (though the can be combined into one line of code).
 
-- `x` a data frame
-- `select` a vector of column names to choose
-- `subset` a condition determining rows to choose
+1. Use a conditional statement to create a boolean vector corresponding to the rows of your data. This vector should be TRUE for the rows you wish to select.
+2. Use this vector in to select the rows.
 
-Try these:
+## Conditional Row Selection
+
+Step 1 - creating a boolean vector corresponding to the rows using operators and functions like  
+`== != < > <= >= & | is.na() !`
+
+For example, try:
 
 ```{r, eval = F}
-subset(d, select = c("age", "gender"))  # Select age and gender columns
-subset(d, subset = c(age <= 18))  # Select all rows where age <= 18
-subset(d, select = c("subid", "gender", "risk"),
-          subset = c(gender == 0 & risk > 90))
+d$risk > 80  # All rows where risk is grater than 80
+d$subid == 15  # All rows where the subject id is 15
+d$risk <= 20 & d$ethnic != 1  # risk less than or equal to 20 AND
+                              # ethnicity not equal to 1
+d$risk < 20 | d$risk > 90  # risk less than 20 OR greater than 90
 ```
 
-## Selecting rows and columns
-
-Conditionals make greatest use of `== != < > <= >= & |`
-
-Test yourself. Subset the data to get all rows with a risk rating of less than 20, OR greater than or equal to 90, but NOT 100.
-
-## The answer
+For convenicence, you can assign this to a vector variable:
 
 ```{r}
-# Create new variable to hold subsetted data
-x <- subset(d, subset = c(risk < 20 | risk >= 90 & risk != 100))
+row.vec <- d$subid == 917 & d$risk > 30
+```
+
+## Conditional Selection
+
+Step 2 - use the conditional to select your rows.
+
+For example:
+
+```{r}
+row.vec <- d$subid == 917 & d$risk > 30
+d[row.vec, ]
+```
+
+This can also be combined with columns
+
+```{r}
+d[row.vec, "risk"]
+```
+
+## Test yourself
+
+Subset the data to get all rows with a risk rating of less than 20, OR greater than or equal to 90, but NOT 100.
+
+## The Answer
+
+```{r}
+row.vec <- d$risk < 20 | d$risk >= 90 & d$risk != 100
+x <- d[row.vec, ]
 hist(x$risk)  # Plot a Histogram of risk column
 ```
 
@@ -116,12 +142,24 @@ We'll look at some common changes.
 
 ## Changing a cell
 
-We can assign a value directly to a particular cell.
+Changing data is like combining selection and variable assignment.
+
+For example, we can assign a value directly to a particular cell.
 
 ```{r}
-d[1, "risk"]
+d[1, ]
 d[1, "risk"] <- 37
-d[1, "risk"]
+d[1, ]
+```
+
+## Changing subsets of data
+
+The same principle applies for subsets of data
+
+```{r}
+row.vec <- !is.na(d$risk) & d$risk == 100
+d[row.vec, "risk"] <- NA
+head(d[row.vec,])
 ```
 
 ## Creating new variables
@@ -145,6 +183,3 @@ d$gender <- factor(d$gender,
                    labels = c("female", "male"))
 table(d$gender)
 ```
-
-
-
