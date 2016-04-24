@@ -30,6 +30,16 @@ For those with no/little experience using software like R (e.g., SPSS users), yo
 
 For those with experience using similar software/other languages like python, R has its pros and cons compared to these. By-and-large, R is the best at what it promises: statistical analysis and graphics.
 
+# The Warning
+
+## With Great Power...
+
+Once you being to master programming languages, you quickly learn that there are a potentially infinite number of ways to achieve the same outcome.
+
+I will try to focus on fundamental approaches, but be aware that everything you do is not the only approach, nor is it usually the best approach.
+
+In general, value code that is consistent and understandable. 
+
 # Getting started
 
 ## Download and Install R

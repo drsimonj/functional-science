@@ -1,0 +1,133 @@
+---
+title: "Descriptive Statistics"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = F, warning = F}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+## Our Data Set
+
+Let's read in the risk data to practice.
+
+```{r}
+d <- read.csv("data/risk.csv")
+head(d)
+```
+
+## Our Data Set
+
+Convert relevant variables to factors.
+
+```{r, results = "hide"}
+d$subid <- factor(d$subid)
+
+d$gender <- factor(d$gender, levels = c(0, 1),
+                   labels = c("female", "male"))
+
+d$wvcat <- factor(d$wvcat, levels = c(0, 1, 2, 3),
+                  labels = c("Unclassifiable", "Individualist", 
+                             "Hierarchicalist", "Egalitarian"))
+```
+
+# Univariate Analysis
+
+## Frequencies and Proportions
+
+```{r}
+my.table <- table(d$gender)
+my.table  # Print frequencies
+
+prop.table(my.table)  # Print proportions
+```
+
+## Central Tendency
+
+Many base functions for describing distribution. Many require `na.rm = TRUE` to remove missing values.
+
+```{r}
+no.miss <- c(1, 20, 29.353, .20)
+with.miss <- c(1, 20, 29.353, NA)
+mean(no.miss)
+mean(with.miss)
+mean(with.miss, na.rm = TRUE)
+```
+
+## Central Tendency
+
+```{r}
+mean(d$risk, na.rm = TRUE)  # The mean
+median(d$risk, na.rm = TRUE)  # The median
+```
+
+## Dispersion
+
+```{r}
+var(d$risk, na.rm = TRUE)  # variance
+sd(d$risk, na.rm = TRUE)  # Standard deviation
+```
+
+## Conditional Distribution
+
+Sometimes you're interested in knowing the number/proportion of values that meet some condition. This takes two steps. The trick is to work with boolean values, knowing that `TRUE` is treated as `1`, and `FALSE` as `0`.
+
+1. Create boolean vector corresponding to conditional.
+2. Treating this as a vector of 1s and 0s, use the likes of `sum()` or `mean()` to compute the sum or proportion of TRUE.
+
+## Conditional Distribution
+
+```{r}
+over50 <- d$risk > 50
+sum(over50, na.rm = TRUE)
+mean(over50, na.rm = TRUE)
+prop.table(table(over50))
+```
+
+## Some Simple Plots
+
+Try these:
+
+```{r, eval = F}
+# Barplot for factors
+my.table <- table(d$gender)
+barplot(my.table)
+
+# Plots for numeric variables
+hist(d$risk)  # Histogram
+boxplot(d$risk)  # boxplot
+```
+
+## Conditional Distribution
+
+Common condition is the number of missing values, handled using `is.na()`
+
+```{r}
+is.miss <- is.na(d$risk)
+table(is.miss)
+```
+
+## Describe with psych
+
+```{r, warning = F}
+library(psych)
+describe(d)
+```
+
+# Bivariate Analysis
+
+## Cross-tabs
+
+Add more arguements to `table()`
+
+```{r}
+my.table <- table(d$gender, d$wvcat)
+my.table  # Print frequencies
+prop.table(my.table)  # Cell proportions
+```
+
+
+

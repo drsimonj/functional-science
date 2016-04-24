@@ -1,5 +1,5 @@
 ---
-title: "Data Frame Management & Manipulations (M&Ms)"
+title: "Using R: Data Frame M&Ms"
 author: "Simon A Jackson"
 date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
 output: ioslides_presentation
@@ -9,6 +9,8 @@ output: ioslides_presentation
 require(knitr, quietly = TRUE)
 opts_knit$set(root.dir = '../../../')
 ```
+
+# M&Ms: Management and Manipulations
 
 ## Our Data Set
 
@@ -180,5 +182,5 @@ Convert to a factor with `factor()`, select your levels and give labels if neede
 d$gender <- factor(d$gender,  # A vector (itself in this case)
                    levels = c(0, 1),  # Unique values in vector
                    labels = c("female", "male"))  # Labels to assign
-table(d$gender)
+d[c(1, 14, 670), "gender"]
 ```
