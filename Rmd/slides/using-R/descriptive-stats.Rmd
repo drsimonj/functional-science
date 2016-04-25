@@ -34,6 +34,19 @@ d$wvcat <- factor(d$wvcat, levels = c(0, 1, 2, 3),
                              "Hierarchicalist", "Egalitarian"))
 ```
 
+## Packages
+
+We'll make use of the `psych` package.
+
+Make sure it's installed on you system and then load it into your workspace.
+
+```{r, eval = F}
+install.packages("psych")  # Only if not installed yet
+```
+```{r, warning = F}
+library(psych)  # load it into your workspace
+```
+
 # Univariate Analysis
 
 ## Frequencies and Proportions
@@ -112,14 +125,13 @@ table(is.miss)
 
 ## Describe with psych
 
-```{r, warning = F}
-library(psych)
+```{r}
 describe(d)
 ```
 
 # Bivariate Analysis
 
-## Cross-tabs
+## Cross-tabs (Factor x Factor)
 
 Add more arguements to `table()`
 
@@ -129,5 +141,18 @@ my.table  # Print frequencies
 prop.table(my.table)  # Cell proportions
 ```
 
+## Describing by Group (Factor x Numeric)
 
+A simple method is provided by the `psych` package using `describeBy(mydata, group, ...)`
 
+```{r}
+describeBy(d[, c("age", "risk")], d$gender)
+```
+
+## Multivariate Visualisations (*n* Numeric) 
+
+Again, `psych` provides a great function, `pairs.panels(data)`
+
+```{r}
+pairs.panels(d[, c("age", "risk")])
+```
