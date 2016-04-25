@@ -10,3 +10,88 @@ require(knitr, quietly = TRUE)
 opts_knit$set(root.dir = '../../../')
 ```
 
+# Setup
+
+## Packages
+
+We'll make use of the `tidyr` package.
+
+Make sure it's installed on you system and then load it into your workspace.
+
+```{r, eval = F}
+install.packages("tidyr")  # Only if not installed yet
+```
+```{r, warning = F}
+library(tidyr)  # load it into your workspace
+```
+
+## Our Data Set
+
+Let's read in the risk data to practice.
+
+```{r}
+d <- read.csv("data/risk.csv")
+head(d)
+```
+
+## Our Data Set
+
+Convert relevant variables to factors.
+
+```{r, results = "hide"}
+d$subid <- factor(d$subid)
+
+d$gender <- factor(d$gender, levels = c(0, 1),
+                   labels = c("female", "male"))
+
+d$wvcat <- factor(d$wvcat, levels = c(0, 1, 2, 3),
+                  labels = c("Unclassifiable", "Individualist", 
+                             "Hierarchicalist", "Egalitarian"))
+```
+
+# t.test()
+
+## One Sample
+
+One sample t test a null hypothesis.
+Default settings: null = 0; significance level = .05
+
+```{r}
+t.test(d$risk)
+```
+
+## Independent Samples (Between)
+
+`t.test(dv ~ group)`
+
+```{r}
+t.test(d$risk ~ d$gender)  # t.test(risk ~ gender, data = d)
+```
+
+## Paired Samples (Within)
+
+Let's adjust our data a bit...
+
+```{r}
+x <- d[d$active == "STK80" | d$active == "STK20",
+       c("subid", "risk", "active")]
+wd <- spread(x, active, risk)  # Wide Data set
+head(wd)
+```
+
+## PairedSamples (Within)
+
+`t.test(var1, var2, paired = TRUE)`
+
+```{r}
+t.test(wd$STK80, wd$STK20, paired = TRUE)
+```
+
+# ANOVA - aov()
+
+## One Way (Between)
+
+# Correlation
+
+# Regression
+

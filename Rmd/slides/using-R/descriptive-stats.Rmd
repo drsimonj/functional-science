@@ -10,6 +10,21 @@ require(knitr, quietly = TRUE)
 opts_knit$set(root.dir = '../../../')
 ```
 
+# Setup
+
+## Packages
+
+We'll make use of the `psych` package.
+
+Make sure it's installed on you system and then load it into your workspace.
+
+```{r, eval = F}
+install.packages("psych")  # Only if not installed yet
+```
+```{r, warning = F}
+library(psych)  # load it into your workspace
+```
+
 ## Our Data Set
 
 Let's read in the risk data to practice.
@@ -32,19 +47,6 @@ d$gender <- factor(d$gender, levels = c(0, 1),
 d$wvcat <- factor(d$wvcat, levels = c(0, 1, 2, 3),
                   labels = c("Unclassifiable", "Individualist", 
                              "Hierarchicalist", "Egalitarian"))
-```
-
-## Packages
-
-We'll make use of the `psych` package.
-
-Make sure it's installed on you system and then load it into your workspace.
-
-```{r, eval = F}
-install.packages("psych")  # Only if not installed yet
-```
-```{r, warning = F}
-library(psych)  # load it into your workspace
 ```
 
 # Univariate Analysis
@@ -123,7 +125,17 @@ is.miss <- is.na(d$risk)
 table(is.miss)
 ```
 
-## Describe with psych
+## Overall Summmaries
+
+Easy base function, `summary(data)`
+
+```{r}
+summary(d)
+```
+
+## Overall Summmaries
+
+Alternative is `describe(data)` from the `psych` package.
 
 ```{r}
 describe(d)
