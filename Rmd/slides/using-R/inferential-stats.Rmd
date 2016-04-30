@@ -53,7 +53,7 @@ d$wvcat <- factor(d$wvcat, levels = c(0, 1, 2, 3),
 
 ## One Sample
 
-One sample t test a null hypothesis.
+One sample *t* test for a null hypothesis.  
 Default settings: null = 0; significance level = .05
 
 ```{r}
@@ -79,7 +79,7 @@ wd <- spread(x, active, risk)  # Wide Data set
 head(wd)
 ```
 
-## PairedSamples (Within)
+## Paired Samples (Within)
 
 `t.test(var1, var2, paired = TRUE)`
 
@@ -87,11 +87,34 @@ head(wd)
 t.test(wd$STK80, wd$STK20, paired = TRUE)
 ```
 
+# Formulas
+
+
+
 # ANOVA - aov()
 
 ## One Way (Between)
 
+## Two-or-More Way (Between)
+
+## Within Subjects
+
+## Mixed
+
 # Correlation
 
-# Regression
+# Regression - lm()
+
+## Simple Linear Regression
+
+## Multiple Regression
+
+## Hierarchical Regression
+
+## Logistic Regression
+
+## Standardized Coefficients
+
+
+
 

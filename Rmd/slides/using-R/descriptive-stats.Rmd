@@ -66,8 +66,8 @@ Many base functions for describing distribution. Many require `na.rm = TRUE` to 
 
 ```{r}
 no.miss <- c(1, 20, 29.353, .20)
-with.miss <- c(1, 20, 29.353, NA)
 mean(no.miss)
+with.miss <- c(1, 20, 29.353, NA)
 mean(with.miss)
 mean(with.miss, na.rm = TRUE)
 ```
@@ -104,15 +104,26 @@ prop.table(table(over50))
 
 ## Some Simple Plots
 
-Try these:
+Barplot for factors
 
-```{r, eval = F}
-# Barplot for factors
+```{r}
 my.table <- table(d$gender)
 barplot(my.table)
+```
 
-# Plots for numeric variables
+## Some Simple Plots
+
+Histogram for numeric variable.
+
+```{r}
 hist(d$risk)  # Histogram
+```
+
+## Some Simple Plots
+
+Boxplot for numeric variable.
+
+```{r}
 boxplot(d$risk)  # boxplot
 ```
 
