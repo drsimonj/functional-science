@@ -87,15 +87,79 @@ head(wd)
 t.test(wd$STK80, wd$STK20, paired = TRUE)
 ```
 
-# Formulas
+# Statistical Modelling in `R`
 
+## Two-step Process
 
+In general, statistical modelling in R takes two steps.
+
+1. Define and fit your model.
+2. Examine the results.
+
+## Defining the Model: The Tilde `~`
+
+In general, statistical models are of the form  
+`explain variance in Y with X1, X2, ... Xn`
+
+This is done is `R` using formulas of the form  
+`Y ~ X1 + X2 ... Xn`.
+
+Our outcome variable appears to the left of the tilde (`~`) and our predictors appear to the right.
+
+## Defining the Model: Combining Predictors
+
+The predictors can be combined in a number of ways. Here are some common operations:
+
+`Y ~ X1 + X2`  
+Predict Y with X1 and X2
+
+`Y ~ X1:X2`  
+Predict Y with the interaction of X1 and X2
+
+`Y ~ X1 + X2 + X1:X2` OR `Y ~ X1*X2`  
+Predict Y with X1, X2, and their interaction.
 
 # ANOVA - aov()
 
 ## One Way (Between)
 
+```{r}
+# Read in our data set
+d <- read.csv("data/planes.csv")
+
+# 1. Fit the model
+fit <- aov(Distance ~ Paper, data = d)
+
+# 2. Explore the results
+summary(fit)
+```
+
 ## Two-or-More Way (Between)
+
+```{r}
+# Read in our data set
+d <- read.csv("data/fishing.csv")
+
+# 1. Fit the model
+fit <- aov(distance ~ rod*line*sinker, data = d)
+
+# 2. Explore the results
+summary(fit)
+```
+
+## Two-or-More Way (Between)
+
+```{r}
+# Two-variable plot
+plot(d$sinker, d$distance)
+```
+
+## Two-or-More Way (Between)
+
+```{r}
+# Three-variable plot
+interaction.plot(d$line, d$sinker, d$distance)
+```
 
 ## Within Subjects
 

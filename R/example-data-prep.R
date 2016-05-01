@@ -50,6 +50,12 @@ x$trial <- factor(x$trial, levels = paste0("Trial", 1:4), labels = 1:4)
 x$activity <- factor(x$activity)
 write.csv(x, "data/energy.csv", row.names = F)
 
+# CORRELATION AND REGRESSION  ============
+
+# Mass and Physical Measurements for Male Subjects
+# http://www.statsci.org/data/oz/physical.html
+x <- read.table("http://www.statsci.org/data/oz/physical.txt", header = TRUE, sep = "\t")
+
 
 
 # 
