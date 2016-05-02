@@ -33,6 +33,7 @@ write.csv(x, "data/fishing.csv", row.names = F)
 # Energy Requirements Running, Walking and Cycling
 # http://www.statsci.org/data/general/energy.html
 x <- read.table("http://www.statsci.org/data/general/energy.txt", header = TRUE, sep = "\t")
+write.csv(x, "data/energy_wide.csv", row.names = F)
 x <- x %>% gather(activity, energy, Running:Cycling)
 x$Subject <- factor(x$Subject)
 x$activity <- factor(x$activity)
