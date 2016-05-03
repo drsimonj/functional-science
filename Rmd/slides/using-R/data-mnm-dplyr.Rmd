@@ -1,0 +1,231 @@
+---
+title: "Using R: Data Frame M&Ms with dplyr"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = F, warning = F}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+# dplyr
+
+## What is dplyr?
+
+dplyr is an R package that makes data frame M&Ms easy, simple, clean and efficient.
+
+It has a core set of "verbs" (functions) that handle most of our essential needs.
+
+In this session, we'll look at the following:
+
+- `select()`
+- `filter()`
+- `mutate()`
+- `arrange()`
+- Pipelines with `%>%`
+
+## Getting dplyr
+
+Start by installing dplyr (if you don't have it already), and loading it into your workspace.
+
+```{r, eval = F}
+# Install the package from CRAN (if necessary)
+install.packages("dplyr")
+
+# Load it into your workspace
+library(dplyr)
+```
+```{r, include = F}
+library(dplyr)
+```
+
+## Our Data Set
+
+Let's read in the risk data to practice.
+
+```{r}
+d <- read.csv("data/risk.csv")
+head(d)
+```
+
+# dplyr Basics
+
+## Function Style
+
+The "verbs" of dplyr all share a similar format:
+
+- their first arguement is a data frame.
+- subsequent arguments are specific to the function.
+- they all return a data frame.
+
+When referencing column names, we don't need quotation marks ""
+
+## How to Select Columns
+
+With dplyr, we can select columns using `select()`
+
+```{r}
+x <- select(d, risk)
+head(x)
+```
+
+## How to Select Columns
+
+Use the dash `-` to remove columns
+
+```{r}
+x <- select(d, -risk)
+head(x)
+```
+
+## How to Select Columns
+
+We can add as many column names as we like.
+```{r}
+x <- select(d, risk, gender, age)
+head(x)
+```
+
+## How to Filter Rows
+
+With dplyr, we can select certain rows using `filter()`
+
+```{r}
+x <- filter(d, risk > 90)
+head(x)
+```
+
+## How to Filter Rows
+
+These can be compounds...
+
+```{r}
+x <- filter(d, risk > 90 & age == 20)
+head(x)
+```
+
+## Create New Variables
+
+New variables can be created with `mutate()`
+
+```{r}
+x <- mutate(d, risk.sq = risk^2)
+head(x)
+```
+
+## Create New Variables
+
+We can create, repalce, and remove multiple variables at once!
+
+```{r}
+x <- mutate(d, risk.sq = risk^2)
+x <- mutate(x, risk.cu = risk^3,
+               gender  = factor(gender, levels = c(0, 1),
+                                labels = c("female", "male")),
+               risk.sq = NULL)
+str(x)
+```
+
+## Create New Variables
+
+Aside, we can rename columns with `rename()`
+
+```{r}
+x <- rename(d, sex = gender, world.view = wvcat)
+head(x)
+```
+
+## Arrange Rows
+
+We can arrange rows with `arrange()`
+
+```{r}
+head(arrange(d, age))
+```
+
+## Arrange Rows
+
+We can arrange in descending order with `desc`
+
+```{r}
+head(arrange(d, desc(age)))
+```
+
+## Arrange Rows
+
+Break ties with more arguments.
+
+```{r}
+head(arrange(d, age, desc(risk)))
+```
+
+## Combining it all
+
+```{r}
+x <- mutate(d, risk.sq = risk^2)
+x <- select(x, gender, age, risk.sq)
+x <- filter(x, age > 80)
+x <- arrange(x, age, risk.sq)
+head(x)
+```
+
+# Pipelines
+
+## What is going on here?
+
+```{r, eval = F}
+arrange(
+  filter(
+    select(
+      mutate(d, risk.sq = risk^2),
+      gender, age, risk.sq
+    ),
+    age > 80
+  ),
+  age, risk.sq
+)
+```
+
+## Why Pipelines?
+
+Help us to streamline our code and make it readable.
+
+In dplyr (and associated packages), we "pipe" variables with `%>%`
+
+The format is `x %>% f(y, ..)`  
+
+...which implicity becomes `f(x, y, ...)`
+
+## Examples
+
+```{r}
+d %>% head()
+```
+
+## Examples
+
+```{r}
+d %>% filter(risk == 100)
+```
+
+## Examples
+
+```{r}
+d %>%
+  select(gender, age, risk) %>%
+  filter(risk < 5)
+```
+
+## Examples
+
+Trick: read it aloud as "then".
+
+```{r}
+d %>%
+  mutate(risk.sq = risk^2) %>%
+  select(gender, age, risk.sq) %>%
+  filter(age > 80) %>%
+  arrange(age, risk.sq)
+```
