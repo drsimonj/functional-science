@@ -207,7 +207,7 @@ d %>% head()
 ## Examples
 
 ```{r}
-d %>% filter(risk == 100)
+d %>% filter(wvcat != 1)
 ```
 
 ## Examples
