@@ -1,0 +1,123 @@
+---
+title: "Descriptive Statistics"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = F, warning = F}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+# Setup
+
+## Packages
+
+We'll make use of the `psych` package.
+
+Make sure it's installed on you system and then load it into your workspace.
+
+```{r, eval = F}
+# Install the package from CRAN (if necessary)
+install.packages("dplyr")
+
+# Load it into your workspace
+library(dplyr)
+```
+```{r, include = F}
+library(dplyr)
+```
+
+## Our Data Set
+
+Let's read in the flight times data to practice.
+
+```{r}
+d <- read.csv("data/flight-times.csv")
+head(d)
+```
+
+# Grouping and Summarising
+
+## Splitting data into groups
+
+Often we're interested in splitting our data into groups.
+
+We do this with the dplyr function, `group_by()`
+
+For example:
+
+```{r}
+by.fn <- group_by(d, ORIGIN)
+```
+
+Other dplyr functions will now treat `by.fn` as multiple data frames: one for each level of the FL_NUM factor.
+
+More to come...
+
+## Summarising Data
+
+To summarise information about a data frame, we use the dplyr function, `summarise()`
+
+```{r}
+summarise(d, mean = mean(CRS_DEP_TIME))
+summarise(d, mean = mean(CRS_DEP_TIME),
+             max  = max(CRS_DEP_TIME))
+```
+
+# Univariate Analysis
+
+## Frequencies and Proportions
+
+For the frequency of a factor variable, group it, and then summarise with `n()`.
+
+```{r}
+d %>%
+  group_by(ORIGIN) %>%
+  summarise(n = n())
+```
+
+## Frequencies and Proportions
+
+Can convert frequencies to proportions by dividing through by the total number of rows.
+
+```{r}
+d %>%
+  group_by(ORIGIN) %>%
+  summarise(p = n() / nrow(d))
+```
+
+## Central Tendency
+
+Many base functions for describing distribution. Many require `na.rm = TRUE` to remove missing values.
+
+```{r}
+no.miss <- c(1, 20, 29.353, .20)
+mean(no.miss)
+with.miss <- c(1, 20, 29.353, NA)
+mean(with.miss)
+mean(with.miss, na.rm = TRUE)
+```
+
+## Central Tendency
+
+```{r}
+d %>%
+  filter(!is.na(ARR_DELAY)) %>%
+  summarise(
+    mean = mean(ARR_DELAY),
+    median = median(ARR_DELAY),
+    q.5  = quantile(ARR_DELAY, .05),
+    q.95 = quantile(ARR_DELAY, .95)
+  )
+```
+
+## Dispersion
+
+```{r}
+# var(d$risk, na.rm = TRUE)  # variance
+# sd(d$risk, na.rm = TRUE)  # Standard deviation
+# quantile(d$risk, .95)
+```
+

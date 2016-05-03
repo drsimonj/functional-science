@@ -9,6 +9,13 @@
 library(tidyr)
 library(dplyr)
 
+# GENERAL
+
+# flight-times.csv was downloaded from
+# http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236
+# It contains information about all flights in and out of Colorado airports
+# in January, 2016
+
 # BETWEEN-SUBJECTS ANOVA ========
 
 # Paper Planes Experiment ---
@@ -60,8 +67,6 @@ write.csv(x, "data/energy.csv", row.names = F)
 # Mass and Physical Measurements for Male Subjects
 # http://www.statsci.org/data/oz/physical.html
 x <- read.table("http://www.statsci.org/data/oz/physical.txt", header = TRUE, sep = "\t")
-
-
 
 # 
 # 
