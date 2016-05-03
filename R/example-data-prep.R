@@ -7,16 +7,20 @@
 ########################
 
 library(tidyr)
+library(dplyr)
 
 # BETWEEN-SUBJECTS ANOVA ========
 
 # Paper Planes Experiment ---
 # http://www.statsci.org/data/oz/planes.html
 x <- read.table("http://www.statsci.org/data/oz/planes.txt", header = TRUE, sep = "\t")
-x$Paper <- factor(x$Paper, levels = c(1, 2), labels = c("80gms", "50gms"))
-x$Angle <- factor(x$Angle, levels = c(1, 2), labels = c("Horizontal", "45 Degrees"))
-x$Design <- factor(x$Plane, levels = c(1, 2), labels = c("High-performance", "Incedibly simple"))
-x$Plane <- x$Order <- NULL
+x <- x %>% mutate(Paper = factor(Paper, levels = c(1, 2),
+                                 labels = c("80gms", "50gms")),
+                  Angle = factor(Angle, levels = c(1, 2),
+                                 labels = c("Horizontal", "45 Degrees")),
+                  Design = factor(Plane, levels = c(1, 2),
+                                  labels = c("High-performance", "Incedibly simple")),
+                  Plane = NULL, Order = NULL)
 write.csv(x, "data/planes.csv", row.names = F)
 
 # Fishing Rod Experiment ---
