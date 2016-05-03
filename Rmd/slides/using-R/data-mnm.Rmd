@@ -83,7 +83,7 @@ Selecting rows based on conditions involves two steps (though they can be combin
 ## Conditional Row Selection
 
 Step 1 - creating a boolean vector corresponding to the rows using operators and functions like  
-`== != < > <= >= & | is.na() !`
+`== != < > <= >= & | is.na() ! %in%`
 
 For example, try:
 
