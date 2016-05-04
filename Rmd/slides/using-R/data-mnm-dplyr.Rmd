@@ -229,3 +229,91 @@ d %>%
   filter(age > 80) %>%
   arrange(age, risk.sq)
 ```
+
+# Some Base Comparisons
+
+## Selecting Columns
+
+The following are equivalent:
+
+```{r, eval = F}
+d[, c("x", "y", "z")]
+
+select(d, x, y, z)
+
+d %>% select(x, y, z)
+```
+
+## Filtering Rows
+
+The following are equivalent:
+
+```{r, eval = F}
+d[d$x == "a" & d$y < 100, ]
+
+filter(d, x == "a" & y < 100)
+
+d %>% filter(x == "a" & y < 100)
+```
+
+## Filtering Rows
+
+The following are equivalent:
+
+```{r, eval = F}
+d[d$x == "a" & d$y < 100, ]
+
+filter(d, x == "a" & y < 100)
+
+d %>% filter(x == "a" & y < 100)
+```
+
+## Create New Variables
+
+The following are equivalent:
+
+```{r, eval = F}
+d$x2 <- d$x ^ 2
+
+d <- mutate(d, x2 = x^2)
+
+d <- d %>% mutate(x2 = x^2)
+```
+
+## Combinations
+
+The following are equivalent:
+
+```{r, eval = F}
+d <- d[d$x == "a" & d$y < 100, c("x", "y", "z")]
+d$x2 <- d$x ^ 2
+
+###
+
+d <- select(d, x, y, z)
+d <- filter(d, x == "a" & y < 100)
+d <- mutate(d, x2 = x^2)
+```
+
+Continues of next slide...
+
+## Combinations
+
+```{r, eval = F}
+
+d <- mutate(
+      filter(
+        select(d, x, y, z)
+        , x == "a" & y < 100
+        )
+      , x2 = x^2
+      )
+
+###
+
+d <- d %>%
+  select(x, y, z) %>%
+  filter(x == "a" & y < 100) %>%
+  mutate(x2 = x^2)
+```
+

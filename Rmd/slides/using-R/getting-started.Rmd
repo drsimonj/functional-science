@@ -41,6 +41,10 @@ Once you being to gain experience with R, you quickly learn that:
 
 I will try to focus on fundamental approaches so that you can learn from others. 
 
+## With Great Power...
+
+Comes great frustration!
+
 ## Mental Shift
 
 Using R requires a completely different mental approach to point-and-click software like SPSS.
