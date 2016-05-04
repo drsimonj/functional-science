@@ -1,0 +1,34 @@
+---
+title: 'Setting up your machine to use R and RStudio'
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+## Download and Install R
+
+Go to <http://www.r-project.org/>
+  
+Click ‘CRAN’, under “Download, Packages”.
+
+Click any link under your country.
+
+Follow links to download latest version on your operating system.
+
+If you are asked to select between 32-bit or 64-bit, you need to match this to your computer. If unsure, take a look at advice online like this <http://www.akaipro.com/kb/article/1616>
+  
+Once downloaded, locate the installer. Double click it and follow the prompts to install it on your machine.
+
+## Download and Install RStudio
+
+Go to <http://www.rstudio.com/>
+  
+Click RStudio from Products menu.
+
+Click DOWNLOAD RSTUDIO DESKTOP.
+
+Follow links to download latest version on your operating system.
+
+Need to pick 32-bit or 64-bit? Match it to your version of R.
+
+Once downloaded, locate the installer. Double click it and follow the prompts to install it on your machine.

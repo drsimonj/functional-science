@@ -73,7 +73,7 @@ Once downloaded, locate the installer. Double click it and follow the prompts to
 
 ## Get RStudio
 
-Great GUI for R.
+Great IDE for R.
 
 Go to <http://www.rstudio.com/>
 

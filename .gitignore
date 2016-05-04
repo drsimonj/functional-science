@@ -3,3 +3,4 @@
 .RData
 Rmd/*.docx
 Rmd/**/*.html
+Rmd/**/*.pdf
