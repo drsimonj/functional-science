@@ -20,8 +20,8 @@ It has a core set of "verbs" (functions) that handle most of our essential needs
 
 In this session, we'll look at the following:
 
-- `gather()`
 - `separate()`
+- `gather()`
 - `spread()`
 
 ## Getting tidyr
@@ -39,9 +39,25 @@ library(tidyr)
 library(tidyr)
 ```
 
+## and also...
+
+We'll also be using `dplyr`
+
+
+```{r, eval = F}
+# Install the package from CRAN (if necessary)
+install.packages("dplyr")
+
+# Load it into your workspace
+library(dplyr)
+```
+```{r, include = F}
+library(dplyr)
+```
+
 ## Function Style
 
-The "verbs" of tidyr all share a similar format:
+Just like functions in `dplyr`, the "verbs" of tidyr all share a similar format:
 
 - their first arguement is a data frame.
 - subsequent arguments are specific to the function.
@@ -50,6 +66,24 @@ The "verbs" of tidyr all share a similar format:
 When referencing column names, we don't need quotation marks ""
 
 # Time to tidy...
+
+## Separate a single column with `separate()`
+
+```{r}
+d <- "data/flight-times.csv" %>%
+  read.csv() %>%
+  select(flight, origin, dest)
+head(d)
+```
+
+## Separate a single column with `separate()`
+
+```{r}
+d %>%
+  separate(flight, into = c("carrier", "flight_num"), sep = "-") %>%
+  head()
+```
+
 
 ## Gather multiple columns together with `gather()`
 
@@ -62,7 +96,7 @@ Useful for going from wide format to long format.
 ## Gather multiple columns together with `gather()`
 
 ```{r}
-d <- read.csv("data/energy_wide.csv")
+d <- read.csv("data/energy.csv")
 d %>% gather(exercise, energy, Running, Walking, Cycling)
 ```
 
@@ -71,12 +105,28 @@ d %>% gather(exercise, energy, Running, Walking, Cycling)
 If you have adjacent columns, you can make life easier with `:`
 
 ```{r}
-d <- read.csv("data/energy_wide.csv")
+d <- read.csv("data/energy.csv")
 d %>% gather(exercise, energy, Running:Cycling)
 ```
 
-## Separate a single column with `separate()`
+## Spread key-value columns with `spread()`
 
+Convert two columns, representing a key and value, into multiple columns.
 
+Useful for getting from long to wide format.
 
+## Spread key-value columns with `spread()`
 
+```{r}
+d <- "data/risk.csv" %>%
+  read.csv %>%
+  select(subid, active, risk) %>%
+  filter(subid < 20 & active %in% c("GOLD", "SILV"))
+d
+```
+
+## Spread key-value columns with `spread()`
+
+```{r}
+d %>% spread(active, risk)
+```

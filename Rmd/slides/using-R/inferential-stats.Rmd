@@ -10,6 +10,25 @@ require(knitr, quietly = TRUE)
 opts_knit$set(root.dir = '../../../')
 ```
 
+# Setup
+
+## Packages
+
+We'll be using the tidyr and dplyr packages.
+
+```{r, eval = F}
+# Install the package from CRAN (if necessary)
+install.packages(c("dplyr", "tidyr"))
+
+# Attach to your workspace
+library(dplyr)
+library(tidyr)
+```
+```{r, include = F}
+library(dplyr)
+library(tidyr)
+```
+
 # t.test()
 
 ## Data sets
@@ -28,7 +47,7 @@ str(b)
 One with a within-subject design.
 
 ```{r}
-w <- read.csv("data/energy_wide.csv")
+w <- read.csv("data/energy.csv")
 str(w)
 ```
 
@@ -133,9 +152,21 @@ interaction.plot(d$line, d$sinker, d$distance)
 
 ## Within Subjects
 
+Apart from a `t.test()`, within-subject analysis in `R` typically requires long data formats.
+
 ```{r}
-d <- read.csv("data/energy.csv")
-fit <- aov(energy ~ activity + Error(Subject / activity), data = d)
+d <- "data/energy.csv" %>%
+  read.csv() %>%
+  gather(exercise, energy, Running:Cycling) %>%
+  mutate(exercise = factor(exercise),
+         Subject = factor(Subject))
+str(d)
+```
+
+## Within Subjects
+
+```{r}
+fit <- aov(energy ~ exercise + Error(Subject / exercise), data = d)
 summary(fit)
 ```
 

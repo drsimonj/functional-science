@@ -9,12 +9,16 @@
 library(tidyr)
 library(dplyr)
 
-# GENERAL
+# GENERAL =============
 
 # flight-times.csv was downloaded from
 # http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236
 # It contains information about all flights in and out of Colorado airports
 # in January, 2016
+x <- read.csv("data/flight-times.csv")
+names(x) <- x %>% names %>% tolower
+x <- x %>% mutate(flight = paste(carrier, fl_num, sep = "-"))
+write.csv(x, "data/flight-times.csv", row.names = F)
 
 # BETWEEN-SUBJECTS ANOVA ========
 
@@ -44,11 +48,11 @@ write.csv(x, "data/fishing.csv", row.names = F)
 # Energy Requirements Running, Walking and Cycling
 # http://www.statsci.org/data/general/energy.html
 x <- read.table("http://www.statsci.org/data/general/energy.txt", header = TRUE, sep = "\t")
-write.csv(x, "data/energy_wide.csv", row.names = F)
-x <- x %>% gather(activity, energy, Running:Cycling)
-x$Subject <- factor(x$Subject)
-x$activity <- factor(x$activity)
 write.csv(x, "data/energy.csv", row.names = F)
+# x <- x %>% gather(activity, energy, Running:Cycling)
+# x$Subject <- factor(x$Subject)
+# x$activity <- factor(x$activity)
+# write.csv(x, "data/energy_long.csv", row.names = F)
 
 
 # MIXED ANOVA =============

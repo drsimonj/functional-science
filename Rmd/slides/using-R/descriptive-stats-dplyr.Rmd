@@ -51,10 +51,10 @@ We do this with the dplyr function, `group_by()`
 For example:
 
 ```{r}
-by.fn <- group_by(d, ORIGIN)
+by.fn <- group_by(d, origin)
 ```
 
-Other dplyr functions will now treat `by.fn` as multiple data frames: one for each level of the ORIGIN factor.
+Other dplyr functions will now treat `by.fn` as multiple data frames: one for each level of the origin factor.
 
 More to come...
 
@@ -63,7 +63,7 @@ More to come...
 To summarise information about a data frame, we use the dplyr function, `summarise()`
 
 ```{r}
-summarise(d, mean = mean(CRS_DEP_TIME))
+summarise(d, mean = mean(crs_dep_time))
 ```
 
 # Univariate Analysis
@@ -71,8 +71,8 @@ summarise(d, mean = mean(CRS_DEP_TIME))
 ## Frequencies and Proportions
 
 ```{r}
-table(d$CARRIER)  # Print frequencies
-table(d$CARRIER) %>% prop.table()  # Print proportions
+table(d$carrier)  # Print frequencies
+table(d$carrier) %>% prop.table()  # Print proportions
 ```
 
 ## Frequencies and Proportions
@@ -81,7 +81,7 @@ A dplyr solution: `group_by(factor)` and then `summarise()` with `n()`.
 
 ```{r}
 d %>%
-  group_by(CARRIER) %>%
+  group_by(carrier) %>%
   summarise(n = n())
 ```
 
@@ -91,7 +91,7 @@ and for proportions, divide through by the total number of rows in the data.
 
 ```{r}
 d %>%
-  group_by(CARRIER) %>%
+  group_by(carrier) %>%
   summarise(n = n(), p = n / nrow(d))
 ```
 
@@ -110,31 +110,31 @@ mean(with.miss, na.rm = TRUE)
 ## Central Tendency
 
 ```{r}
-mean(d$DEP_DELAY, na.rm = TRUE)  # mean
-median(d$DEP_DELAY, na.rm = TRUE)  # Median
+mean(d$dep_delay, na.rm = TRUE)  # mean
+median(d$dep_delay, na.rm = TRUE)  # Median
 ```
 
 ## Position
 
 ```{r}
-min(d$DEP_DELAY, na.rm = TRUE)  # minimum/smallest value
-max(d$DEP_DELAY, na.rm = TRUE)  # maximum/largest value
+min(d$dep_delay, na.rm = TRUE)  # minimum/smallest value
+max(d$dep_delay, na.rm = TRUE)  # maximum/largest value
 ```
 
 ## Position
 
 ```{r}
-quantile(d$DEP_DELAY, na.rm = TRUE)  # Quantiles
-quantile(d$DEP_DELAY, .95, na.rm = TRUE)
-quantile(d$DEP_DELAY, c(.025, .975), na.rm = TRUE)
+quantile(d$dep_delay, na.rm = TRUE)  # Quantiles
+quantile(d$dep_delay, .95, na.rm = TRUE)
+quantile(d$dep_delay, c(.025, .975), na.rm = TRUE)
 ```
 
 ## Dispersion
 
 ```{r}
-range(d$DEP_DELAY, na.rm = TRUE)  # range
-var(d$DEP_DELAY, na.rm = TRUE)  # variance
-sd(d$DEP_DELAY, na.rm = TRUE)  # Standard deviation
+range(d$dep_delay, na.rm = TRUE)  # range
+var(d$dep_delay, na.rm = TRUE)  # variance
+sd(d$dep_delay, na.rm = TRUE)  # Standard deviation
 ```
 
 ## Conditional Distribution
@@ -147,9 +147,9 @@ Sometimes you're interested in knowing the number/proportion of values that meet
 ## Conditional Distribution
 
 ```{r}
-sum(d$DEP_DELAY > 60, na.rm = TRUE)
-mean(d$DEP_DELAY > 60, na.rm = TRUE)
-prop.table(table(d$DEP_DELAY > 60))
+sum(d$dep_delay > 60, na.rm = TRUE)
+mean(d$dep_delay > 60, na.rm = TRUE)
+prop.table(table(d$dep_delay > 60))
 ```
 
 ## Putting it Together with dplyr
@@ -158,15 +158,15 @@ Can combine with `summarise()` into a useful table.
 
 ```{r}
 d %>%
-  filter(!is.na(DEP_DELAY)) %>%  # remove rows with missing values
+  filter(!is.na(dep_delay)) %>%  # remove rows with missing values
   summarise(
     n = n(),
-    n.delayed = sum(DEP_DELAY > 0),
-    mean = mean(DEP_DELAY),
-    median = median(DEP_DELAY),
-    sd = sd(DEP_DELAY),
-    q5 = quantile(DEP_DELAY, .05),
-    q95 = quantile(DEP_DELAY, .95)
+    n.delayed = sum(dep_delay > 0),
+    mean = mean(dep_delay),
+    median = median(dep_delay),
+    sd = sd(dep_delay),
+    q5 = quantile(dep_delay, .05),
+    q95 = quantile(dep_delay, .95)
   )
 ```
 
@@ -176,15 +176,15 @@ Remember, it's easy to save results as a .csv file.
 
 ```{r, eval = F}
 x <- d %>%
-      filter(!is.na(DEP_DELAY)) %>%  # remove rows with missing values
+      filter(!is.na(dep_delay)) %>%  # remove rows with missing values
       summarise(
         n = n(),
-        n.delayed = sum(DEP_DELAY > 0),
-        mean = mean(DEP_DELAY),
-        median = median(DEP_DELAY),
-        sd = sd(DEP_DELAY),
-        q5 = quantile(DEP_DELAY, .05),
-        q95 = quantile(DEP_DELAY, .95)
+        n.delayed = sum(dep_delay > 0),
+        mean = mean(dep_delay),
+        median = median(dep_delay),
+        sd = sd(dep_delay),
+        q5 = quantile(dep_delay, .05),
+        q95 = quantile(dep_delay, .95)
       )
 write.csv(x, "descriptives.csv")
 ```
@@ -194,7 +194,7 @@ write.csv(x, "descriptives.csv")
 Barplot for factors
 
 ```{r}
-my.table <- table(d$CARRIER)
+my.table <- table(d$carrier)
 barplot(my.table)
 ```
 
@@ -203,7 +203,7 @@ barplot(my.table)
 Histogram for numeric variable.
 
 ```{r}
-hist(d$DEP_DELAY)  # Histogram
+hist(d$dep_delay)  # Histogram
 ```
 
 ## Some Simple Plots
@@ -211,7 +211,7 @@ hist(d$DEP_DELAY)  # Histogram
 Boxplot for numeric variable.
 
 ```{r}
-boxplot(d$DEP_DELAY)  # boxplot
+boxplot(d$dep_delay)  # boxplot
 ```
 
 ## Some Simple Plots
@@ -220,9 +220,9 @@ Boxplot for numeric variable.
 
 ```{r}
 d %>%
-  filter(DEP_DELAY > quantile(DEP_DELAY, .2, na.rm = TRUE) &
-         DEP_DELAY < quantile(DEP_DELAY, .8, na.rm = TRUE)) %>%
-  select(DEP_DELAY) %>%
+  filter(dep_delay > quantile(dep_delay, .2, na.rm = TRUE) &
+         dep_delay < quantile(dep_delay, .8, na.rm = TRUE)) %>%
+  select(dep_delay) %>%
   boxplot()
 ```
 
@@ -251,10 +251,10 @@ describe(d)
 Add more arguements to `table()`
 
 ```{r}
-table(d$ORIGIN, d$CARRIER)
+table(d$origin, d$carrier)
 
 d %>%
-  select(ORIGIN, CARRIER) %>%
+  select(origin, carrier) %>%
   table() %>%
   prop.table()
 
@@ -266,8 +266,8 @@ prop.table(my.table)  # Cell proportions
 The dplyr approach can be easily extended to multiple groups with `group_by()`
 
 ```{r}
-d %>% group_by(CARRIER) %>%
-  summarise(n = n(), mean = mean(DEP_DELAY, na.rm = T))
+d %>% group_by(carrier) %>%
+  summarise(n = n(), mean = mean(dep_delay, na.rm = T))
 ```
 
 ## Describing by Group (Factor x Numeric)
@@ -275,7 +275,7 @@ d %>% group_by(CARRIER) %>%
 Another descriptive method is provided by the `psych` package using `describeBy(mydata, group, ...)`
 
 ```{r}
-describeBy(d[, c("DEP_DELAY", "TAXI_OUT")], d$CARRIER)
+describeBy(d[, c("dep_delay", "taxi_out")], d$carrier)
 ```
 
 ## Multivariate Visualisations (*n* Numeric)
@@ -284,6 +284,6 @@ describeBy(d[, c("DEP_DELAY", "TAXI_OUT")], d$CARRIER)
 
 ```{r}
 d %>%
-  select(CRS_DEP_TIME, TAXI_OUT, DEP_DELAY) %>%
+  select(crs_dep_time, taxi_out, dep_delay) %>%
   pairs.panels()
 ```
