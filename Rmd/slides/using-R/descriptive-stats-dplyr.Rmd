@@ -40,13 +40,21 @@ d <- read.csv("data/flight-times.csv")
 head(d)
 ```
 
-# dplyr Grouping and Summarising
+# dplyr Summarising and Grouping
+
+## Summarising Data
+
+To summarise information about a data frame, we can use the dplyr function, `summarise()`
+
+```{r}
+summarise(d, mean = mean(crs_dep_time))
+```
 
 ## Splitting data into groups
 
 Often we're interested in splitting our data into groups.
 
-We do this with the dplyr function, `group_by()`
+If we plan on using `summarise()`, we can do this with the dplyr function, `group_by()`
 
 For example:
 
@@ -57,14 +65,6 @@ by.fn <- group_by(d, origin)
 Other dplyr functions will now treat `by.fn` as multiple data frames: one for each level of the origin factor.
 
 More to come...
-
-## Summarising Data
-
-To summarise information about a data frame, we use the dplyr function, `summarise()`
-
-```{r}
-summarise(d, mean = mean(crs_dep_time))
-```
 
 # Univariate Analysis
 

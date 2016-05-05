@@ -54,7 +54,6 @@ write.csv(x, "data/energy.csv", row.names = F)
 # x$activity <- factor(x$activity)
 # write.csv(x, "data/energy_long.csv", row.names = F)
 
-
 # MIXED ANOVA =============
 
 # Rotary Pursuit Tracking
@@ -63,8 +62,7 @@ x <- read.table("http://www.statsci.org/data/general/tracking.txt", header = TRU
 x$id <- 1:nrow(x)
 x <- x %>% gather(trial, time, Trial1:Trial4)
 x$trial <- factor(x$trial, levels = paste0("Trial", 1:4), labels = 1:4)
-x$activity <- factor(x$activity)
-write.csv(x, "data/energy.csv", row.names = F)
+write.csv(x, "data/tracking.csv", row.names = F)
 
 # CORRELATION AND REGRESSION  ============
 

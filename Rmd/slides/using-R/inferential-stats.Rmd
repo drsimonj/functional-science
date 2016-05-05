@@ -39,7 +39,7 @@ One with a between-subject design
 
 ```{r}
 b <- read.csv("data/planes.csv")
-str(b)
+b
 ```
 
 ## Data sets
@@ -48,7 +48,7 @@ One with a within-subject design.
 
 ```{r}
 w <- read.csv("data/energy.csv")
-str(w)
+w
 ```
 
 ## One Sample t-test
@@ -123,6 +123,28 @@ fit <- aov(Distance ~ Paper, data = d)
 summary(fit)
 ```
 
+## One Way (Between)
+
+```{r}
+# 2. Explore the results
+model.tables(fit, "means")
+```
+
+## One Way (Between)
+
+```{r}
+# 2. Explore the results
+model.tables(fit, "effects")
+```
+
+## One Way (Between)
+
+Quick comparison with `t.test()`, which should give us same result.
+
+```{r}
+t.test(Distance ~ Paper, data = d)
+```
+
 ## Two-or-More Way (Between)
 
 ```{r}
@@ -134,6 +156,20 @@ fit <- aov(distance ~ rod*line*sinker, data = d)
 
 # 2. Explore the results
 summary(fit)
+```
+
+## Two-or-More Way (Between)
+
+```{r}
+# 2. Explore the results
+model.tables(fit, "means")
+```
+
+## Two-or-More Way (Between)
+
+```{r}
+# 2. Explore the results
+model.tables(fit, "effects")
 ```
 
 ## Two-or-More Way (Between)
@@ -152,7 +188,7 @@ interaction.plot(d$line, d$sinker, d$distance)
 
 ## Within Subjects
 
-Apart from a `t.test()`, within-subject analysis in `R` typically requires long data formats.
+Apart from a `t.test()`, within-subject analysis in `R` typically requires long data formats and the observation identifying (e.g., subject id) column to be a factor.
 
 ```{r}
 d <- "data/energy.csv" %>%
@@ -171,6 +207,31 @@ summary(fit)
 ```
 
 ## Mixed
+
+In this data set, participants (`id`) had to track a Box **or** a Circle (`Shape`), four times (`trial`).
+
+```{r}
+d <- "data/tracking.csv" %>%
+  read.csv() %>%
+  mutate(id = factor(id))
+head(d)
+```
+
+## Mixed
+
+```{r}
+# 2x(4) mixed:
+# IV between: Shape
+# IV within:  trial
+# DV:         time
+fit <- aov(time ~ Shape*trial + Error(id / trial), data = d)
+```
+
+## Mixed
+
+```{r}
+summary(fit)
+```
 
 # Correlation
 
