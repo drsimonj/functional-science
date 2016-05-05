@@ -54,7 +54,7 @@ For example:
 by.fn <- group_by(d, ORIGIN)
 ```
 
-Other dplyr functions will now treat `by.fn` as multiple data frames: one for each level of the FL_NUM factor.
+Other dplyr functions will now treat `by.fn` as multiple data frames: one for each level of the ORIGIN factor.
 
 More to come...
 

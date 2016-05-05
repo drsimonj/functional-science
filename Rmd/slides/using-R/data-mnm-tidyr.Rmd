@@ -1,0 +1,82 @@
+---
+title: "Using R: Data Frame tidying with tidyr"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = F, warning = F}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+# tidyr
+
+## What is tidyr?
+
+tidyr is an R package that makes it easy to "tidy" your data frames.
+
+It has a core set of "verbs" (functions) that handle most of our essential needs.
+
+In this session, we'll look at the following:
+
+- `gather()`
+- `separate()`
+- `spread()`
+
+## Getting tidyr
+
+Start by installing tidyr (if you don't have it already), and loading it into your workspace.
+
+```{r, eval = F}
+# Install the package from CRAN (if necessary)
+install.packages("tidyr")
+
+# Load it into your workspace
+library(tidyr)
+```
+```{r, include = F}
+library(tidyr)
+```
+
+## Function Style
+
+The "verbs" of tidyr all share a similar format:
+
+- their first arguement is a data frame.
+- subsequent arguments are specific to the function.
+- they all return a data frame.
+
+When referencing column names, we don't need quotation marks ""
+
+# Time to tidy...
+
+## Gather multiple columns together with `gather()`
+
+Convert multiple columns into two columns: a key and a value.
+
+Useful for going from wide format to long format.
+
+`gather(data, key.name, value.name, columns.to.gather)`
+
+## Gather multiple columns together with `gather()`
+
+```{r}
+d <- read.csv("data/energy_wide.csv")
+d %>% gather(exercise, energy, Running, Walking, Cycling)
+```
+
+## Gather multiple columns together with `gather()`
+
+If you have adjacent columns, you can make life easier with `:`
+
+```{r}
+d <- read.csv("data/energy_wide.csv")
+d %>% gather(exercise, energy, Running:Cycling)
+```
+
+## Separate a single column with `separate()`
+
+
+
+
