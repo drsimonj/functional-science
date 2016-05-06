@@ -184,3 +184,16 @@ d$gender <- factor(d$gender,  # A vector (itself in this case)
                    labels = c("female", "male"))  # Labels to assign
 d[c(1, 14, 670), "gender"]
 ```
+
+## Merging/joining Data Frames
+
+We can merge different data frames containing data for the same observations with `merge()`
+
+```{r}
+df1 <- data.frame(id = c(1, 2), age = c(45, 32))
+df2 <- data.frame(id = c(1, 2), gender = c("f", "m"))
+merge(df1, df2)
+```
+
+
+
