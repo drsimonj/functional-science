@@ -24,6 +24,7 @@ In this session, we'll look at the following:
 - `filter()`
 - `mutate()`
 - `arrange()`
+- `join()`
 - Pipelines with `%>%`
 
 ## Getting dplyr
@@ -161,7 +162,7 @@ Break ties with more arguments.
 head(arrange(d, age, desc(risk)))
 ```
 
-## Combining it all
+## Combining What We Know
 
 ```{r}
 x <- mutate(d, risk.sq = risk^2)
@@ -169,6 +170,18 @@ x <- select(x, gender, age, risk.sq)
 x <- filter(x, age > 80)
 x <- arrange(x, age, risk.sq)
 head(x)
+```
+
+## Join Two Data Sets
+
+We can join data sets with a set of functions of the form `xxx_join(df1, df2, by, ...)`
+
+Similar to `merge()`, but with various advantages.
+
+```{r}
+x <- select(d, subid, active, risk)
+y <- select(d, subid, active, wvcat)
+left_join(x, y)
 ```
 
 # Pipelines
@@ -194,7 +207,7 @@ Help us to streamline our code and make it readable.
 
 In dplyr (and associated packages), we "pipe" variables with `%>%`
 
-The format is `x %>% f(y, ..)`  
+The format is `x %>% f(y, ...)`
 
 ...which implicity becomes `f(x, y, ...)`
 
@@ -237,11 +250,11 @@ d %>%
 The following are equivalent:
 
 ```{r, eval = F}
-d[, c("x", "y", "z")]
+d[, c("x", "y", "z")]  # Base R
 
-select(d, x, y, z)
+select(d, x, y, z)     # dplyr, no piping
 
-d %>% select(x, y, z)
+d %>% select(x, y, z)  # dplyr, with piping
 ```
 
 ## Filtering Rows
@@ -280,6 +293,23 @@ d <- mutate(d, x2 = x^2)
 d <- d %>% mutate(x2 = x^2)
 ```
 
+## Merge/Join data frames
+
+```{r, eval = F}
+df1 <- data.frame(id = c(1, 2), age = c(45, 32))
+df2 <- data.frame(id = c(1, 2), gender = c("f", "m"))
+```
+
+The following are equivalent:
+
+```{r, eval = F}
+merge(df1, df2)
+
+left_join(df1, df2)
+
+df1 %>% left_join(df2)
+```
+
 ## Combinations
 
 The following are equivalent:
@@ -295,7 +325,7 @@ d <- filter(d, x == "a" & y < 100)
 d <- mutate(d, x2 = x^2)
 ```
 
-Continues of next slide...
+Continues on next slide...
 
 ## Combinations
 

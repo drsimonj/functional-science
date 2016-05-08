@@ -195,5 +195,4 @@ df2 <- data.frame(id = c(1, 2), gender = c("f", "m"))
 merge(df1, df2)
 ```
 
-
-
+Note - LOTS of variants of this.

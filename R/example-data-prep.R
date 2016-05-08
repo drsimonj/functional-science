@@ -17,7 +17,6 @@ library(dplyr)
 # in January, 2016
 x <- read.csv("data/flight-times.csv")
 names(x) <- x %>% names %>% tolower
-x <- x %>% mutate(flight = paste(carrier, fl_num, sep = "-"))
 write.csv(x, "data/flight-times.csv", row.names = F)
 
 # BETWEEN-SUBJECTS ANOVA ========
