@@ -261,6 +261,16 @@ d %>%
 prop.table(my.table)  # Cell proportions
 ```
 
+## Cross-tabs (Factor x Factor)
+
+A dplyr solution: `group_by(factor1, factor2, ...)` and then `summarise()` with `n()`.
+
+```{r}
+d %>%
+  group_by(origin, carrier) %>%
+  summarise(n = n())
+```
+
 ## Describing by Group (Factor x Numeric)
 
 The dplyr approach can be easily extended to multiple groups with `group_by()`

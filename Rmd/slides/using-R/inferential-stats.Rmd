@@ -14,19 +14,21 @@ opts_knit$set(root.dir = '../../../')
 
 ## Packages
 
-We'll be using the tidyr and dplyr packages.
+We'll be using the tidyr, dplyr, and psych packages.
 
 ```{r, eval = F}
 # Install the package from CRAN (if necessary)
-install.packages(c("dplyr", "tidyr"))
+install.packages(c("dplyr", "tidyr", "psych"))
 
 # Attach to your workspace
 library(dplyr)
 library(tidyr)
+library(psych)
 ```
 ```{r, include = F}
 library(dplyr)
 library(tidyr)
+library(psych)
 ```
 
 # t.test()
@@ -235,18 +237,264 @@ summary(fit)
 
 # Correlation
 
-# Regression - lm()
+## Data set
+
+```{r}
+d <- read.csv("data/physical.csv")
+head(d)
+```
+
+## Base R
+
+R has `cor()`
+
+```{r}
+cor(d)
+```
+
+## Base R
+
+```{r}
+d %>% cor %>% round(2)
+```
+
+## With `psych`
+
+The `psych` package has `corr.test()`. Note, unlike `cor()`, this uses pairwise by default. It also gives us sample sizes and p values as separate matrices.
+
+```{r}
+corr.test(d)
+```
+
+## Home-made Function
+
+Let's take a look at a homemade function that makes use of `corr.test()`...
+
+```{r}
+source("R/stats-functions.R")
+starMatrix
+```
+
+## Home-made Function
+
+```{r}
+d %>% starMatrix()
+```
+
+## Home-made Function
+
+Remember, it's easy to export as a table for formatting...
+
+```{r, eval = F}
+d %>% starMatrix() %>% write.csv("rMatrix.csv")
+```
+
+## Basic Plots
+
+Scatter plot with 2 variables:
+
+```{r}
+d %>% select(Height, Mass) %>% plot()
+```
+
+## Basic Plots
+
+Recall `pairs.panels()` from `psych`:
+
+```{r}
+d %>% pairs.panels()
+```
+
+# Linear Models/Regression - lm()
 
 ## Simple Linear Regression
 
+Simple linear regression is a model with one predictor. So...
+
+```{r}
+fit <- lm(Mass ~ Height, data = d)
+summary(fit)
+```
+
+## Basic Plots
+
+Can add a regression line to a scatter plot with `abline()`
+
+```{r}
+fit <- lm(Mass ~ Height, data = d)
+d %>% select(Height, Mass) %>% plot()
+abline(fit)
+```
+
+## Basic Plots
+
+Can interactively `identify()` points by row number...
+
+```{r, eval = F}
+d %>% select(Height, Mass) %>% plot()
+d %>% select(Height, Mass) %>% identify()
+```
+
+Now click near the points to be identified, and hit escape when done.
+
 ## Multiple Regression
+
+Multiple regression has multiple predictors...
+
+```{r}
+fit <- lm(Mass ~ Height + Bicep, data = d)
+summary(fit)
+```
+
+## Multiple Regression
+
+What if we wanted to add an interaction?
+
+Well, first thing we need to do is center our predictors
+
+```{r}
+d <- d %>%
+  mutate(Height.c = Height - mean(Height),
+         Bicep.c  = Bicep - mean(Bicep))
+d %>% select(Height, Bicep, Height.c, Bicep.c) %>% describe()
+```
+
+## Multiple Regression
+
+Now we can add an interaction term.
+
+```{r}
+fit <- lm(Mass ~ Height.c + Bicep.c + Height.c:Bicep.c, data = d)
+summary(fit)
+```
 
 ## Hierarchical Regression
 
-## Logistic Regression
+In hierarchical models, we want to examine improvements to our model as certain variables are added. For example, does the interaction term improve our model fit?
+
+This is done by creating 2 (or more) nested models and comparing with `anova()`. Yes, this is confusing.
+
+```{r}
+fit1 <- lm(Mass ~ Height.c + Bicep.c, data = d)
+fit2 <- lm(Mass ~ Height.c + Bicep.c + Height.c:Bicep.c, data = d)
+anova(fit1, fit2)
+```
+
+## Predicted and Residuals
+
+For any model, we can obtain the predicted and residual values with two functions:
+
+```{r}
+fit <- lm(Mass ~ Height + Bicep, data = d)
+pred <- predict(fit)
+res  <- residuals(fit)
+data.frame(predicted = pred, residual = res) %>% describe()
+```
+
+## Predicted and Residuals
+
+```{r}
+plot(pred, res)
+```
 
 ## Standardized Coefficients
 
+For whatever model, if you're after the standardised coefficients ($\beta$), then attach the `lm.beta` package to your workspace.
 
+```{r, eval = F}
+# Install the package from CRAN (if necessary)
+install.packages("lm.beta")
 
+# Attach to your workspace
+library(lm.beta)
+```
+```{r, include = F}
+library(lm.beta)
+```
 
+## Standardized Coefficients
+
+Now, we use a fit `lm()` model as an arugment to `lm.beta()`, and call `summary()`.
+
+```{r}
+fit <- lm(Mass ~ Height + Bicep, data = d)
+s.fit <- lm.beta(fit)
+summary(s.fit)
+```
+
+## Standardized Coefficients
+
+dplyr style:
+
+```{r}
+d %>%
+  lm(Mass ~ Height + Bicep, data = .) %>%
+  lm.beta() %>%
+  summary()
+```
+
+## Checking Assumptions
+
+For any model, we can plot information to check that assumptions are satisfied:
+
+```{r, eval = F}
+fit <- lm(Mass ~ Height + Bicep, data = d)
+plot(fit)
+```
+
+Use the `Enter` key to progress through plots.
+
+# Generalized Linear Models - glm()
+
+## `glm()` Format
+
+```{r, eval = F}
+glm(formula,
+    data = data,
+    family = familytype(link = linkfunction))
+```
+
+## `glm()` Format
+
+Family	                  Default Link Function
+-------------------       ------------------------------------------------
+binomial	                (link = "logit")
+gaussian	                (link = "identity")
+Gamma	                    (link = "inverse")
+inverse.gaussian	        (link = "1/mu^2")
+poisson	                  (link = "log")
+quasi	                    (link = "identity", variance = "constant")
+quasibinomial	            (link = "logit")
+quasipoisson	            (link = "log")
+
+## Logistic Regression
+
+As an example, we'll try logisitic regression, which uses the binomial link function when predicting a binary variable.
+
+For example, say we have a variable indicating whether a person is in a healthy BMI range:
+
+```{r}
+d <- read.csv("data/physical.csv") %>%
+     mutate(m2 = (Height / 100) ^ 2,
+            BMI = Mass / m2,
+            healthy = BMI > 18.5 & BMI < 24.9)
+```
+
+Healthy is a boolean variable, treating TRUE as 1 and FALSE as 0.
+
+## Logistic Regression
+
+Can the size of certain body parts predict whether a person is within the healthy BMI range?
+
+```{r}
+fit <- glm(healthy ~ Bicep + Head, data = d, family = binomial())
+summary(fit)
+```
+
+## Logistic Regression
+
+Take a quick look:
+
+```{r}
+d %>% select(Bicep, healthy) %>% plot()
+```

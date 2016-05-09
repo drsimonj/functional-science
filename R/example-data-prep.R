@@ -68,6 +68,7 @@ write.csv(x, "data/tracking.csv", row.names = F)
 # Mass and Physical Measurements for Male Subjects
 # http://www.statsci.org/data/oz/physical.html
 x <- read.table("http://www.statsci.org/data/oz/physical.txt", header = TRUE, sep = "\t")
+write.csv(x, "data/physical.csv", row.names = F)
 
 # 
 # 
