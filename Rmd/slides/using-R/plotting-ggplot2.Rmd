@@ -1,0 +1,140 @@
+---
+title: "Using R: Plotting with ggplot2"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = F, warning = F}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+# Setup
+
+## Packages
+
+We'll be using the ggplot2, tidyr, and dplyr packages.
+
+```{r, eval = F}
+# Install the package from CRAN (if necessary)
+install.packages(c("dplyr", "tidyr", "ggplot2"))
+
+# Attach to your workspace
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+```{r, include = F}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+# ggplot2
+
+## What is ggplot2 and why use it?
+
+In general, a good reason to use R is its strong graphics capabilities.
+
+`ggplot2` is "a plotting system for R, based on the grammar of graphics".
+
+It enables you to produce professional looking, publishable quality, and highly modifiable, graphs.
+
+## ggplot2 Basics
+
+In general, ggplot2 builds a plot using three components:
+
+- A data frame
+- geoms, which are the visual elements that represent your data
+- A coordinate system
+
+## ggplot2 Warning
+
+`ggplot2` is incredibly powerful, and remember what comes with great power!
+
+You will continue searching for solutions for a long time, perhaps forever.
+
+But the key is to understand the structure, and the rest will be fine.
+
+## ggplot2 Cheat Sheet
+
+There's a great cheat sheet online.
+
+Don't hesitate to print it out and stick it on your wall!
+
+![]("Rmd/img/ggplot-cheat-sheet-on-wall.jpg")  ## NOT WORKING
+
+# Graphs with ggplot2
+
+## Basic Structure
+
+Let's read in a data set:
+
+```{r}
+d <- read.csv("data/flight-times.csv")
+head(d)
+```
+
+## Basic Structure
+
+We start to build a graph with `ggplot(data.frame, aes(variables, ...))`
+
+```{r, eval = F}
+ggplot(d, aes(carrier))
+```
+
+This just sets up our data. Next we need to add geoms.
+
+## Basic Structure
+
+We now have the data prepared.
+
+Next, using `+`, we need to add layers and elements.
+
+For example, we should add geom layer (function) that will represent our data as a visual element.
+
+## Basic Structure
+
+```{r}
+ggplot(d, aes(carrier)) + geom_bar()
+```
+
+## Basic Structure
+
+```{r, warning = F}
+ggplot(d, aes(dep_delay)) +
+  geom_density()
+```
+
+## Basic Structure
+
+Extending to more variables is easy:
+
+```{r, warning = F}
+ggplot(d, aes(x = dep_time, y = dep_delay)) + geom_point()
+```
+
+
+
+
+
+
+
+
+
+
+## Basic Structure
+
+```{r, warning = F, message = F}
+ggplot(d, aes(dep_delay)) +
+  geom_histogram()
+```
+
+## Basic Structure
+
+```{r, message = F}
+d %>% filter(dep_delay < quantile(dep_delay, .95, na.rm = TRUE)) %>%
+  ggplot(aes(dep_delay)) + geom_histogram()
+```
+
