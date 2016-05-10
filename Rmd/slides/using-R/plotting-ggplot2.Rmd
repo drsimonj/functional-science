@@ -55,15 +55,13 @@ In general, ggplot2 builds a plot using three components:
 
 You will continue searching for solutions for a long time, perhaps forever.
 
-But the key is to understand the structure, and the rest will be fine.
+But the key is to understand the structure, and the rest will follow.
 
 ## ggplot2 Cheat Sheet
 
 There's a great cheat sheet online.
 
 Don't hesitate to print it out and stick it on your wall!
-
-![]("Rmd/img/ggplot-cheat-sheet-on-wall.jpg")  ## NOT WORKING
 
 # Graphs with ggplot2
 
@@ -94,20 +92,22 @@ Next, using `+`, we need to add layers and elements.
 
 For example, we should add geom layer (function) that will represent our data as a visual element.
 
+Note that geoms create a default coordinate system.
+
 ## Basic Structure
 
 ```{r}
 ggplot(d, aes(carrier)) + geom_bar()
 ```
 
-## Basic Structure
+## The Basics
 
 ```{r, warning = F}
 ggplot(d, aes(dep_delay)) +
   geom_density()
 ```
 
-## Basic Structure
+## The Basics
 
 Extending to more variables is easy:
 
@@ -115,26 +115,323 @@ Extending to more variables is easy:
 ggplot(d, aes(x = dep_time, y = dep_delay)) + geom_point()
 ```
 
+## The Basics
 
+You can also save the graph as a variable and grow it.
 
+```{r, warning = F}
+p <- ggplot(d, aes(x = dep_time, y = dep_delay))
+p <- p + geom_point()
+p
+```
 
+# Geoms - One Variable
 
-
-
-
-
-
-## Basic Structure
+## Bar (for Discrete variables)
 
 ```{r, warning = F, message = F}
-ggplot(d, aes(dep_delay)) +
-  geom_histogram()
+ggplot(d, aes(carrier)) + geom_bar()
 ```
 
-## Basic Structure
+## Density
 
-```{r, message = F}
+```{r, warning = F, message = F}
+ggplot(d, aes(dep_delay)) + geom_density()
+```
+
+## Histogram
+
+```{r, warning = F, message = F}
+ggplot(d, aes(dep_delay)) + geom_histogram()
+```
+
+# Geoms - Two Variables
+
+## Jitter (Discrete X, Discrete Y)
+
+```{r, warning = F, message = F}
+ggplot(d, aes(carrier, origin)) + geom_jitter()
+```
+
+## Bar (Discrete X, Continuous Y)
+
+```{r, warning = F, message = F}
+d %>% group_by(carrier) %>%
+  summarise(mean.delay = mean(dep_delay, na.rm = T)) %>%
+  ggplot(aes(carrier, mean.delay)) + geom_bar(stat = "identity")
+```
+
+## Boxplot (Discrete X, Continuous Y)
+
+```{r, warning = F, message = F}
+ggplot(d, aes(carrier, dep_delay)) + geom_boxplot()
+```
+
+## Boxplot (Discrete X, Continuous Y)
+
+```{r, warning = F, message = F}
 d %>% filter(dep_delay < quantile(dep_delay, .95, na.rm = TRUE)) %>%
-  ggplot(aes(dep_delay)) + geom_histogram()
+  ggplot(aes(carrier, dep_delay)) + geom_boxplot()
 ```
 
+## Violin (Discrete X, Continuous Y)
+
+```{r, warning = F, message = F}
+d %>% filter(dep_delay < quantile(dep_delay, .95, na.rm = TRUE)) %>%
+  ggplot(aes(carrier, dep_delay)) + geom_violin()
+```
+
+## Points (Continuous X, Continuous Y)
+
+```{r, warning = F, message = F}
+ggplot(d, aes(dep_time, dep_delay)) + geom_point()
+```
+
+## Smoothed Conditional Mean (Continuous X, Continuous Y)
+
+```{r, warning = F, message = F}
+ggplot(d, aes(dep_time, dep_delay)) + geom_smooth()
+```
+
+## Smoothed Conditional Mean (Continuous X, Continuous Y)
+
+```{r, warning = F, message = F}
+ggplot(d, aes(dep_time, dep_delay)) + geom_smooth(method = "lm")
+```
+
+## Points and Regression Line (Continuous X, Continuous Y)
+
+```{r, warning = F, message = F}
+ggplot(d, aes(dep_time, dep_delay)) + geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## 2D Bins (Continuous Bivariate)
+
+```{r, warning = F, message = F}
+ggplot(d, aes(day_of_month, taxi_out)) + geom_bin2d()
+```
+
+## 2D Density (Continuous Bivariate)
+
+```{r, warning = F, message = F}
+ggplot(d, aes(day_of_month, taxi_out)) + geom_density2d()
+```
+
+## Line (Continuous Function)
+
+```{r, warning = F, message = F}
+d %>% group_by(day_of_month) %>% summarise(n = n()) %>%
+ggplot(aes(day_of_month, n)) + geom_line()
+```
+
+## Error Bars
+
+```{r, warning = F, message = F}
+x <- d %>% group_by(carrier) %>%
+        summarise(n    = n(),
+                  mean = mean(dep_delay, na.rm = TRUE),
+                  se   = sd(dep_delay, na.rm = TRUE)/sqrt(n))
+```
+
+## Error Bars
+
+```{r, warning = F, message = F}
+ggplot(x, aes(carrier, mean, ymin = mean - se, ymax = mean + se)) +
+    geom_errorbar()
+```
+
+## Bars with Error Bars
+
+```{r, warning = F, message = F}
+ggplot(x, aes(carrier, mean, ymin = mean - se, ymax = mean + se)) +
+    geom_bar(stat = "identity") + geom_errorbar()
+```
+
+## Bars with Error Bars
+
+```{r, warning = F, message = F}
+ggplot(x, aes(carrier, mean, ymin = mean - se, ymax = mean + se)) +
+    geom_bar(stat = "identity") + geom_errorbar(width = .25)
+```
+
+## Text
+
+```{r, warning = F, message = F}
+ggplot(x, aes(carrier, mean, label = carrier)) +
+  geom_text()
+```
+
+## Text
+
+```{r, warning = F, message = F}
+ggplot(x, aes(carrier, mean, label = carrier)) +
+  geom_bar(stat = "identity") +
+  geom_text()
+```
+
+## Text
+
+```{r, warning = F, message = F}
+ggplot(x, aes(carrier, mean, label = carrier)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(vjust = ifelse(sign(mean) > 0, -1, 2)))
+```
+
+## Text
+
+```{r, warning = F, message = F}
+x <- x %>% mutate(ci.upper = mean + se * 1.96,
+                  ci.lower = mean - se * 1.96,
+                  zero = ci.lower < 0 & ci.upper > 0,
+                  flag = ifelse(zero, "", "*"))
+```
+
+## Text
+
+```{r, warning = F, message = F}
+ggplot(x, aes(carrier, mean, label = flag)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(vjust = ifelse(sign(mean) > 0, -1, 2)))
+```
+
+# Three Variables
+
+## Scales
+
+Scales apply an aesthetic to geoms.
+
+The main scales you'll work with are:
+
+- shape
+- size
+- fill
+- color
+
+## Shape (A Third Discrete)
+
+```{r, warning = F, message = F}
+d %>% filter(carrier %in% c("AA", "B6", "DL") & dep_delay < 15)
+ggplot(d, aes(dep_delay, arr_delay, shape = carrier)) + geom_point()
+```
+
+## Size (A Third Continuous)
+
+```{r, warning = F, message = F}
+read.csv("data/physical.csv") %>%
+  ggplot(aes(Thigh, Height, size = Mass)) + geom_point()
+```
+
+## Fill  (A Third Discrete)
+
+```{r, warning = F, message = F}
+d <- read.csv("data/planes.csv")
+d %>% group_by(Paper, Angle) %>%
+  summarise(Distance = mean(Distance)) %>%
+  ggplot(aes(Paper, Distance, fill = Angle)) +
+  geom_bar(stat = "identity")
+```
+
+## Fill (A Third Discrete)
+
+```{r, warning = F, message = F}
+d %>% group_by(Paper, Angle) %>%
+  summarise(Distance = mean(Distance)) %>%
+  ggplot(aes(Paper, Distance, fill = Angle)) +
+  geom_bar(stat = "identity", position = "dodge")
+```
+
+## Colour
+
+```{r, warning = F, message = F}
+read.csv("data/physical.csv") %>%
+  ggplot(aes(Thigh, Height, size = Mass, colour = Mass)) +
+  geom_point()
+```
+
+# Additional Features
+
+## Labels
+
+The following change the major labels on your graphs:
+
+- `+ ggtitle("Graph Title")`
+- `+ xlab("X axis label")`
+- `+ ylab("Y axis label")`
+- `+ labs(title = "", x = "", y = "")`
+
+## Faceting
+
+Faceting allows you to create panels of subplots plots based on a discrete variable.
+
+```{r, warning = F, message = F}
+read.csv("data/planes.csv") %>%
+  group_by(Paper, Angle) %>%
+  summarise(Distance = mean(Distance)) %>%
+  ggplot(aes(Paper, Distance)) + geom_bar(stat= "identity") +
+  facet_grid(. ~ Angle)
+```
+
+## Faceting
+
+```{r, warning = F, message = F}
+read.csv("data/planes.csv") %>%
+  group_by(Paper, Angle) %>%
+  summarise(Distance = mean(Distance)) %>%
+  ggplot(aes(Paper, Distance)) + geom_bar(stat= "identity") +
+  facet_grid(Angle ~ .)
+```
+
+## Faceting
+
+```{r, warning = F, message = F}
+read.csv("data/planes.csv") %>%
+  group_by(Paper, Angle, Design) %>%
+  summarise(Distance = mean(Distance)) %>%
+  ggplot(aes(Paper, Distance)) + geom_bar(stat = "identity") +
+  facet_grid(Angle ~ Design)
+```
+
+## Themes
+
+Themes adjust overal aesthetic elements.
+
+```{r}
+read.csv("data/flight-times.csv") %>% 
+  ggplot(aes(carrier)) + geom_bar() +
+  theme_classic()
+```
+
+## Saving
+
+`ggsave()` saves the last plot you created.
+
+```{r, eval = F}
+ggsave("plot.png", width = 5, height = 5)
+```
+
+# Putting it Together
+
+## Challenge
+
+```{r}
+d <- read.csv("data/flight-times.csv")
+```
+Using data for carriers "AA" and "DL", flights leaving after 5AM and departing between 0 and 20 minutes late, create a scatter plot of the departure delay (`dep_delay`) against the scheduled departure time (`crs_dep_time`). Add a loess line, and colour the points by `carrier`. Make sure appropriate axis labels are used, and a classic theme. Save the graph as a 5 x 3 jpeg file.
+
+Bonus: use a single pipeline to create the graph.
+
+## Challenge
+
+```{r, eval = F}
+d %>% filter(carrier %in% c("AA", "DL") &
+               crs_dep_time > 500 &
+               dep_delay > 0 & dep_delay < 20) %>%
+  ggplot(aes(crs_dep_time, dep_delay, colour = carrier)) +
+    geom_point() +
+    geom_smooth() +
+    labs(x = "Scheduled Departure Time",
+         y = "Departure Delay") +
+    theme_classic()
+ggsave("plot.png", width = 5, height = 3)
+```
