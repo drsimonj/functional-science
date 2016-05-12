@@ -95,6 +95,14 @@ d %>%
   summarise(n = n(), p = n / nrow(d))
 ```
 
+## Test Yourself
+
+Summarise the frequency and proportions of each destination.
+
+Arrange the results from most to least frequent.
+
+Tip: use dplyr functions.
+
 ## Central Tendency
 
 Many base functions for describing distribution. Many require `na.rm = TRUE` to remove missing values.
@@ -114,6 +122,10 @@ mean(d$dep_delay, na.rm = TRUE)  # mean
 median(d$dep_delay, na.rm = TRUE)  # Median
 ```
 
+## Test Yourself
+
+Compute the mean and median of the amount of time spent taxiing ("taxi_out").
+
 ## Position
 
 ```{r}
@@ -126,8 +138,12 @@ max(d$dep_delay, na.rm = TRUE)  # maximum/largest value
 ```{r}
 quantile(d$dep_delay, na.rm = TRUE)  # Quantiles
 quantile(d$dep_delay, .95, na.rm = TRUE)
-quantile(d$dep_delay, c(.025, .975), na.rm = TRUE)
+quantile(d$dep_delay, c(.20, .80), na.rm = TRUE)
 ```
+
+## Test yourself
+
+Find the values that encapsulate 95% of the departure delay times closest to the median.
 
 ## Dispersion
 
@@ -226,7 +242,7 @@ d %>%
   boxplot()
 ```
 
-## Other Quick Variable Summaries
+# Other Quick Variable Summaries
 
 ## Overall Summmaries
 

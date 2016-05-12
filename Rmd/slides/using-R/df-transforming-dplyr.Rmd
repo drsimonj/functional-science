@@ -1,5 +1,5 @@
 ---
-title: "Using R: Data Frame M&Ms with dplyr"
+title: "Using R: Transforming Data Frames with `dplyr`"
 author: "Simon A Jackson"
 date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
 output: ioslides_presentation
@@ -14,7 +14,7 @@ opts_knit$set(root.dir = '../../../')
 
 ## What is dplyr?
 
-dplyr is an R package that makes data frame M&Ms easy, simple, clean and efficient.
+dplyr is an R package that makes data frame transformations easy, simple, clean and efficient.
 
 It has a core set of "verbs" (functions) that handle most of our essential needs.
 
@@ -23,6 +23,7 @@ In this session, we'll look at the following:
 - `select()`
 - `filter()`
 - `mutate()`
+- `rename()`
 - `arrange()`
 - `join()`
 - Pipelines with `%>%`
@@ -57,7 +58,7 @@ head(d)
 
 The "verbs" of dplyr all share a similar format:
 
-- their first arguement is a data frame.
+- their first argument is a data frame.
 - subsequent arguments are specific to the function.
 - they all return a data frame.
 
@@ -89,6 +90,11 @@ x <- select(d, risk, gender, age)
 head(x)
 ```
 
+
+## Test Yourself
+
+Create a data frame that has subject id ("subid"), risk and gender.
+
 ## How to Filter Rows
 
 With dplyr, we can select certain rows using `filter()`
@@ -107,6 +113,10 @@ x <- filter(d, risk > 90 & age == 20)
 head(x)
 ```
 
+## Test Yourself
+
+Filter rows to include the ratings made by females for only the activity ("active") of investing in gold ("GOLD").
+
 ## Create New Variables
 
 New variables can be created with `mutate()`
@@ -118,7 +128,7 @@ head(x)
 
 ## Create New Variables
 
-We can create, repalce, and remove multiple variables at once!
+We can create, replace, and remove multiple variables at once!
 
 ```{r}
 x <- mutate(d, risk.sq = risk^2)
@@ -137,6 +147,12 @@ Aside, we can rename columns with `rename()`
 x <- rename(d, sex = gender, world.view = wvcat)
 head(x)
 ```
+
+## Test Yourself
+
+Create a new boolean variable called "risky", that is TRUE if someone gave a risk rating higher than 50.
+
+Rename the "subid" column to "id"
 
 ## Arrange Rows
 
@@ -179,6 +195,22 @@ We can join data sets with a set of functions of the form `xxx_join(df1, df2, by
 Similar to `merge()`, but with various advantages.
 
 ```{r}
+df1 <- data.frame(id = c(1, 2), age = c(45, 32))
+df2 <- data.frame(id = c(1, 2), gender = c("f", "m"))
+left_join(df1, df2)
+```
+
+## Test Yourself
+
+From the risk data set, use `select` to create one data frame with "risk", and another with "wvcat".
+
+Include whatever identiying columns you need in both.
+
+Join them using `left_join()`
+
+## Test Yourself Answer
+
+```{r}
 x <- select(d, subid, active, risk)
 y <- select(d, subid, active, wvcat)
 left_join(x, y)
@@ -217,6 +249,10 @@ The format is `x %>% f(y, ...)`
 d %>% head()
 ```
 
+## Test Yourself
+
+Investigate the internal structure of `d` without a pipeline, and then with a pipeline.
+
 ## Examples
 
 ```{r}
@@ -236,6 +272,29 @@ d %>%
 Trick: read it aloud as "then".
 
 ```{r}
+d %>%
+  mutate(risk.sq = risk^2) %>%
+  select(gender, age, risk.sq) %>%
+  filter(age > 80) %>%
+  arrange(age, risk.sq)
+```
+
+## Examples
+
+```{r, eval = F}
+arrange(
+  filter(
+    select(
+      mutate(d, risk.sq = risk^2),
+      gender, age, risk.sq
+    ),
+    age > 80
+  ),
+  age, risk.sq
+)
+
+# Same as
+
 d %>%
   mutate(risk.sq = risk^2) %>%
   select(gender, age, risk.sq) %>%
@@ -280,6 +339,15 @@ filter(d, x == "a" & y < 100)
 
 d %>% filter(x == "a" & y < 100)
 ```
+
+
+## Test Yourself
+
+Create a new data frame column using:
+
+1. Base R
+2. dplyr (no piping)
+3. dplyr with piping
 
 ## Create New Variables
 
@@ -347,3 +415,11 @@ d <- d %>%
   mutate(x2 = x^2)
 ```
 
+## Test yourself
+
+In a single pipeline:
+
+- Import the risk data set.
+- Convert the gender column into a factor
+- Filter rows to retain people aged 30 to 40
+- Save the results as `d`

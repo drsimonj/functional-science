@@ -28,6 +28,7 @@ You'll typically work with three types of data objects, and one for missing valu
 ```{r, eval = F}
 "Hello"
 "I'm a character object in R"
+"100"
 ```
 
 ## Main Types of Objects
@@ -48,7 +49,7 @@ NA
 
 ## Setting Variables
 
-You’ll start wanting to save objects as variables. This is done using `<-`
+You’ll start wanting to save objects as variables. This is done using `variable.name <- value`
 
 You can see your variables in the Environment Tab of the RStudio Panel.
 
@@ -57,6 +58,17 @@ x <- 2
 x
 y <- x + 3
 y
+```
+
+## Test Yourself
+
+What is the value of `x`? Run the commands to check that you're right.
+
+```{r, eval = F}
+x <- 3
+x <- x *
+     5
+x
 ```
 
 ## Types of Variables
@@ -91,9 +103,16 @@ d <- data.frame(sex, age, height)
 d
 ```
 
+## Test Yourself
+
+Create a data frame with two columns:
+
+- numeric column called `age` with three people aged 10, 15 and 20.
+- boolean column called `teen`, indicating whether person is a teenager or not.
+
 # Functions
 
-The vocabulary of R
+The verbs of R
 
 ## What are Functions?
 
@@ -124,7 +143,7 @@ There are lots of functions already in R.
 Try these for yourself:
 
 ```{r, eval = F}
-v <- c(5, 10, 15,20)
+v <- c(5, 10, 15, 20)
 length(v)
 sd(v)
 sum(v)
@@ -209,3 +228,10 @@ write.csv(m, file = "myMatrix.csv")
 ```
 
 Of course, other options exist.
+
+## Test Yourself
+
+Create a new folder called "output".
+
+Create a data frame and write is as a .csv file into the "output" folder.
+

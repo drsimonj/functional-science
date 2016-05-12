@@ -1,5 +1,5 @@
 ---
-title: "Using R: Data Frame M&Ms"
+title: "Using R: Transforming Data Frames"
 author: "Simon A Jackson"
 date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
 output: ioslides_presentation
@@ -10,7 +10,7 @@ require(knitr, quietly = TRUE)
 opts_knit$set(root.dir = '../../../')
 ```
 
-# M&Ms: Management and Manipulations
+# Transformations
 
 ## Our Data Set
 
@@ -73,6 +73,10 @@ col.vec <- c("subid", "gender", "age")  # Columns to select
 d[row.vec, col.vec]
 ```
 
+## Test Yourself
+
+Subset d to show rows 99, 250, and 340, and columns "subid" and "risk".
+
 ## Conditionals
 
 Selecting rows based on conditions involves two steps (though they can be combined into one line of code).
@@ -83,15 +87,15 @@ Selecting rows based on conditions involves two steps (though they can be combin
 ## Conditional Row Selection
 
 Step 1 - creating a boolean vector corresponding to the rows using operators and functions like  
-`== != < > <= >= & | is.na() ! %in%`
+`== != < > <= >=  is.na() ! %in%  & |`
 
 For example, try:
 
 ```{r, eval = F}
-d$risk > 80  # All rows where risk is grater than 80
+d$risk > 80  # All rows where risk is greater than 80
 d$subid == 15  # All rows where the subject id is 15
-d$risk <= 20 & d$ethnic != 1  # risk less than or equal to 20 AND
-                              # ethnicity not equal to 1
+d$risk <= 20 & d$wvcat != 1  # risk less than or equal to 20 AND
+                              # wvcat not equal to 1
 d$risk < 20 | d$risk > 90  # risk less than 20 OR greater than 90
 ```
 
@@ -122,14 +126,14 @@ d[row.vec, "risk"]
 
 Subset the data to get all rows with a risk rating of less than 20, OR greater than or equal to 90, but NOT 100.
 
-## The Answer
+## Answer to Part 1
 
 ```{r}
 row.vec <- d$risk < 20 | d$risk >= 90 & d$risk != 100
 hist(d[row.vec, "risk"])  # Plot a Histogram of risk column
 ```
 
-# Manipulating Data
+# Transforming Data
 
 ## Changing data in R
 
@@ -174,6 +178,14 @@ d$risk2 <- d$risk^2  # risk squared
 head(d)
 ```
 
+## Test yourself
+
+Create the following columns:
+
+- Risk squared
+- Age squared
+- Risk squared divided by age squared
+
 ## Converting to factor
 
 Convert to a factor with `factor()`, select your levels and give labels if needed. Be sure to check the "ordering".
@@ -184,6 +196,17 @@ d$gender <- factor(d$gender,  # A vector (itself in this case)
                    labels = c("female", "male"))  # Labels to assign
 d[c(1, 14, 670), "gender"]
 ```
+
+## Test Yourself
+
+Convert World View Category (wvcat) into a factor. Levels/labels are:
+
+ Level   Label
+-------  -------------
+ 0       Unclassifiable
+ 1       Individualist 
+ 2       Hierarchicalist
+ 3       Egalitarian
 
 ## Merging/joining Data Frames
 
@@ -196,3 +219,13 @@ merge(df1, df2)
 ```
 
 Note - LOTS of variants of this.
+
+## Test Yourself
+
+Create three data frames.
+
+In each, have three people identified by an id column.
+
+In the first, add a column for age, for the second, add gender, for the third, add IQ.
+
+Merge the three data frames into a single data frame.

@@ -259,6 +259,11 @@ library(psych)
 
 You can see installed and loaded packages in the *Packages* tab of the RStudio panel.
 
+## Test Yourself
+
+Install Hadley William's `dplyr` package and attach it to your session.
+
+
 ## Getting help
 
 View all supplied documentation with `help.start()`

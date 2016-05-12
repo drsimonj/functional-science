@@ -60,7 +60,7 @@ library(dplyr)
 
 Just like functions in `dplyr`, the "verbs" of tidyr all share a similar format:
 
-- their first arguement is a data frame.
+- their first argument is a data frame.
 - subsequent arguments are specific to the function.
 - they all return a data frame.
 
@@ -83,7 +83,7 @@ head(d)
 Say we wanted to combine `carrier` and `fl_num` to get a single `flight` name variable.
 
 ```{r}
-d <- d %>% select(carrier, fl_num)
+d <- d %>% select(carrier, fl_num, origin, dest)
 head(d)
 ```
 
@@ -92,18 +92,21 @@ head(d)
 Say we wanted to combine `carrier` and `fl_num` to get a single `flight` name variable.
 
 ```{r}
-d %>% unite(flight, carrier, fl_num) %>% head
+d %>% unite(flight, carrier, fl_num) %>% head()
 ```
-
 
 ## Combine two variables into one with `unite()`
 
-Can use the `sep` argument to change the combination character.
+Can use the `sep` argument to change the separating character.
 
 ```{r}
 d %>% unite(flight, carrier, fl_num, sep = "") %>% head(2)
 d %>% unite(flight, carrier, fl_num, sep = "-") %>% head(2)
 ```
+
+## Test Yourself
+
+Unite the origin and destination ("dest") columns into a new variable called `path`.
 
 ## Separate a single column with `separate()`
 
@@ -121,6 +124,12 @@ d %>%
   separate(flight, into = c("carrier", "flight_num"), sep = "_") %>%
   head()
 ```
+
+## Test Yourself
+
+Unite the origin and destination ("dest") columns into a new variable called `path`.
+
+Then separate it back to it's original form. 
 
 ## Gather multiple columns together with `gather()`
 
