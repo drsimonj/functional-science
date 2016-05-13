@@ -68,6 +68,14 @@ More to come...
 
 # Univariate Analysis
 
+## Function Format
+
+Most functions that help us to describe a univariate distribution take a vector of values (our variable) as the first arguement.
+
+Subsequent arguments are specific to the function.
+
+Commonly, they do NOT accept missing values. To override this, `na.rm = TRUE` must be added as an arguement.
+
 ## Frequencies and Proportions
 
 ```{r}
@@ -143,7 +151,7 @@ quantile(d$dep_delay, c(.20, .80), na.rm = TRUE)
 
 ## Test yourself
 
-Find the values that encapsulate 95% of the departure delay times closest to the median.
+Find the 5% and 95% quantiles of the departure delay times ("dep_delay")
 
 ## Dispersion
 
@@ -178,9 +186,7 @@ d %>%
   summarise(
     n = n(),
     n.delayed = sum(dep_delay > 0),
-    mean = mean(dep_delay),
     median = median(dep_delay),
-    sd = sd(dep_delay),
     q5 = quantile(dep_delay, .05),
     q95 = quantile(dep_delay, .95)
   )
@@ -196,14 +202,18 @@ x <- d %>%
       summarise(
         n = n(),
         n.delayed = sum(dep_delay > 0),
-        mean = mean(dep_delay),
         median = median(dep_delay),
-        sd = sd(dep_delay),
         q5 = quantile(dep_delay, .05),
         q95 = quantile(dep_delay, .95)
       )
 write.csv(x, "descriptives.csv")
 ```
+
+## Test Yourself
+
+Create a Data Frame describing the mean, standard deviation, and number of missing values of taxiing times.
+
+Save the results as a .csv file.
 
 ## Some Simple Plots
 
@@ -230,9 +240,11 @@ Boxplot for numeric variable.
 boxplot(d$dep_delay)  # boxplot
 ```
 
-## Some Simple Plots
+## Test Yourself
 
-Boxplot for numeric variable.
+Create a boxplot of the departure delays that fall between the 20th and 80th quantiles.
+
+## Test Yourself Answer
 
 ```{r}
 d %>%
