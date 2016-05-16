@@ -299,6 +299,10 @@ d %>%
   summarise(n = n())
 ```
 
+## Test Yourself
+
+Compute the proportions of all flight paths (from origin to dest). 
+
 ## Describing by Group (Factor x Numeric)
 
 The dplyr approach can be easily extended to multiple groups with `group_by()`
@@ -325,3 +329,9 @@ d %>%
   select(crs_dep_time, taxi_out, dep_delay) %>%
   pairs.panels()
 ```
+
+## Test Yourself
+
+Using the `iris` data set (which comes with base R), visualise the variance-covariance matrix with `pairs.panels()`
+
+Note: check that the variables make sense for this plot. If not, remove anything that should be removed.
