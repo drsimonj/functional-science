@@ -78,6 +78,10 @@ t.test(b$Distance ~ b$Design)
 t.test(w$Running, w$Walking, paired = TRUE)
 ```
 
+## Test Yourself
+
+Using the planes data set (`b`), find the p-value for the test of whether the mean Distance travelled by all planes is significantly different from 2900.
+
 # Statistical Modelling in `R`
 
 ## Two-step Process
@@ -147,6 +151,12 @@ Quick comparison with `t.test()`, which should give us same result.
 t.test(Distance ~ Paper, data = d)
 ```
 
+## Test Yourself
+
+Conduct a one-way ANOVA investigating whether the throwing Angle has an effect the Distance a paper plane will travel.
+
+Obtain the means for the different conditions, and their deviations from the grand mean.
+
 ## Two-or-More Way (Between)
 
 ```{r}
@@ -188,9 +198,25 @@ plot(d$sinker, d$distance)
 interaction.plot(d$line, d$sinker, d$distance)
 ```
 
+## Test Yourself
+
+Run complete 3-way ANOVA on the paper planes data (`planes.csv`).
+
+Produce all relevant plots.
+
 ## Within Subjects
 
 Apart from a `t.test()`, within-subject analysis in `R` typically requires long data formats and the observation identifying (e.g., subject id) column to be a factor.
+
+As a challenge:
+
+- import the `energy.csv`
+- convert it into the appropriate long data format
+- convert relevant variables into factors.
+
+## Within Subjects
+
+Solution:
 
 ```{r}
 d <- "data/energy.csv" %>%
@@ -281,13 +307,9 @@ starMatrix
 d %>% starMatrix()
 ```
 
-## Home-made Function
+## Test Yourself
 
-Remember, it's easy to export as a table for formatting...
-
-```{r, eval = F}
-d %>% starMatrix() %>% write.csv("rMatrix.csv")
-```
+Using `starMatrix()`, generate a correlation matrix for the data and save (write) it as a .csv file for formatting in excel.
 
 ## Basic Plots
 
@@ -296,6 +318,10 @@ Scatter plot with 2 variables:
 ```{r}
 d %>% select(Height, Mass) %>% plot()
 ```
+
+## Test Yourself
+
+Produce a scatter plot of people's Calf and Thigh sizes.
 
 ## Basic Plots
 
@@ -337,6 +363,14 @@ d %>% select(Height, Mass) %>% identify()
 
 Now click near the points to be identified, and hit escape when done.
 
+## Test Yourself
+
+Regress Calf size on Thigh size.
+
+Produce the relevant scatter plot with a regression line.
+
+Identify any outliers.
+
 ## Multiple Regression
 
 Multiple regression has multiple predictors...
@@ -350,7 +384,14 @@ summary(fit)
 
 What if we wanted to add an interaction?
 
-Well, first thing we need to do is center our predictors
+Well, first thing we need to do is center our predictors.
+
+Challenge:
+
+- Create centered versions of `Height` and `Bicep` (called them `Height.c` and `Bicep.c`).
+- Check that you centered the variables correctly.
+
+## Multiple Regression
 
 ```{r}
 d <- d %>%
@@ -367,6 +408,10 @@ Now we can add an interaction term.
 fit <- lm(Mass ~ Height.c + Bicep.c + Height.c:Bicep.c, data = d)
 summary(fit)
 ```
+
+## Test Yourself
+
+Run the same multiple regression, but using a single operator to produce main effects and an interaction.
 
 ## Hierarchical Regression
 
@@ -433,6 +478,10 @@ d %>%
   summary()
 ```
 
+## Test Yourself
+
+Regress Mass on Height, Bicep and their interaction, and obtain the standardized coefficients.
+
 ## Checking Assumptions
 
 For any model, we can plot information to check that assumptions are satisfied:
@@ -498,3 +547,19 @@ Take a quick look:
 ```{r}
 d %>% select(Bicep, healthy) %>% plot()
 ```
+
+## Test Yourself
+
+Compute (or locate) a binary variable of interest.
+
+Run a logistic regression predicting your variable with a few others.
+
+Obtain the model results.
+
+Check the assumptions.
+
+Create a more complex model of your first by adding more variables (center if necessary).
+
+Obtain the model results.
+
+Compare the fit of the two models.
