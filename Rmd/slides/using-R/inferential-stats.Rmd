@@ -459,7 +459,7 @@ library(lm.beta)
 
 ## Standardized Coefficients
 
-Now, we use a fit `lm()` model as an arugment to `lm.beta()`, and call `summary()`.
+Now, we use a fit `lm()` model as an argument to `lm.beta()`, and call `summary()`.
 
 ```{r}
 fit <- lm(Mass ~ Height + Bicep, data = d)

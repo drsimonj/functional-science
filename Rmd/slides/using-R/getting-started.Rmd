@@ -34,7 +34,7 @@ For those with experience using similar software/other languages like python, R 
 
 ## With Great Power...
 
-Once you being to gain experience with R, you quickly learn that:
+Once you begin to gain experience with R, you quickly learn that:
 
 - there are a potentially infinite number of ways to achieve the same outcome.
 - its power comes from thousands of user-contributed packages, making its mastery endless, and no course or instructor comprehensive.
@@ -261,7 +261,7 @@ You can see installed and loaded packages in the *Packages* tab of the RStudio p
 
 ## Test Yourself
 
-Install Hadley William's `dplyr` package and attach it to your session.
+Install Hadley Wickham's `dplyr` package and attach it to your session.
 
 
 ## Getting help

@@ -70,11 +70,11 @@ More to come...
 
 ## Function Format
 
-Most functions that help us to describe a univariate distribution take a vector of values (our variable) as the first arguement.
+Most functions that help us to describe a univariate distribution take a vector of values (our variable) as the first argument.
 
 Subsequent arguments are specific to the function.
 
-Commonly, they do NOT accept missing values. To override this, `na.rm = TRUE` must be added as an arguement.
+Commonly, they do NOT accept missing values. To override this, `na.rm = TRUE` must be added as an argument.
 
 ## Frequencies and Proportions
 
@@ -276,7 +276,7 @@ describe(d)
 
 ## Cross-tabs (Factor x Factor)
 
-Add more arguements to `table()`
+Add more arguments to `table()`
 
 ```{r}
 table(d$origin, d$carrier)
@@ -309,8 +309,12 @@ The dplyr approach can be easily extended to multiple groups with `group_by()`
 
 ```{r}
 d %>% group_by(carrier) %>%
-  summarise(n = n(), mean = mean(dep_delay, na.rm = T))
+  summarise(n = n(), mean = mean(dep_delay, na.rm = TRUE))
 ```
+
+## Test Yourself
+
+Include the standard deviation of the departure times for each carrier in the table you just made.
 
 ## Describing by Group (Factor x Numeric)
 

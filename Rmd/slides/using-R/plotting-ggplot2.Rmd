@@ -433,5 +433,5 @@ d %>% filter(carrier %in% c("AA", "DL") &
     labs(x = "Scheduled Departure Time",
          y = "Departure Delay") +
     theme_classic()
-ggsave("plot.png", width = 5, height = 3)
+ggsave("plot.jpeg", width = 5, height = 3)
 ```

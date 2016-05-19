@@ -233,5 +233,5 @@ Of course, other options exist.
 
 Create a new folder called "output".
 
-Create a data frame and write is as a .csv file into the "output" folder.
+Create a data frame and write it as a .csv file into the "output" folder.
 
