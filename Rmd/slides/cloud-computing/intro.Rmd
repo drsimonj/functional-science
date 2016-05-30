@@ -1,0 +1,37 @@
+---
+title: "Intro to Cloud Computing"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+## What is cloud computing?
+
+> "A kind of Internet-based computing that provides shared processing resources and data to computers and other devices on demand" [Wikipedia](https://en.wikipedia.org/wiki/Cloud_computing)
+
+## Why use it?
+
+**Freedom!**  
+Free yourself from the shackles of working on a single device.
+
+**Collaboration!**  
+Collaborate with colleagues on a file with ease.
+
+**Interaction!**
+Interact with other people and services all over the world.
+
+**Peace of Mind**  
+Rest easy knowing that your files are backed up and secure*.
+
+*sort of...
+
+## 
+
+
+
+

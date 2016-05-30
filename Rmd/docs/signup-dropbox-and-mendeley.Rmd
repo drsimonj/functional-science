@@ -1,0 +1,33 @@
+---
+title: "Sign up for Dropbox and Mendeley"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Sign up for Dropbox
+
+Go to <https://www.dropbox.com/>
+
+Fill in your name, email address, and password.
+
+Click "Sign up for free".
+
+### Optional:
+
+- Download and install the Dropbox app for your computer.
+
+## Sign up for Mendeley
+
+Go to <http://mendeley.com/>
+
+Click "Create a free account", and follow the prompts.
+
+### Optional:
+
+- Download and install Mendeley Desktop from <https://www.mendeley.com/download-mendeley-desktop/>
+- Install the Mendeley Web Importer for Google Chrome from <https://www.mendeley.com/import/>
