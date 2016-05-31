@@ -1,0 +1,54 @@
+---
+title: "Intro to Mendeley"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+## What is Mendeley?
+
+> "A free reference manager and academic social network that can help you organize your research, collaborate with others online, and discover the latest research."
+
+> "A combination of a desktop application and a website which helps you manage, share and discover both content and contacts in research." ^[Mendeley](http://support.mendeley.com/customer/en/portal/articles/227875-what-is-mendeley-)^
+
+A cloud-based reference/citation manager.
+
+## How to get Mendeley
+
+Create an account at <https://www.mendeley.com/>
+
+## Basic Usage
+
+Think of Mendeley like any other citation manager.
+
+It's easy to:
+
+- Create references
+- Associate them with PDFs or other documents
+
+## Oh the convenience!
+
+Search text in all of your references and their documents instantly.
+
+Tag your references with key words.
+
+The Chrome web importer ends the need to manually type in new references.
+
+Create folders and groups for various projects.
+
+Word plugin, or copy directly as a formatted citation.
+
+Do all of this from any computer!
+
+## Collaborating with others
+
+Create groups to build a shared reference folder.
+
+## Bonus - Powerful Insight
+
+Mendeley powers the bibliometrics behind a number of publishers like Elsevier, and supports Journals like PLoS ONE.

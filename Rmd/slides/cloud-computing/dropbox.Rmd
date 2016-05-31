@@ -1,0 +1,56 @@
+---
+title: "Intro to Dropbox"
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+require(knitr, quietly = TRUE)
+opts_knit$set(root.dir = '../../../')
+```
+
+## What is Dropbox?
+
+> "One place for all your stuff, wherever you are."
+
+> "Dropbox is a home for all your photos, docs, videos, and files. Anything you add to Dropbox will automatically show up on all your computers, phones and even the Dropbox website — so you can access your stuff from anywhere."
+
+[Dropbox](https://www.dropbox.com/tour)
+
+## How to get your own Dropbox
+
+Create an account at <https://www.dropbox.com>
+
+## Basic Usage
+
+Think of Dropbox like any other folder on your computer.
+
+It's easy to:
+
+- Store files
+- Alter files
+- Create folders
+
+## Collaborating with others
+
+We can let other people see and download our files or folders with the "Share" feature.
+
+We can share complete access to our folders by inviting people by email.
+
+## Test Yourself
+
+In groups of two or more, elect one person to create a folder in their Dropbox.
+
+Have this person invite everyone else to collaborate in this folder.
+
+Have someone else add a word document to this folder.
+
+Everyone else, take turns adding to this file, or adding new files/folders.
+
+Can you see how to leave comments for yourself and each other?
+
+## Bonus - Version History
+
+> By default, Dropbox saves all deleted and previous versions of your files for 30 days. ^[Dropbox Help](https://www.dropbox.com/en/help/113)^
+
