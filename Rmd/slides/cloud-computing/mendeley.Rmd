@@ -39,8 +39,6 @@ Tag your references with key words.
 
 The Chrome web importer ends the need to manually type in new references.
 
-Create folders and groups for various projects.
-
 Word plugin, or copy directly as a formatted citation.
 
 Do all of this from any computer!
@@ -51,4 +49,4 @@ Create groups to build a shared reference folder.
 
 ## Bonus - Powerful Insight
 
-Mendeley powers the bibliometrics behind a number of publishers like Elsevier, and supports Journals like PLoS ONE.
+Mendeley powers the bibliometrics behind a number of publishers like Elsevier, and supports journals like PLoS ONE.

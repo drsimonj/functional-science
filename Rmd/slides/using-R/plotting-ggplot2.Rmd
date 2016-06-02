@@ -311,8 +311,8 @@ The main scales you'll work with are:
 ## Shape (A Third Discrete)
 
 ```{r, warning = F, message = F}
-d %>% filter(carrier %in% c("AA", "B6", "DL") & dep_delay < 15)
-ggplot(d, aes(dep_delay, arr_delay, shape = carrier)) + geom_point()
+d %>% filter(carrier %in% c("AA", "B6", "DL") & dep_delay < 15) %>%
+  ggplot(aes(dep_delay, arr_delay, shape = carrier)) + geom_point()
 ```
 
 ## Size (A Third Continuous)

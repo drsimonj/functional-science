@@ -8,8 +8,36 @@ output:
 
 ```{r setup, echo = FALSE, warning = FALSE}
 require(knitr, quietly = TRUE)
-opts_knit$set(root.dir = '../../../')
+opts_knit$set(root.dir = '../../')
 ```
+
+## Dr Simon A Jackson
+
+```{r, echo = FALSE, warning = FALSE, fig.width = .5, fig.height = .5}
+library(png)
+library(grid)
+img <- readPNG("Rmd/img/social_media_icons/gmail.png")
+grid.raster(img)
+```
+drsimonjackson@gmail.com
+
+```{r, echo = FALSE, warning = FALSE, fig.width = .5, fig.height = .5}
+library(png)
+library(grid)
+img <- readPNG("Rmd/img/social_media_icons/twitter.png")
+grid.raster(img)
+```
+@drsimonj
+
+
+```{r, echo = FALSE, warning = FALSE, fig.width = .5, fig.height = .5}
+library(png)
+library(grid)
+img <- readPNG("Rmd/img/social_media_icons/github.png")
+grid.raster(img)
+```
+drsimonj
+
 
 # What is Functional Science?
 
