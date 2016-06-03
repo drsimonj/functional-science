@@ -9,35 +9,35 @@ output:
 ```{r setup, echo = FALSE, warning = FALSE}
 require(knitr, quietly = TRUE)
 opts_knit$set(root.dir = '../../')
+
+library(png)
+library(grid)
 ```
 
 ## Dr Simon A Jackson
 
 ```{r, echo = FALSE, warning = FALSE, fig.width = .5, fig.height = .5}
-library(png)
-library(grid)
 img <- readPNG("Rmd/img/social_media_icons/gmail.png")
 grid.raster(img)
 ```
 drsimonjackson@gmail.com
 
 ```{r, echo = FALSE, warning = FALSE, fig.width = .5, fig.height = .5}
-library(png)
-library(grid)
 img <- readPNG("Rmd/img/social_media_icons/twitter.png")
 grid.raster(img)
 ```
-@drsimonj
-
+[\@drsimonj](https://twitter.com/drsimonj)
 
 ```{r, echo = FALSE, warning = FALSE, fig.width = .5, fig.height = .5}
-library(png)
-library(grid)
 img <- readPNG("Rmd/img/social_media_icons/github.png")
 grid.raster(img)
 ```
-drsimonj
+[github.com/drsimonj](https://github.com/drsimonj)
 
+<br><br>
+
+**Slides available at my Github**  
+Follow `functional-science / Rmd / slides`
 
 # What is Functional Science?
 
