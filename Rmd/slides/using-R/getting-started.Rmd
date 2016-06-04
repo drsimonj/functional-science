@@ -26,7 +26,7 @@ Completely ‘code based’
 
 It’s free and open-source!
 
-For those with no/little experience using software like R (e.g., SPSS users), you’ll quickly learn that R gives you the flexibility to do things with data that you didn’t even think were possible. Put simply, if you can think it, R can do it! The down side, of course, is the learning curve.
+For those with no/little experience using software like R (e.g., SPSS users), you’ll quickly learn that R gives you the flexibility to do things with data that you didn’t even think were possible. Put simply, if you can think it, R can do it!
 
 For those with experience using similar software/other languages like python, R has its pros and cons compared to these. By-and-large, R is the best at what it promises: statistical analysis and graphics.
 
@@ -206,11 +206,6 @@ Can you guess the results of the following commands? Run them to check that you'
 4
 
 ```
-
-Think about some problems
-
-- Order of operations?
-- Incomplete commands?
 
 ## Saving and opening your scripts
 
