@@ -30,6 +30,17 @@ For those with no/little experience using software like R (e.g., SPSS users), yo
 
 For those with experience using similar software/other languages like python, R has its pros and cons compared to these. By-and-large, R is the best at what it promises: statistical analysis and graphics.
 
+## Why use R?
+
+Handle all major data phases in a central location.
+
+```{r, echo = FALSE, warning = FALSE, fig.width = 8}
+library(png)
+library(grid)
+img <- readPNG("Rmd/img/data_phases_and_R_packages.png")
+grid.raster(img)
+```
+
 # The Warnings
 
 ## With Great Power...
