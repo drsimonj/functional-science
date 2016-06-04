@@ -37,7 +37,7 @@ Handle all major data phases in a central location.
 ```{r, echo = FALSE, warning = FALSE, fig.width = 8}
 library(png)
 library(grid)
-img <- readPNG("Rmd/img/data_phases_and_R_packages.png")
+img <- readPNG("Rmd/img/data_phases.png")
 grid.raster(img)
 ```
 
@@ -227,7 +227,7 @@ E.g., `psych` for many psychometric analyses, `lme4` package for multilevel mode
 
 Some current package stats from CRAN...
 
-```{r, echo = F}
+```{r, echo = F, warning = F}
 types <- c("source", "win.binary", 
            "mac.binary", "mac.binary.mavericks")
  

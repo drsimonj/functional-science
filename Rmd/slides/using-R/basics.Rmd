@@ -191,6 +191,18 @@ cMean(c(1, 2, 3))
 cMean(c(11, 27, 24.32, 89, 102))
 ```
 
+## Function Cheat Sheet
+
+```{r, echo = FALSE, warning = FALSE, fig.width = 8}
+library(png)
+library(grid)
+img <- readPNG("Rmd/img/function_cheat_sheet.png")
+grid.raster(img)
+```
+
+Available at [github.com/drsimonj](https://github.com/drsimonj)  
+functional-science / Rmd / img / function_cheat_sheet.png
+
 # Input and Output
 
 ## Reading Tabular Data
