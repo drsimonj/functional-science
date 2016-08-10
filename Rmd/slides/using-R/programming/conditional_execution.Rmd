@@ -1,0 +1,118 @@
+---
+title: 'Using R: conditional execution'
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3
+)
+```
+
+## `if`
+
+We often want to run code only `if` a certain condition is `TRUE`.
+
+For example, we want to be warned if there are invalid scores in a variable.
+
+This is achieved with an `if` statement:
+
+```{r, eval = F}
+if (condition) {
+  # code to run if the condition results in TRUE
+}
+```
+
+Note, `condition` is anything that evalutes to `TRUE` or `FALSE`.
+
+## `if`
+
+Let's see how it works:
+
+```{r}
+if (TRUE) {
+  print("Hello")
+}
+
+if (FALSE) {
+  print("Hello")
+}
+```
+
+## `if`
+
+```{r}
+x <- 1
+y <- 2
+
+if (x == 1) {
+  print("Hello")
+}
+
+if (x == 1 && y != 2) {
+  print("Hello")
+}
+```
+
+## `if else`
+
+If our condition is `FALSE`, we can run different code with `else` as follows:
+
+```{r, eval = FALSE}
+if (condition) {
+  # code to run if condition is TRUE
+} else {
+  # code to run  if condition is FALSE
+}
+```
+
+## `if else`
+
+An example:
+
+```{r}
+x <- "a"
+
+if (x == "b") {
+  print("x is b")
+} else {
+  print("x is not b")
+}
+```
+
+## `if else if else`
+
+We can add more conitionals as follows:
+
+```{r, eval = FALSE}
+if (condition 1) {
+  # code to run if condition 1 is TRUE
+} else if (condition 2) {
+  # code to run if condition 2 is TRUE
+} else if (condition 3) {
+  # code to run if condition 3 is TRUE
+}
+...
+} else {
+  # code to run if no conditions are TRUE
+}
+```
+
+## Test Yourself
+
+Create an object `x` with some value (e.g., `NA`, `10`, `"a"`)
+
+Create a condition to:
+
+- `print("Missing")` if `x` is a missing value.
+- Else, `print("Number")` if it is a number.
+- Otherwise, `print("Other")`
+
+Trial your conditional execution with different values for `x`.

@@ -1,0 +1,254 @@
+---
+title: 'Using R: iteration'
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3
+)
+```
+
+## What is Iteration?
+
+Iteration is a critical component of programming that involves executing certain code multiple times.
+
+For example, we use iteration to run a check on every column or row of our data, or to run a list of regression models.
+
+Like writing functions, iteration helps us to cut down on the need to copy and paste code.
+
+## Example without iteration
+
+How would you calculate the standard deviation of every column in the `mtcars` data set?
+
+## Example without iteration
+
+You'd probably start with something like:
+
+```{r}
+sd(mtcars$mpg)
+sd(mtcars$cyl)
+sd(mtcars$disp)
+sd(mtcars$hp)
+```
+
+etc.
+
+## `for` loops
+
+`for` loops are a typical way to do iteration in many programming langauages.
+
+We write a `for` loop in R as follows:
+
+```{r, eval = F}
+for (i in sequence) {
+  # code to run here making use of `var`
+}
+```
+
+## The `for` loop
+
+At a minimum, a `for` loop has two main components:
+
+- the `sequence`
+- the code to execute for each value in the `sequence`
+
+The sequence is usually a vector or list, and we execute the code once for each value in the sequence.
+
+That is, we run the loop for the first sequence element, then the second, all the way up to the *n*^th^.
+
+## The `for` loop
+
+We access the *i*^th^ element of the sequence in a given iteration by way of:
+
+```{r, eval = F}
+i in sequence
+```
+
+This means we can use `i` within the `for` code to refer to the *i*^th^ element of the sequence.
+
+## The `for` loop
+
+Here's a basic example:
+
+```{r}
+for(i in 1:5) {
+  print(i)
+}
+```
+
+## The `for` loop
+
+Another
+
+```{r}
+for(i in 1:5) {
+  x <- i / 2
+  print(x)
+}
+```
+
+## Test yourself
+
+Create a vector of names.
+
+Write a `for` loop that prints each name, one at a time.
+
+## Test yourself
+
+Try writing a `for` loop with a list as a sequence rather than a vector.
+
+## Sequence variations
+
+Recall that a data frame is a list (though not very effective):
+
+```{r}
+for (col in mtcars) {
+  print(sd(col))
+}
+```
+
+## Sequence variations
+
+How about this:
+
+```{r}
+for(var in names(mtcars)) {
+  cat(var, ":", sd(mtcars[[var]]), "\n")
+}
+```
+
+## Saving the results
+
+When saving the results, we should always declare an (empty) object first, then save to it.
+
+For example:
+
+```{r}
+sds <- vector("double", ncol(mtcars))
+for(i in seq_along(mtcars)) {
+  sds[[i]] <- sd(mtcars[[i]])
+}
+names(sds) <- names(mtcars)
+sds
+```
+
+## Test Yourself
+
+Use a loop to compute the median of every column in the `airquality` data set.
+
+Save the results in a named vector.
+
+`order()` the results from lowest to highest.
+
+Plot the ordered results in a `barplot()`.
+
+## Test Yourself
+
+Answer:
+
+```{r, fig.width=7}
+meds <- vector("double", ncol(airquality))
+for(i in seq_along(airquality)) {
+  meds[[i]] <- median(airquality[[i]], na.rm = TRUE)
+}
+names(meds) <- names(airquality)
+meds <- meds[order(meds)]
+barplot(meds, ylab = "Median")
+```
+
+## Going Beyond `for`
+
+Knowing how to use `for` loops is a foundational programming skill.
+
+In R, however, you have a number of unique and superior choices.
+
+Most prominently, there are:
+
+- \*apply functions in base R
+- map\* functions in the purrr package.
+
+## Going Beyond `for`
+
+Using these other options involves writing a function in the following format (literally or conceptually):
+
+```{r, eval = F}
+iteration_function(sequence, function_for_each_loop(i) {
+  # Code to be executed
+})
+```
+
+Note that `i in sequence` is not required. Instead `i` appears in a function declaration.
+
+There is no need to create an empty object as all of these functions return the iterated results of the `function_for_each_loop()`.
+
+## `lapply()`
+
+`lapply()` is one of the most frequently used of the \*apply() functions. It returns the results of the function as a **list**:
+
+```{r}
+x <- lapply(1:3, function(i) {
+  c(i, i + 1)
+})
+x
+```
+
+## `lapply()`
+
+When we only want to use a single function (e.g., `mean()`, `sd()`) we skip `function(i)`:
+
+```{r}
+lapply(mtcars, mean)
+```
+
+## Test Yourself
+
+Use `lapply()` to:
+
+1. Calculate the range of every column in the `mtcars` data set.
+2. Convert every column to z scores ((x - mean(x)) / sd(x))
+    - Save these results and convert back to a data frame with `as.data.frame()`
+
+## Test Yourself
+
+Answers
+
+```{r, eval = F}
+# 1
+lapply(mtcars, range)
+
+# 2
+x <- lapply(mtcars, function(col) {
+  (col - mean(col)) / sd(col)
+})
+as.data.frame(x)
+```
+
+## `sapply()`
+
+`sapply()` is exactly the same as `lapply()` except that it attempts to **simplify** the results into a vector or matrix:
+
+```{r}
+sapply(mtcars, range)
+```
+
+[Beware of performance issues](http://stackoverflow.com/questions/38649411/r-speed-up-the-for-loop-using-apply-or-lapply-or-etc/38649860#38649860).
+
+## Test Yourself
+
+Use `sapply()` to compute the quantiles (`quantile()`) of all `mtcars` columns and return the results as a matrix.
+
+## Test Yourself
+
+Answer
+
+```{r}
+sapply(mtcars, quantile)
+```

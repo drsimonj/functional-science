@@ -1,0 +1,180 @@
+---
+title: 'Using R: lists'
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+# require(knitr, quietly = TRUE)
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  #root.dir = '../../../../',
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3
+)
+```
+
+## list() v c()
+
+A `list()` is **like** a vector (`c()`) because:
+
+- It is a sequence with a particular length.
+- It can be named.
+
+A `list()` is **different** from a vector (`c()`) because:
+
+- It can be heterogeneous.
+- Contain anything, even other lists!
+
+## Creating lists
+
+We create a list with `list()`, which we use similarly to `c()`:
+
+```{r}
+x <- list(1, 2, 3)
+class(x)
+x
+```
+
+## Creating lists
+
+Each element can be anything.
+
+```{r}
+x <- list(1, "a", TRUE, c(1, 2), list("b", 2))
+str(x)
+```
+
+## Naming lists
+
+List elements can be named
+
+```{r}
+x <- list(a = 10, b = TRUE, "Hello")
+names(x)[3] <- "c"
+x
+```
+
+## Indexing lists
+
+Indexing can be done in a few ways, which each have important differences:
+
+- `[`
+- `[[`
+- `$` 
+
+## Indexing lists
+
+`[` extracts a subset of the list, and returns a list.
+
+```{r}
+x[c(1, 3)]
+x[c("a", "b")]
+class(x[c(1,3)])
+```
+
+## Indexing lists
+
+`[[` extracts a single element, and returns the list element, whatever it is.
+
+```{r}
+x[[1]]
+x[["c"]]
+class(x[[2]])
+```
+
+## Indexing lists
+
+`$` is a convenience method for `[[` when the list is named.
+
+```{r}
+x$a
+x$b
+class(x$c)
+```
+
+## Changing a list
+
+Use any of the indexing methods to add a new list element or change an existing one.
+
+```{r}
+x$a  <- 27
+x[4] <- c("I'm new")
+x$d  <- list(TRUE, FALSE)
+```
+
+## Changing a list
+
+```{r}
+x
+```
+
+## Test Yourself
+
+Create a named list with the following objects:
+
+- A numeric scalar
+- A numeric vector
+
+Add an additional object which is an unnamed list containing:
+
+  - A numeric scalar
+  - A numeric vector
+  
+Add the numeric scalar in the main list to the numeric scalar in the nested list.
+
+## Regression example
+
+Let's test a multiple regression model with and without an interaction term, and store all the results in a list, `lms`.
+
+```{r}
+# Import data; store the models
+d <- read.csv("data/physical.csv")
+lms <- list()
+lms$mods <- list(
+  main = "Mass ~ Fore + Bicep",  # main effects only
+  int  = "Mass ~ Fore * Bicep"   # interaction included
+)
+str(lms)
+```
+
+## Regression example
+
+Now, let's fit the models.
+
+```{r}
+lms$fits <- list(
+  main = lm(lms$mods$main, data = d),
+  int  = lm(lms$mods$int,  data = d)
+)
+```
+
+Examine the list so far.
+
+## Regression example
+
+Summarise results for whichever fit we're interested in:
+
+```{r}
+summary(lms$fits$int)
+```
+
+## Test yourself
+
+Import the `planes.csv`.
+
+Create a list and fill it with t-tests for differences in `Distance` as a function of each of the three categorial variables (`Paper`, `Angle`, and `Design`).
+
+Be able to use your list to access the results for whichever categorical variable you might be interested in.
+
+## A note about data frames
+
+Data frames are lists with certain restrictions/features:
+
+- Each column is an object in the list.
+- Each column must be homogeneous.
+- Each column must be the same length.

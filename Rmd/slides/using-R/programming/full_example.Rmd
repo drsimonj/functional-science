@@ -1,0 +1,39 @@
+---
+title: 'Using R: programming example'
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3
+)
+```
+
+## Motivation
+
+Data collected........... check!
+
+Data cleaned............. 
+
+Big job when cleaning is to check whether there are any values outside of a valid range.
+
+## Example
+
+We have multiple columns, each with different possible values.
+
+We can't look at every cell.
+
+What to do?
+
+## What we'll do
+
+- Write a function to check whether values of a vector are acceptable, and indicate the location of anything that is not.
+- Create a list object that will provide information about what is acceptable for each column.
+- Iterate through our data to check each column and save the results.

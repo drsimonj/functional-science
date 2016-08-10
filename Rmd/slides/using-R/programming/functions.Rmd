@@ -1,0 +1,182 @@
+---
+title: 'Using R: writing functions'
+author: "Simon A Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3
+)
+```
+
+## Functions for everyone
+
+Functions don't just come in R or packages that we install.
+
+We can write our own functions.
+
+But what's the point?
+
+## Why write our own functions
+
+Most of the time, we write functions to replace the need to copy and paste.
+
+For example, instead of constantly copying and pasting the code needed to compute the mean of different vectors (e.g., computing sum, compute length, divide through), we can use `mean()`.
+
+## Why write our own functions
+
+The major advantages of using functions instead of copy and paste is that:
+
+- We avoid forgetting to make changes throughout large code chunks.
+- If we need to change our code, we just need to do it in one place.
+- Keeps our code clean and legibile.
+
+## How to create and use a function
+
+We create (**declare**) a function by:
+
+`func_name <- function(arg1, arg2, ...) { code }`
+
+1. Declare a function name.
+2. Assign it (`<-`) to `function() {}`.
+3. Place arguments whose values can be changed inside the parentheses `()`.
+4. Place code to be executed inside the curly braces `{}`.
+5. Ensure we return a value in the last code line or with `return()`.
+
+## How to create and use a function
+
+We then use (**call**) it by:
+
+`func_name(val1, val2, ...)`
+
+1. Call it's name followed by parentheses `()`.
+2. Providing values for the arguments inside the parentheses `()`, separated by commas.
+
+## How to create and use a function
+
+Example:
+
+```{r}
+# Function to add one 
+add_1 <- function(x) {
+  x + 1
+}
+
+add_1(4)
+
+a <- c(1, 2, 3)
+add_1(a)
+```
+
+## How to create and use a function
+
+Example:
+
+```{r}
+# Count the number of values equal to something
+num_of <- function(vals, equal_to) {
+  sum(vals == equal_to)
+}
+
+x <- c(1, 1, 3)
+y <- c("a", "a", "b")
+num_of(x, 1)
+num_of(x, 88)
+num_of(y, "b")
+num_of(y, "z")
+```
+
+## Test yourself
+
+Write a function that divides a number by 2.
+
+Next, adjust the function so that you can divide by any number instead of just 2.
+
+## Arguments
+
+Arguments give functions flexibility.
+
+We substitute arguments for values when we call our function.
+
+So far, we've done this based on the **order** of the arguments.
+
+## Arguments by name
+
+It's possible, however, to reference arguments by name:
+
+```{r}
+x <- c(1, 1, 3)
+num_of(x, 1)
+num_of(equal_to = 1, vals = x)
+```
+
+## Argument defaults
+
+We can also set argument defaults when we declare the function.
+
+When a default exists, we don't need to include a value for that argument when we call the function.
+
+```{r}
+divide_by <- function(val, divisor = 2) {
+  val / divisor
+}
+
+divide_by(4)
+divide_by(4, 3)
+divide_by(4, divisor = 5)
+```
+
+## Test yourself
+
+Write a function that does some arithmetic with at least three arguments.
+
+Provide default values for the second and third arguments.
+
+Run your function by providing values for the first and third arguments.
+
+## Return
+
+Functions must also return something. By default, this will be the result of the last line of code. However, we can do this explicitly with `return()`.
+
+```{r}
+fun_1 <- function(x) {
+  x
+  x * 2
+}
+
+fun_2 <- function(x) {
+  return (x)
+  x * 2
+}
+
+fun_1(10)
+fun_2(10)
+```
+
+## Free yourself with source()
+
+As we start to write many functions, it becomes important to keep them organised and in a way that makes it possible to transport/share them across projects.
+
+A good way to do this is to place your functions in separate function scripts and then use `source()` to read the script in.
+
+For example...
+
+1. Place your functions in a new script (e.g., called `"functions.R"`).
+2. Save this script in the "R/" folder.
+3. Open a new script, and place `source("R/functions.R")` at the top.
+4. Run this to be able to use your functions.
+
+## Test yourself
+
+Write a function to count how many numeric values of a vector are outside an acceptable range.
+
+For example, to check whether any values in a vector of proportions are outside the range of zero to one.
+
+Placethis function in a function R script and use `source()` to declare and use it in another script.
