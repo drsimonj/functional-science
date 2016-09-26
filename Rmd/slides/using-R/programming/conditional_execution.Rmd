@@ -56,10 +56,18 @@ if (x == 1) {
   print("Hello")
 }
 
-if (x == 1 && y != 2) {
+if (x == 1 & y != 2) {
   print("Hello")
 }
 ```
+
+## Test Yourself
+
+Create two vectors: one numeric and the other a character vector.
+
+Write two if statements to check whether each vector `is.numeric()`.
+
+If it is, then compute the `mean()`.
 
 ## `if else`
 
@@ -86,6 +94,14 @@ if (x == "b") {
   print("x is not b")
 }
 ```
+
+## Test yourself
+
+Create a variable `x`. E.g., `x <- 2`.
+
+Write an if statement that checks whether `x` is numeric and, if so, prints "number". Else, print, "other".
+
+Try for different types of `x`.
 
 ## `if else if else`
 
@@ -116,3 +132,13 @@ Create a condition to:
 - Otherwise, `print("Other")`
 
 Trial your conditional execution with different values for `x`.
+
+## Test Yourself
+
+For example sake, say that the range of valid values for `qsec` in the `mtcars` data set is 10 to 20.
+
+Write an if statment that prints out "All good" or "Invalid values" depending on whether all values fall in this range or not.
+
+Note, you will probably need `all()` to collapse boolean vectors.
+
+Bonus: Print out any invalid values should they exist.

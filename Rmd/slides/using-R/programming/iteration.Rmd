@@ -41,6 +41,8 @@ sd(mtcars$hp)
 
 etc.
 
+# for loops
+
 ## `for` loops
 
 `for` loops are a typical way to do iteration in many programming langauages.
@@ -49,7 +51,16 @@ We write a `for` loop in R as follows:
 
 ```{r, eval = F}
 for (i in sequence) {
-  # code to run here making use of `var`
+  # code to run here making use of `i`
+}
+```
+
+## Quick example
+
+```{r}
+x <- c(1, 4, 10)
+for (i in x) {
+  print(i + 1)
 }
 ```
 
@@ -73,6 +84,8 @@ i in sequence
 ```
 
 This means we can use `i` within the `for` code to refer to the *i*^th^ element of the sequence.
+
+Aside, note that `i` can be any valid variable name.
 
 ## The `for` loop
 
@@ -121,7 +134,8 @@ How about this:
 
 ```{r}
 for(var in names(mtcars)) {
-  cat(var, ":", sd(mtcars[[var]]), "\n")
+  dat <- mtcars[[var]]
+  cat(var, ":", sd(dat), "\n")
 }
 ```
 
@@ -164,9 +178,11 @@ meds <- meds[order(meds)]
 barplot(meds, ylab = "Median")
 ```
 
+# Beyond for loops
+
 ## Going Beyond `for`
 
-Knowing how to use `for` loops is a foundational programming skill.
+Understanding `for` loops is a foundational programming skill.
 
 In R, however, you have a number of unique and superior choices.
 
@@ -177,44 +193,48 @@ Most prominently, there are:
 
 ## Going Beyond `for`
 
-Using these other options involves writing a function in the following format (literally or conceptually):
+Using \*apply or map\* functions involves writing the relevant "`iteration_function()`" in the following format (literally or conceptually):
 
 ```{r, eval = F}
-iteration_function(sequence, function_for_each_loop(i) {
-  # Code to be executed
-})
+iteration_function(sequence, function)
 ```
 
-Note that `i in sequence` is not required. Instead `i` appears in a function declaration.
+- The function is applied/mapped to each sequence element. No need to write `for i in sequence`.
+- They always return the iterated function results. No need to create empty objects.
 
-There is no need to create an empty object as all of these functions return the iterated results of the `function_for_each_loop()`.
+# *apply()
 
 ## `lapply()`
 
 `lapply()` is one of the most frequently used of the \*apply() functions. It returns the results of the function as a **list**:
 
 ```{r}
-x <- lapply(1:3, function(i) {
-  c(i, i + 1)
-})
-x
+lapply(mtcars, sd)
 ```
 
 ## `lapply()`
 
-When we only want to use a single function (e.g., `mean()`, `sd()`) we skip `function(i)`:
+Because it returns the result, we can immediately save it to a variable:
 
 ```{r}
-lapply(mtcars, mean)
+x <- lapply(mtcars, sd)
+x$hp
+```
+
+## `lapply()`
+
+Additional function arguments can be passed after the function:
+
+```{r}
+lapply(airquality, sd, na.rm = TRUE)
 ```
 
 ## Test Yourself
 
 Use `lapply()` to:
 
-1. Calculate the range of every column in the `mtcars` data set.
-2. Convert every column to z scores ((x - mean(x)) / sd(x))
-    - Save these results and convert back to a data frame with `as.data.frame()`
+- calculate the range of every column in the `mtcars` data set.
+- save the median of every column in the `airquality` data set, and print only the `Ozone` results
 
 ## Test Yourself
 
@@ -225,10 +245,8 @@ Answers
 lapply(mtcars, range)
 
 # 2
-x <- lapply(mtcars, function(col) {
-  (col - mean(col)) / sd(col)
-})
-as.data.frame(x)
+x <- lapply(airquality, median, na.rm = TRUE)
+x$Ozone
 ```
 
 ## `sapply()`
@@ -245,10 +263,111 @@ sapply(mtcars, range)
 
 Use `sapply()` to compute the quantiles (`quantile()`) of all `mtcars` columns and return the results as a matrix.
 
-## Test Yourself
+Bonus: add a pipe (`%>%`) into your code.
 
-Answer
+# purrr::map*()
+
+## purrr package
+
+The purrr package "makes your pure functions purr".
+
+Install and attach:
 
 ```{r}
-sapply(mtcars, quantile)
+# install.packages("purrr")
+library(purrr)
 ```
+
+## `map()`
+
+The primary purrr function is `map()`.
+
+It takes a sequence and function, and returns a list, just like `lapply()`:
+
+```{r}
+mtcars %>% map(mean)
+```
+
+## Test Yourself
+
+Use `map()` to find the median of each `mtcars` column.
+
+Write the `lapply()` equivalent.
+
+## `map_*()`
+
+For simplified output, there are a variety of map functions:
+
+- `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()`/`map_df()`
+
+```{r}
+airquality %>% map_dbl(mean, na.rm = TRUE)
+
+airquality %>% map_df(range, na.rm = TRUE)
+```
+
+## Test Yourself
+
+Using a varient of `map()`, check which columns of the `iris` data set are numeric with the function `is.numeric`.
+
+# Custom functions
+
+## Adding custom functions
+
+There are two ways we can add custom functions into the \*apply and map\*:
+
+1. Create the function then use its name.
+2. Use an anonymous function
+
+## Using a created function
+
+When we write our own functions, we can use them like any other in the iteration functions covered:
+
+```{r}
+# Function to normalise a vector to range between 0 and 1
+normalise <- function(vector) {
+  (vector - min(vector)) / (max(vector) - min(vector))
+}
+
+mtcars %>% map_df(normalise) %>% head()
+```
+
+## Anonymous functions
+
+Anonymus functions are functions that do not exist in the environment, and are written directly into another function like `lapply()`. 
+
+For `*apply()` functions, we do the following:
+
+```{r, eval = FALSE}
+*apply(sequence, function(i) {
+  # Code using `i`
+})
+```
+
+For `map*()` functions, we do the following:
+
+```{r, eval = FALSE}
+map(sequence, ~ # code using `.`)
+```
+
+## Examples
+
+Here's an anonymous version of the normalise function:
+
+```{r}
+mtcars %>% map_df(~ (. - min(.)) / (max(.) - min(.)))
+```
+
+## Test Yourself
+
+`split()` the `mtcars` data based on the number of car cylinders into a list as follows:
+
+```{r, eval = F}
+mtcars %>%
+  split(.$cyl)
+```
+
+Continue the pipe and regress `mpg` on `wt` for each split. Try using `lapply()` and `map()`.
+
+Bonus: continue the pipe again and obtain the `summary()` for each fitted model.
+
