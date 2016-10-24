@@ -101,11 +101,11 @@ Create a variable `x`. E.g., `x <- 2`.
 
 Write an if statement that checks whether `x` is numeric and, if so, prints "number". Else, print, "other".
 
-Try for different types of `x`.
+Try for different values of `x`.
 
 ## `if else if else`
 
-We can add more conitionals as follows:
+We can add more conditionals as follows:
 
 ```{r, eval = FALSE}
 if (condition 1) {
@@ -139,6 +139,6 @@ For example sake, say that the range of valid values for `qsec` in the `mtcars` 
 
 Write an if statment that prints out "All good" or "Invalid values" depending on whether all values fall in this range or not.
 
-Note, you will probably need `all()` to collapse boolean vectors.
+Tip: use `all()` to collapse boolean vectors into a single `TRUE` or `FALSE`.
 
 Bonus: Print out any invalid values should they exist.

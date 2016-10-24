@@ -160,6 +160,20 @@ fun_1(10)
 fun_2(10)
 ```
 
+## Return
+
+Using `return()` is particularly useful when combined with conditional statements. For example, try the following:
+
+```{r}
+add <- function(x, y) {
+  if (is.na(x) | is.na(y)) {
+    return (NA)
+  } else {
+    return(x + y)
+  }
+}
+```
+
 ## Free yourself with source()
 
 As we start to write many functions, it becomes important to keep them organised and in a way that makes it possible to transport/share them across projects.

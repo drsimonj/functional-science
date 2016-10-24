@@ -120,12 +120,12 @@ Create a named list with the following objects:
 - A numeric scalar
 - A numeric vector
 
-Add an additional object which is an unnamed list containing:
+Add a third object to the list, which is an unnamed list containing:
 
   - A numeric scalar
   - A numeric vector
   
-Add the numeric scalar in the main list to the numeric scalar in the nested list.
+Add the numeric scalar in the main list to the numeric scalar in the nested list (third object).
 
 ## Regression example
 
@@ -134,33 +134,19 @@ Let's test a multiple regression model with and without an interaction term, and
 ```{r}
 # Import data; store the models
 d <- read.csv("data/physical.csv")
-lms <- list()
-lms$mods <- list(
-  main = "Mass ~ Fore + Bicep",  # main effects only
-  int  = "Mass ~ Fore * Bicep"   # interaction included
+lms <- list(
+  main = lm(Mass ~ Fore + Bicep, data = d),  # main effects only
+  int  = lm(Mass ~ Fore * Bicep, data = d)   # interaction included
 )
 str(lms)
 ```
 
 ## Regression example
 
-Now, let's fit the models.
-
-```{r}
-lms$fits <- list(
-  main = lm(lms$mods$main, data = d),
-  int  = lm(lms$mods$int,  data = d)
-)
-```
-
-Examine the list so far.
-
-## Regression example
-
 Summarise results for whichever fit we're interested in:
 
 ```{r}
-summary(lms$fits$int)
+summary(lms$int)
 ```
 
 ## Test yourself
