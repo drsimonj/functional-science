@@ -141,16 +141,22 @@ for(var in names(mtcars)) {
 
 ## Saving the results
 
-When saving the results, we should always declare an (empty) object first, then save to it.
+`for` loops don't need to return anything, but generally we want them to.
+
+When saving results, it's best practice to declare an (empty) object first, then save to it.
+
+## Saving the results
 
 For example:
 
 ```{r}
 sds <- vector("double", ncol(mtcars))
-for(i in seq_along(mtcars)) {
-  sds[[i]] <- sd(mtcars[[i]])
-}
 names(sds) <- names(mtcars)
+sds
+
+for(var in names(mtcars)) {
+  sds[[var]] <- sd(mtcars[[var]])
+}
 sds
 ```
 
@@ -160,9 +166,10 @@ Use a loop to compute the median of every column in the `airquality` data set.
 
 Save the results in a named vector.
 
-`order()` the results from lowest to highest.
-
 Plot the ordered results in a `barplot()`.
+
+Bonus: `order()` the results from lowest to highest and then plot.
+
 
 ## Test Yourself
 
@@ -170,10 +177,10 @@ Answer:
 
 ```{r, fig.width=7}
 meds <- vector("double", ncol(airquality))
-for(i in seq_along(airquality)) {
-  meds[[i]] <- median(airquality[[i]], na.rm = TRUE)
-}
 names(meds) <- names(airquality)
+for(var in names(airquality)) {
+  meds[[var]] <- median(airquality[[var]], na.rm = TRUE)
+}
 meds <- meds[order(meds)]
 barplot(meds, ylab = "Median")
 ```
@@ -265,6 +272,15 @@ Use `sapply()` to compute the quantiles (`quantile()`) of all `mtcars` columns a
 
 Bonus: add a pipe (`%>%`) into your code.
 
+## Test Yourself
+
+Answer:
+
+```{r, message=F}
+library(dplyr)
+mtcars %>% sapply(quantile)
+```
+
 # purrr::map*()
 
 ## purrr package
@@ -308,7 +324,7 @@ airquality %>% map_df(range, na.rm = TRUE)
 
 ## Test Yourself
 
-Using a varient of `map()`, check which columns of the `iris` data set are numeric with the function `is.numeric`.
+Using a varient of `map()` to simplify the output, check which columns of the `iris` data set are numeric with the function `is.numeric`.
 
 # Custom functions
 
