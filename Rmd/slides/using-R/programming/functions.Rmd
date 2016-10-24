@@ -166,8 +166,10 @@ Using `return()` is particularly useful when combined with conditional statement
 
 ```{r}
 add <- function(x, y) {
-  if (is.na(x) | is.na(y)) {
-    return (NA)
+  if (is.na(x)) {
+    return (y)
+  } else if (is.na(y)) {
+    return (x)
   } else {
     return(x + y)
   }
