@@ -10,7 +10,6 @@ knitr::opts_knit$set(root.dir = '../../../../')
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "figs/",
   fig.height = 3,
   fig.width = 3,
   fig.align = "center"
