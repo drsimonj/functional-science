@@ -1,0 +1,110 @@
+---
+title: 'Using R: ggplot2 themes, labels, and other features'
+author: "Dr Simon Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3,
+  fig.align = "center"
+)
+```
+
+## Beyond geoms and aesthetics
+
+Geoms and aesthetics are how we represent data in the plot.
+
+However, there are many other aspects of our plots we might want to make adjustments too.
+
+For example, the background colour, the axis ticks and labels.
+
+# Themes
+
+## Themes
+
+The visual elements outside of geoms are mostly controlled by themes.
+
+Let's create a default plot to work with:
+
+```{r}
+library(ggplot2)
+p <- ggplot(mtcars, aes(x = hp, y = mpg)) + geom_point()
+p
+```
+
+## Themes
+
+There are many existing themes we can apply. For example:
+
+```{r}
+p + theme_bw()
+```
+
+## Themes
+
+```{r}
+p + theme_classic()
+```
+
+## Themes
+
+See the complete list of themes via the help page for any theme.
+
+e.g., `?theme_bw`
+
+## Test yourself
+
+Create the plot using a theme we haven't used yet.
+
+## Custom themes
+
+We can also customise the theme elements using `theme()`.
+
+See `?theme` for a complete list of elements that can be adjusted.
+
+## Custom themes
+
+```{r}
+p + theme(panel.background = element_rect(fill = "skyblue"))
+```
+
+## Custom themes
+
+```{r}
+p + theme(axis.line.x = element_line(color = "blue",
+                                     size = 3,
+                                     lineend = "round"),
+          axis.line.y = element_line(color = "orange",
+                                     size = 2,
+                                     lineend = "square")
+          )
+```
+
+# Labels
+
+## Labels
+
+We almost always want to change the plot title and axis labels.
+
+The best way to do this is using `+ labs()`, and providing three arguments:
+
+- `title = ""`
+- `x = ""`
+- `y = ""`
+
+## Labels
+
+```{r}
+p + labs(x = "Horsepower", y = "Miles Per Gallon")
+```
+
+## Test yourself
+
+Add a title to the previous plot.
