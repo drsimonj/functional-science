@@ -1,6 +1,6 @@
 ---
-title: 'Using R: programming example'
-author: "Simon A Jackson"
+title: 'Using R: programming challenge'
+author: "Dr Simon Jackson"
 date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
 output: ioslides_presentation
 ---
@@ -32,7 +32,7 @@ We can't look at every cell.
 
 What to do?
 
-## What we'll do
+## Challenge
 
 - Write a function to check whether values of a vector are acceptable, and indicate the location of anything that is not.
 - Create a list object that will provide information about what is acceptable for each column.
