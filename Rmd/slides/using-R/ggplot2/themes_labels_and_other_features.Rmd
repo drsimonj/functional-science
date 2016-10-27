@@ -107,3 +107,26 @@ p + labs(x = "Horsepower", y = "Miles Per Gallon")
 ## Test yourself
 
 Add a title to the previous plot.
+
+# Other features
+
+## Adjusting legends
+
+Remove a legend title with `labs(LEGEND_NAME = NULL)`
+
+```{r, fig.width = 5}
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  labs(color = NULL)
+```
+
+## Adjusting legends
+
+Remove a legend with `guides(LEGEND_NAME = "none")`
+
+```{r}
+ggplot(mtcars, aes(x = mpg, y = hp, color = hp)) +
+  geom_point() +
+  guides(color = "none")
+```
+
