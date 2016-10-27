@@ -1,0 +1,90 @@
+---
+title: 'Using R: understanding ggplot2 layers'
+author: "Dr Simon Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3,
+  fig.align = "center"
+)
+```
+
+## Layers
+
+When we add (`+`) geoms to a plots, this is done in layers.
+
+geoms added earlier in the plot chain will appear **behind** geoms added later.
+
+Imagine drawing each geom on a plastic sheet. When you add it to the plot, you put it down on top of the previous one.
+
+## Examples
+
+Here the points are added ontop of the line:
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(x = hp, y = wt)) +
+  geom_line() + 
+  geom_point(size = 2, color = "red")
+```
+
+## Examples
+
+Here, the line is added ontop of the points:
+
+```{r}
+ggplot(mtcars, aes(x = hp, y = wt)) +
+  geom_point(size = 2, color = "red") +
+  geom_line()
+```
+
+## Some uses
+
+Understanding layers is important from the point of view that you will often make simple errors.
+
+But carefully layering our geoms can also prove useful for many reasons.
+
+## Examples
+
+Let's examine ozone levels in May using the `airquality` data set.
+
+```{r}
+library(dplyr)
+d <- airquality %>% filter(Month == 5)
+head(d)
+```
+
+
+## Example
+
+Let's draw points:
+
+```{r, fig.width=8}
+ggplot(d, aes(x = Day, y = Ozone)) +
+  geom_point()
+```
+
+
+## Example
+
+How might we make these large white points with black outlines?
+
+## Example
+
+```{r, fig.width=8, warning=F}
+ggplot(d, aes(x = Day, y = Ozone)) +
+  geom_point(size = 3) +
+  geom_point(color = "white", size = 2)
+```
+
+## Example
+
+Add lines...

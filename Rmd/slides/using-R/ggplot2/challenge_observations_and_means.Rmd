@@ -1,0 +1,41 @@
+---
+title: 'Using R: ggplot2 challenge - observations and means'
+author: "Dr Simon Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3,
+  fig.align = "center"
+)
+```
+
+## Challenge
+
+Create the following plot using the `mtcars` data:
+
+```{r, echo = F, message=F, fig.width=5, fig.height=5}
+library(ggplot2)
+library(dplyr)
+id <- mtcars
+gd <- id %>%
+  group_by(cyl) %>% 
+  summarise(hp = mean(hp))
+
+ggplot(id, aes(x = factor(cyl), y = hp, color = cyl, fill = cyl)) +
+  geom_point() +
+  geom_bar(data = gd, stat = "identity", alpha = .2) +
+  guides(color = "none", fill = "none") +
+  labs(
+    x = "Number of cylinders",
+    y = "Horsepower"
+  ) +
+  theme_bw()
+```
