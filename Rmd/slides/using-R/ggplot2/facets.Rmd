@@ -1,0 +1,103 @@
+---
+title: 'Using R: ggplot2 geoms and aesthetics'
+author: "Dr Simon Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/",
+  fig.height = 3,
+  fig.width = 3,
+  fig.align = "center"
+)
+```
+
+## Facets
+
+Facets refer to subpanels that are created by dividing the plotting area. For example:
+
+```{r, echo = F, fig.width=8}
+library(ggplot2)
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_point() +
+  facet_wrap(~ cyl) +
+  ggtitle("Breakdown by number of cylinders")
+```
+
+## When/how to use facets
+
+We typically want to use facets with one or two categorical variables.
+
+There are two facet functions available to us:
+
+```{r, eval = F}
+facet_grid()
+
+facet_wrap()
+```
+
+Like all other ggplot2 functions, we use these by adding them to a sequence of plot functions. E.g.,
+
+```{r, eval = F}
+ggplot() + geom_*() + facet_wrap()
+```
+
+
+## facet_grid()
+
+`facet_grid()` lays out panels in a grid. We define which variable to split on rows, columns, or both.
+
+The first argument is used to define the panels in the form:
+
+```{r, eval = F}
+facet_grid(var_to_split_rows ~ var_to_split_cols)
+```
+
+## facet_grid()
+
+Example:
+
+```{r, fig.width=8}
+ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() +
+  facet_grid(am ~ cyl)
+```
+
+## facet_grid()
+
+To NOT divide rows or columns, use `.`:
+
+```{r}
+ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() +
+  facet_grid(am ~ .)
+```
+
+## facet_wrap()
+
+`facet_wrap()` is used to layout 1D panels splits in a 2D manner. For this we use `~ var_to_wrap`:
+
+```{r, fig.width=5, warning=F}
+ggplot(airquality, aes(x = Ozone, y = Temp)) + geom_point() +
+  facet_wrap(~ Month)
+```
+
+## Multiple variables
+
+In both facet functions, we can add (`+`) multiple variables to facet by. For example:
+
+```{r}
+ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() +
+  facet_wrap(~ cyl + am)
+```
+
+## Test yourself
+
+Create a scatter plot of two continuous variables from the `mtcars` dataset.
+
+Use `facet_wrap()` and `facet_grid()` to divide the plot depending on the number of gears (`gear`) and/or the number of carbuetors (`carb`) a car has.
+
+Try various combinations of facets the check that you can obtain what you think you can.
