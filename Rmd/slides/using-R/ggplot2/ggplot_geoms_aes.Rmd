@@ -37,11 +37,11 @@ When it comes to ggplot2, we're forced (in a good way) to manipulate the data. T
 
 ## Thinking in ggplot2
 
-The logic behind ggplot2 is to map values from variables (columns) in a data frame to visual elements in a plot.
+The logic behind ggplot2 is to map values from variables (columns) in a data frame to aesthetics of visual elements (geoms) in a plot.
 
 This will make more sense as we progress.
 
-## Basic setup
+## Basics
 
 (Install and) Load the `ggplot2` package:
 
@@ -55,6 +55,14 @@ A ggplot2 plot must begin with:
 ```{r, eval = F}
 ggplot()
 ```
+
+## Basics
+
+Geoms and aesthetics are the two most important things to understand.
+
+Geoms are the elements we want to plot (lines, points, bars, etc).
+
+Aesthetics are how we'd like geoms to appear (where, what colour, what size, etc).
 
 ## Geoms
 
@@ -189,4 +197,27 @@ Answer:
 ggplot(mtcars, aes(x = hp, y = mpg, color = mpg)) +
   geom_point(aes(size = mpg)) +
   geom_line(aes(alpha = mpg))
+```
+
+## Challenge
+
+Create the following plot using the `mtcars` data:
+
+```{r, echo = F, message=F, fig.width=5, fig.height=5}
+library(ggplot2)
+library(dplyr)
+id <- mtcars
+gd <- id %>%
+  group_by(cyl) %>% 
+  summarise(hp = mean(hp))
+
+ggplot(id, aes(x = factor(cyl), y = hp, color = cyl, fill = cyl)) +
+  geom_point() +
+  geom_bar(data = gd, stat = "identity", alpha = .2) +
+  guides(color = "none", fill = "none") +
+  labs(
+    x = "Number of cylinders",
+    y = "Horsepower"
+  ) +
+  theme_bw()
 ```
