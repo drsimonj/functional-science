@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ## Layers
 
-When we add (`+`) geoms to a plots, this is done in layers.
+When we add (`+`) geoms to a plot, this is done in layers.
 
 geoms added earlier in the plot chain will appear **behind** geoms added later.
 
@@ -32,7 +32,7 @@ Here the points are added ontop of the line:
 ```{r}
 library(ggplot2)
 ggplot(mtcars, aes(x = hp, y = wt)) +
-  geom_line() + 
+  geom_line(size = 2) + 
   geom_point(size = 2, color = "red")
 ```
 
@@ -43,7 +43,7 @@ Here, the line is added ontop of the points:
 ```{r}
 ggplot(mtcars, aes(x = hp, y = wt)) +
   geom_point(size = 2, color = "red") +
-  geom_line()
+  geom_line(size = 2)
 ```
 
 ## Some uses
@@ -56,7 +56,7 @@ But carefully layering our geoms can also prove useful for many reasons.
 
 Let's examine ozone levels in May using the `airquality` data set.
 
-```{r}
+```{r, message=F}
 library(dplyr)
 d <- airquality %>% filter(Month == 5)
 head(d)
@@ -67,11 +67,10 @@ head(d)
 
 Let's draw points:
 
-```{r, fig.width=8}
+```{r, warning=F, fig.width=8}
 ggplot(d, aes(x = Day, y = Ozone)) +
   geom_point()
 ```
-
 
 ## Example
 
@@ -85,6 +84,22 @@ ggplot(d, aes(x = Day, y = Ozone)) +
   geom_point(color = "white", size = 2)
 ```
 
-## Example
+## Test Yourself
 
-Add lines...
+Add a line to the previous plot.
+
+Make sure that the dots appear on top of the line.
+
+Bonus: change the `linetype` aesthetic on the line to equal 2.
+
+## Test Yourself
+
+Answer
+
+```{r, fig.width=8, warning=F}
+ggplot(d, aes(x = Day, y = Ozone)) +
+  geom_line(linetype = 2) +
+  geom_point(size = 3) +
+  geom_point(color = "white", size = 2)
+```
+
