@@ -282,6 +282,8 @@ Some other great resources:
 
 - [Cookbook for R](http://www.cookbook-r.com/)
 - [Quick R](http://www.statmethods.net/)
+- [Stack Overflow](http://stackoverflow.com/)
+- [R-bloggers](https://www.r-bloggers.com/)
 
 
 
