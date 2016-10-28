@@ -1,6 +1,6 @@
 ---
 title: 'Using R: lists'
-author: "Simon A Jackson"
+author: "Dr Simon Jackson"
 date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
 output: ioslides_presentation
 ---
@@ -134,19 +134,25 @@ Let's test a multiple regression model with and without an interaction term, and
 ```{r}
 # Import data; store the models
 d <- read.csv("data/physical.csv")
-lms <- list(
+fits <- list(
   main = lm(Mass ~ Fore + Bicep, data = d),  # main effects only
-  int  = lm(Mass ~ Fore * Bicep, data = d)   # interaction included
+  int  = lm(Mass ~ Fore + Bicep + Fore:Bicep, data = d)   # interaction included
 )
-str(lms)
 ```
+
+## Regression example
+
+```{r}
+str(fits)
+```
+
 
 ## Regression example
 
 Summarise results for whichever fit we're interested in:
 
 ```{r}
-summary(lms$int)
+summary(fits$int)
 ```
 
 ## Test yourself

@@ -103,6 +103,14 @@ Write an if statement that checks whether `x` is numeric and, if so, prints "num
 
 Try for different values of `x`.
 
+## Test yourself
+
+Create two vectors, one numeric and one character.
+
+Write if-else statements to check whether each vector `is.numeric()`.
+
+If so, compute the vector mean; else show the frequencies using `table()`.
+
 ## `if else if else`
 
 We can add more conditionals as follows:
