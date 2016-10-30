@@ -34,6 +34,61 @@ What to do?
 
 ## Challenge
 
+Say the following are valid values for variables in the `iris` data:
+
+- `Sepal.Length`  4.5 to 8
+- `Sepal.Width`   1 to 5
+- `Petal.Length`  1.1 to 6.8
+- `Petal.Width`   0 to 2
+- `Species`       "setosa" and "versicolor"
+
 - Write a function to check whether values of a vector are acceptable, and indicate the location of anything that is not.
-- Create a list object that will provide information about what is acceptable for each column.
-- Iterate through our data to check each column and save the results.
+- Create a list object that will provide information about what is acceptable for each variable.
+- Iterate through the data to check each variable and save the results.
+
+## Bonus
+
+Create plots that helps you to vizualise the results in a useful way.
+
+Examples:
+
+- Bar plot of the number of invalid values per variable.
+- Tile plot showing row numbers of invalid values for each value.
+
+## One answer
+
+```{r}
+d <- iris
+
+# Function to return indices of any values in a vector that are not valid
+#
+# Args:
+#   x Vector of values to check
+#   valid Vector of valid values. 2-elements (low and high) if numeric, more if
+#   factor.
+not_valid <- function(x, valid) {
+  if (is.numeric(x)) {
+    valid <- x >= valid[1] & x <= valid[2]
+  } else {
+    valid <- x %in% valid
+  }
+  
+  which(!valid)
+}
+```
+
+## One answer
+
+```{r}
+valid_list <- list(
+  Sepal.Length = c(4.5, 8),
+  Species     = c("setosa", "versicolor")
+)
+
+
+not_valid(iris$Sepal.Length, c(4.5, 8))
+not_valid(iris$Species, c("setosa", "versicolor"))
+
+purrr::map(names(valid_list), ~ not_valid(d[[.]], valid_list[[.]]))
+```
+
