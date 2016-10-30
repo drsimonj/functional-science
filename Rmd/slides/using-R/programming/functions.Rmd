@@ -99,6 +99,8 @@ Write a function that divides a number by 2.
 
 Next, adjust the function so that you can divide by any number instead of just 2.
 
+# Arguments
+
 ## Arguments
 
 Arguments give functions flexibility.
@@ -140,6 +142,8 @@ Write a function that does some arithmetic with at least three arguments.
 Provide default values for the second and third arguments.
 
 Run your function by providing values for the first and third arguments.
+
+# Return
 
 ## Return
 
@@ -195,4 +199,4 @@ Write a function to count how many numeric values of a vector are outside an acc
 
 For example, to check whether any values in a vector of proportions are outside the range of zero to one.
 
-Placethis function in a function R script and use `source()` to declare and use it in another script.
+Place this function in a function R script and use `source()` to declare and use it in another script.

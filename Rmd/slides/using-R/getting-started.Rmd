@@ -284,6 +284,7 @@ Some other great resources:
 - [Quick R](http://www.statmethods.net/)
 - [Stack Overflow](http://stackoverflow.com/)
 - [R-bloggers](https://www.r-bloggers.com/)
+- [Twitter and #rstats](https://twitter.com/search?q=%23rstats&src=typd)
 
 
 
