@@ -326,6 +326,8 @@ airquality %>% map_df(range, na.rm = TRUE)
 
 Using a varient of `map()` to simplify the output, check which columns of the `iris` data set are numeric with the function `is.numeric`.
 
+Bonus: use the results to calculate the total number of numeric columns.
+
 # Custom functions
 
 ## Adding custom functions
