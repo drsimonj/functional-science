@@ -16,31 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## What/Why ggplot2?
-
-`ggplot2` is a package for **plotting**.
-
-Many would consider it to be R's most powerful data vizualisation tool.
-
-It's incredibly flexible, giving you control over almost every aspect of a plot.
-
-But with flexibility comes the challenge of mastery.
-
-## Thinking in ggplot2
-
-Using `ggplot2` often requires a mental shift when it comes to plotting.
-
-When we use tools like SPSS or Excel, we often try various plotting methods until something gives us what we want. But we seldom play with the data.
-
-When it comes to ggplot2, we're forced (in a good way) to manipulate the data. This can take some time to get used to.
-
-## Thinking in ggplot2
-
-The logic behind ggplot2 is to map values from variables (columns) in a data frame to aesthetics of visual elements (geoms) in a plot.
-
-This will make more sense as we progress.
-
-## Basics
+## Getting Started
 
 (Install and) Load the `ggplot2` package:
 
@@ -197,6 +173,67 @@ ggplot(mtcars, aes(x = hp, y = mpg, color = mpg)) +
   geom_point(aes(size = mpg)) +
   geom_line(aes(alpha = mpg))
 ```
+
+## Thinking in terms of the data
+
+What if we wanted to visualise the means of groups like in this example?
+
+```{r, echo = F, message = F, fig.width=5, fig.height=4}
+library(dplyr)
+mtcars %>% 
+  group_by(cyl) %>% 
+  summarise(mpg = mean(mpg)) %>% 
+  ggplot(aes(x = cyl, y = mpg)) +
+    geom_bar(stat = "identity")
+```
+
+## Thinking in terms of the data
+
+In terms of data, we're using `mtcars`, so `ggplot(data = mtcars)`
+
+In terms of geoms, we're seeing bars, so that's `geom_bar()`.
+
+In terms of aesthetics:
+
+- x-axis defined by `cyl`, so `aes(x = cyl)`.
+- y-axis defined by `mpg`, so `aes(x = cyl, y = mpg)`
+
+Right??
+
+## Thinking in terms of the data
+
+Wrong :(
+
+The bar heights are **means**, not single observations.
+
+So we need a data frame that contains this information!
+
+## Thinking in terms of the data
+
+```{r, message = F}
+library(dplyr)
+d <- mtcars %>% 
+  group_by(cyl) %>% 
+  summarise(mpg = mean(mpg))
+d
+```
+
+## Thinking in terms of the data
+
+```{r, message = F, fig.width=5, fig.height=4}
+ggplot(d, aes(x = cyl, y = mpg)) +
+  geom_bar(stat = "identity")
+```
+
+## Thinking in terms of the data
+
+```{r, message = F, fig.width=5, fig.height=4}
+ggplot(d, aes(x = cyl, y = mpg, label = round(mpg, 2))) +
+  geom_bar(stat = "identity") +
+  geom_text(vjust = 1.5, color = "white")
+```
+
+# Challenge
 
 ## Challenge
 

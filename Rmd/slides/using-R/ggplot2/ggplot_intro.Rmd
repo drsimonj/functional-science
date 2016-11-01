@@ -1,0 +1,193 @@
+---
+title: 'Using R: ggplot2'
+author: "Dr Simon Jackson"
+date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
+output: ioslides_presentation
+---
+
+```{r setup, echo = FALSE, warning = FALSE}
+knitr::opts_knit$set(root.dir = '../../../../')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+## What/Why ggplot2?
+
+`ggplot2` is a package for **plotting**.
+
+Many would consider it to be R's most powerful data vizualisation tool.
+
+It's incredibly flexible, giving you control over almost every aspect of a plot.
+
+But with flexibility comes the challenge of mastery.
+
+## Some examples
+
+```{r,echo = F, message = F}
+library(dplyr)
+library(ggplot2)
+
+# Car horsepower
+id <- mtcars %>%
+  tibble::rownames_to_column() %>% 
+  mutate(cyl = factor(cyl, levels = c(4, 6, 8)))
+
+gd <- id %>% 
+        group_by(cyl) %>% 
+        summarise(
+          hp = mean(hp)
+        )
+
+ggplot(id, aes(x = cyl, y = hp, color = cyl, fill = cyl)) +
+  geom_bar(data = gd, stat = "identity", alpha = .3) +
+  ggrepel::geom_text_repel(aes(label = rowname), color = "black", size = 2.5, segment.color = "grey") +
+  geom_point() +
+  guides(color = "none", fill = "none") +
+  theme_bw() +
+  labs(
+    title = "Car horespower by cylinders",
+    x = "Number of cylinders",
+    y = "Horsepower"
+  )
+```
+
+## Some Examples
+
+```{r, echo = F, message = F}
+# Step 1: Fit the data
+d <- mtcars
+fit <- glm(vs ~ hp, family = binomial(), data = d)
+
+# Step 2: Obtain predicted and residuals
+d$predicted <- predict(fit, type="response")
+d$residuals <- residuals(fit, type = "response")
+
+# Steps 3 and 4: plot the results
+ggplot(d, aes(x = hp, y = vs)) +
+  geom_segment(aes(xend = hp, yend = predicted), alpha = .2) +
+  geom_point(aes(color = residuals), size = 3) +
+  scale_color_gradient2(low = "blue", mid = "white", high = "red") +
+  guides(color = FALSE) +
+  geom_point(aes(y = predicted), shape = 1, size = 3) +
+  theme_bw() +
+  labs(
+    x = "Horespower",
+    y = "V engine (or S)",
+    title = "Predicted and residual values from logistic regression"
+    
+  )
+```
+
+## Some examples
+
+```{r, echo = F, message = F}
+iris %>%
+  select(Species, Petal.Length, Petal.Width) %>% 
+  rename(Length = Petal.Length, Width = Petal.Width) %>% 
+  mutate(id = row_number()) %>% 
+  tidyr::gather(var, val, -id, -Species) %>% 
+  ggplot(aes(x = var, y = val, group = id, color = Species)) +
+  geom_line(size = 1.5, alpha = .1) +
+  geom_point(size = 4, alpha = .2) +
+  scale_color_brewer(palette = "Set1") +
+  theme_bw() +
+  labs(
+    x = "Petal Size",
+    y = "cm",
+    title = "Petal sizes of iris flowers"
+  )
+```
+
+## Some examples
+
+```{r, echo = F, message = F}
+d <- iris[-5]
+
+# Univariate
+ggplot(iris, aes(x = Sepal.Width, fill = Species)) +
+  geom_histogram(data = d, fill = "grey", alpha = .5) +
+  geom_histogram(colour = "black") +
+  facet_wrap(~ Species) +
+  guides(fill = FALSE) +
+  theme_bw() +
+  labs(
+    x = "Sepal Width",
+    y = NULL,
+    title = "Distribution of Sepal Width for different iris species")
+```
+
+## Some examples
+
+```{r, echo = F}
+airquality %>% 
+  select(Ozone, Temp) %>% 
+  na.omit() %>% 
+  ggplot(aes(x = Ozone, y = Temp, color = Temp)) +
+  geom_point(size = 4) +
+  guides(color = "none") +
+  scale_colour_gradientn(colours = c("deepskyblue2", "chocolate1", "firebrick")) +
+  theme_classic() +
+  theme(panel.background = element_rect(fill = "black")) +
+  labs(
+    x = "Mean ozone in parts per billion",
+    y = "Maximum daily Temperature (degrees F)",
+    title = "Ozone levels correspond to temperature"
+  )
+
+```
+
+## Some examples
+
+```{r, echo = F, message = F}
+library(ourworldindata)
+
+d <- financing_healthcare %>% 
+  filter(year == 2013) %>% 
+  select(country, health_exp_total, gdp) %>% 
+  na.omit() %>% 
+  mutate(exp_gdp = 100 * health_exp_total / gdp) %>% 
+  rename(region = country) %>% 
+  mutate(region = ifelse(region == "United States", "USA", region))
+
+world_map <-  map_data(map = "world") %>% left_join(d)
+
+ggplot(world_map) +
+  geom_map(map = world_map, aes(map_id = region, x = long, y = lat, fill = exp_gdp)) +
+  scale_fill_gradient(name = "Healthcare expenditure\nas % of GDP",
+                      low = "palegreen1", high = "navyblue", na.value = "gray95") +
+  coord_equal() +
+  ggtitle("Total Healthcare Expenditure as Share (%) of National GDP, 2013") +
+  theme_void()
+```
+
+## Thinking in ggplot2
+
+Using `ggplot2` often requires a mental shift when it comes to plotting.
+
+When we use tools like SPSS or Excel, we often try various plotting methods until something gives us what we want. But we seldom play with the data.
+
+When it comes to ggplot2, we're forced (in a good way) to manipulate the data. This can take some time to get used to.
+
+## Thinking in ggplot2
+
+The logic behind ggplot2 is to map values from variables (columns) in a data frame to aesthetics of visual elements (geoms) in a plot.
+
+This will make more sense as we progress.
+
+## Basics
+
+(Install and) Load the `ggplot2` package:
+
+```{r}
+# install.packages("ggplot2")
+library(ggplot2)
+```
+
+A ggplot2 plot must begin with:
+
+```{r, eval = F}
+ggplot()
+```
