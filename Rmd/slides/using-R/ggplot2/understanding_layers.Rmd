@@ -102,3 +102,43 @@ ggplot(d, aes(x = Day, y = Ozone)) +
   geom_point(color = "white", size = 2)
 ```
 
+# Challenge
+
+## Challenge
+
+In this challenge we'll use the tracking data:
+
+```{r}
+d <- read.csv("data/tracking.csv")
+```
+
+This is a long-format data file containing people's (`id`) tracking time (`time`) on four trials (`trial`). On all four trials, participants track EITHER a Box or a Circle (`Shape`).
+
+## Challenge
+
+Plot everyone's tracking times over the four trials via:
+
+```{r, fig.width=8, fig.height=3}
+d %>% 
+  ggplot(aes(x = trial, y = time, color = Shape)) +
+    geom_line(aes(group = id), alpha = .2)
+```
+
+## Challenge
+
+Add group means so the plot looks similar to:
+
+```{r, echo = F, fig.width=8, fig.height=5}
+gd <- d %>% 
+  group_by(Shape, trial) %>% 
+  summarise(time = mean(time))
+
+d %>% 
+  ggplot(aes(x = trial, y = time, color = Shape)) +
+  geom_line(aes(group = id), alpha = .2) +
+  geom_line(data = gd, aes(group = Shape), size = 2) +
+  geom_point(data = gd, size = 6) +
+  geom_point(data = gd, size = 4, color = "white") +
+  theme_bw()
+```
+
