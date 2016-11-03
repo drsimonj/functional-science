@@ -130,3 +130,25 @@ ggplot(mtcars, aes(x = mpg, y = hp, color = hp)) +
   guides(color = "none")
 ```
 
+# Challenge
+
+## Challenge
+
+Use your new knowledge to clean up your version of this plot from the facet challenge.
+
+```{r, echo = F, fig.width = 8, fig.height=4, message = F}
+library(dplyr)
+bd <- iris %>% select(-Species)  # Background data
+
+# Univariate
+ggplot(iris, aes(x = Sepal.Width, fill = Species)) +
+  geom_histogram(data = bd, fill = "grey", alpha = .5) +
+  geom_histogram(colour = "black") +
+  facet_wrap(~ Species) +
+  guides(fill = FALSE) +
+  theme_bw() +
+  labs(
+    x = "Sepal Width",
+    y = NULL,
+    title = "Distribution of Sepal Width for different iris species")
+```
