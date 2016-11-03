@@ -80,7 +80,7 @@ How might we make these large white points with black outlines?
 ```{r, fig.width=8, warning=F}
 ggplot(d, aes(x = Day, y = Ozone)) +
   geom_point(size = 3) +
-  geom_point(color = "white", size = 2)
+  geom_point(size = 2, color = "white")
 ```
 
 ## Example

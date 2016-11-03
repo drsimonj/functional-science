@@ -107,6 +107,8 @@ Using the `mtcars` data, create a scatter plot of cars' weight (`wt`) and horsep
 
 Create the same plot by using the `data` argument and aesthetic function (`aes()`) in `ggplot()` or `geom_point()`
 
+# Scalar aesthetics
+
 ## Scalar aesthetics 
 
 We can also use scalar values for aesthetics. In such cases, we must make the changes within `geom_*()` and **outside** of `aes()`.
@@ -136,7 +138,9 @@ Adjust the `size` aesthetic of the points in two ways:
 1. Adjust the size depending on the value of `mpg`.
 2. Make all points the same size of 4.
 
-## Using ggplot() or geom_*()?
+# Using ggplot() or geom_*()?
+
+## ggplot() or geom_*()?
 
 When a data frame or aesthetic is placed in `ggplot()`, it is used by all geom layers that don't override those values.
 
@@ -146,7 +150,7 @@ ggplot(mtcars, aes(x = hp, y = mpg, color = hp)) +
   geom_line()
 ```
 
-## Using ggplot() or geom_*()?
+## ggplot() or geom_*()?
 
 Data or aesthetics used within `geom_*()` will be used by that geom only.
 
@@ -173,6 +177,8 @@ ggplot(mtcars, aes(x = hp, y = mpg, color = mpg)) +
   geom_point(aes(size = mpg)) +
   geom_line(aes(alpha = mpg))
 ```
+
+# Think about your data
 
 ## Thinking in terms of the data
 

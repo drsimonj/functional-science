@@ -46,6 +46,22 @@ Like all other ggplot2 functions, we use these by adding them to a sequence of p
 ggplot() + geom_*() + facet_wrap()
 ```
 
+# facet_wrap()
+
+## facet_wrap()
+
+`facet_wrap()` is used to layout 1D panels splits in a 2D manner. For this we use `~ var_to_wrap`:
+
+```{r, fig.width=5, warning=F}
+ggplot(airquality, aes(x = Ozone, y = Temp)) + geom_point() +
+  facet_wrap(~ Month)
+```
+
+## Test yourself
+
+Use `facet_wrap()` to create a separate scatter plot for each `Day` instead of month.
+
+# facet_grid()
 
 ## facet_grid()
 
@@ -75,14 +91,11 @@ ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() +
   facet_grid(am ~ .)
 ```
 
-## facet_wrap()
+## Test yourself
 
-`facet_wrap()` is used to layout 1D panels splits in a 2D manner. For this we use `~ var_to_wrap`:
+Split the plot into columns only.
 
-```{r, fig.width=5, warning=F}
-ggplot(airquality, aes(x = Ozone, y = Temp)) + geom_point() +
-  facet_wrap(~ Month)
-```
+# Multiple facets on same axis
 
 ## Multiple variables
 
@@ -100,3 +113,27 @@ Create a scatter plot of two continuous variables from the `mtcars` dataset.
 Use `facet_wrap()` and `facet_grid()` to divide the plot depending on the number of gears (`gear`) and/or the number of carbuetors (`carb`) a car has.
 
 Try various combinations of facets the check that you can obtain what you think you can.
+
+# Challenge
+
+## Challenge
+
+Using the `iris` data, create this `geom_histogram()` of `Sepal.Width` for each `Species`, with background population data!
+
+```{r, echo = F, fig.width = 8, fig.height=4, message = F}
+library(dplyr)
+bd <- iris %>% select(-Species)  # Background data
+
+# Univariate
+ggplot(iris, aes(x = Sepal.Width, fill = Species)) +
+  geom_histogram(data = bd, fill = "grey", alpha = .5) +
+  geom_histogram(colour = "black") +
+  facet_wrap(~ Species) +
+  guides(fill = FALSE) +
+  theme_bw() +
+  labs(
+    x = "Sepal Width",
+    y = NULL,
+    title = "Distribution of Sepal Width for different iris species")
+```
+
