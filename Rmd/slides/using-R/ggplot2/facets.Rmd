@@ -116,24 +116,34 @@ Try various combinations of facets the check that you can obtain what you think 
 
 # Challenge
 
-## Challenge
+## Challenge 1
 
-Using the `iris` data, create this `geom_histogram()` of `Sepal.Width` for each `Species`, with background population data!
+Create a facetted `geom_density` of every variable in the `mtcars` data set:
 
-```{r, echo = F, fig.width = 8, fig.height=4, message = F}
+```{r, echo = F, message = F, fig.height=4, fig.width=7}
 library(dplyr)
-bd <- iris %>% select(-Species)  # Background data
+library(tidyr)
 
-# Univariate
-ggplot(iris, aes(x = Sepal.Width, fill = Species)) +
-  geom_histogram(data = bd, fill = "grey", alpha = .5) +
-  geom_histogram(colour = "black") +
-  facet_wrap(~ Species) +
-  guides(fill = FALSE) +
-  theme_bw() +
-  labs(
-    x = "Sepal Width",
-    y = NULL,
-    title = "Distribution of Sepal Width for different iris species")
+mtcars %>%
+  gather() %>% 
+  ggplot(aes(x = value)) +
+    geom_density() +
+    facet_wrap(~ key, scales = "free")
 ```
 
+## Challenge 2
+
+Using the `iris` data, create facetted `geom_histogram()` of all continuous variables (all but `Species`).
+
+```{r, echo = F, message = F, fig.height=4, fig.width=7}
+library(dplyr)
+library(tidyr)
+
+iris %>%
+  select(-Species) %>% 
+  gather(var, val) %>% 
+  separate(var, into = c("part", "measure")) %>% 
+  ggplot(aes(x = val)) +
+    geom_histogram() +
+    facet_grid(part ~ measure)
+```

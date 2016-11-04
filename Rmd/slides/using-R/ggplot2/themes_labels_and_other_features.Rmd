@@ -134,7 +134,7 @@ ggplot(mtcars, aes(x = mpg, y = hp, color = hp)) +
 
 ## Challenge
 
-Use your new knowledge to clean up your version of this plot from the facet challenge.
+Using the `iris` data, create this `geom_histogram()` of `Sepal.Width` for each `Species`, with background population data!
 
 ```{r, echo = F, fig.width = 8, fig.height=4, message = F}
 library(dplyr)

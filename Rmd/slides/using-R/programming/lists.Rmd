@@ -59,6 +59,18 @@ names(x)[3] <- "c"
 x
 ```
 
+## Test yourself
+
+Create a named list and a named vector.
+
+Run the following functions on both to compare the difference:
+
+- `print()`
+- `class()`
+- `str()`
+
+# Indexing
+
 ## Indexing lists
 
 Indexing can be done in a few ways, which each have important differences:
@@ -97,6 +109,23 @@ x$b
 class(x$c)
 ```
 
+## Test yourself
+
+Create the following list:
+
+```{r}
+z <- list(num1 = 1, word1 = "hello", num2 = 2,
+          word2 = "world", bool1 = TRUE)
+```
+
+From this list:
+
+- Extract a list of numbers
+- Extract a list with one number and one character string.
+- In three different ways, extract a number and add 10 to it.
+
+# Making changes
+
 ## Changing a list
 
 Use any of the indexing methods to add a new list element or change an existing one.
@@ -126,6 +155,8 @@ Add a third object to the list, which is an unnamed list containing:
   - A numeric vector
   
 Add the numeric scalar in the main list to the numeric scalar in the nested list (third object).
+
+# Modelling example
 
 ## Regression example
 
