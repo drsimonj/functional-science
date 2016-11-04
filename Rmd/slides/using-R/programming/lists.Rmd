@@ -63,8 +63,10 @@ x
 
 Create a named list and a named vector.
 
-Run the following functions on both to compare the difference:
+Run the following functions on both to compare the similarities/difference:
 
+- `length()`
+- `names()`
 - `print()`
 - `class()`
 - `str()`
@@ -156,6 +158,15 @@ Add a third object to the list, which is an unnamed list containing:
   
 Add the numeric scalar in the main list to the numeric scalar in the nested list (third object).
 
+## A note about data frames
+
+Data frames are lists with certain restrictions/features:
+
+- Each column is an object in the list.
+- Each column must be homogeneous.
+- Each column must be the same length.
+- Each column must be named
+
 # Modelling example
 
 ## Regression example
@@ -186,18 +197,12 @@ Summarise results for whichever fit we're interested in:
 summary(fits$int)
 ```
 
-## Test yourself
+# Challenge
+
+## Challenge
 
 Import the `planes.csv`.
 
 Create a list and fill it with t-tests for differences in `Distance` as a function of each of the three categorial variables (`Paper`, `Angle`, and `Design`).
 
 Be able to use your list to access the results for whichever categorical variable you might be interested in.
-
-## A note about data frames
-
-Data frames are lists with certain restrictions/features:
-
-- Each column is an object in the list.
-- Each column must be homogeneous.
-- Each column must be the same length.
