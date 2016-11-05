@@ -55,10 +55,28 @@ for (i in sequence) {
 }
 ```
 
-## Quick example
+## Quick examples
 
-```{r}
-x <- c(1, 4, 10)
+```{r, eval = F}
+x <- 1:5
+for (i in x) {
+  print("Hi")
+}
+```
+
+## Quick examples
+
+```{r, eval = F}
+x <- 1:5
+for (i in x) {
+  print(i)
+}
+```
+
+## Quick examples
+
+```{r, eval = F}
+x <- 1:5
 for (i in x) {
   print(i + 1)
 }
@@ -160,18 +178,20 @@ for(var in names(mtcars)) {
 sds
 ```
 
-## Test Yourself
+# Challenge
+
+## Challenge
 
 Use a loop to compute the median of every column in the `airquality` data set.
 
 Save the results in a named vector.
 
-Plot the ordered results in a `barplot()`.
+Plot the results in a `barplot()`.
 
 Bonus: `order()` the results from lowest to highest and then plot.
 
 
-## Test Yourself
+## Challenge
 
 Answer:
 
@@ -221,7 +241,16 @@ lapply(mtcars, sd)
 
 ## `lapply()`
 
-Because it returns the result, we can immediately save it to a variable:
+```{r, eval = F}
+lapply(mtcars, sd)
+```
+
+Things to note:
+
+- No parentheses: `sd` not `sd()`
+- Value for each iteration is used as the **first** function argument
+- Sequence names transferred to result
+- We can immediately save it to a variable:
 
 ```{r}
 x <- lapply(mtcars, sd)
@@ -289,7 +318,7 @@ The purrr package "makes your pure functions purr".
 
 Install and attach:
 
-```{r}
+```{r, message=F}
 # install.packages("purrr")
 library(purrr)
 ```
@@ -307,6 +336,8 @@ mtcars %>% map(mean)
 ## Test Yourself
 
 Use `map()` to find the median of each `mtcars` column.
+
+Save the results and then subset it to get the median for `hp` and `mpg`.
 
 Write the `lapply()` equivalent.
 
@@ -373,10 +404,23 @@ map(sequence, ~ # code using `.`)
 Here's an anonymous version of the normalise function:
 
 ```{r}
+mtcars %>% lapply(function(i) {
+  (i - min(i)) / (max(i) - min(i))
+})
+```
+
+
+## Examples
+
+Here's an anonymous version of the normalise function:
+
+```{r}
 mtcars %>% map_df(~ (. - min(.)) / (max(.) - min(.)))
 ```
 
-## Test Yourself
+# Challenge
+
+## Challenge
 
 `split()` the `mtcars` data based on the number of car cylinders into a list as follows:
 
@@ -385,7 +429,32 @@ mtcars %>%
   split(.$cyl)
 ```
 
-Continue the pipe and regress `mpg` on `wt` for each split. Try using `lapply()` and `map()`.
+Continue the pipe and regress `hp` on `wt` and `mpg` for each split. Try using `lapply()` and `map()`.
 
 Bonus: continue the pipe again and obtain the `summary()` for each fitted model.
 
+Bonus Bonus: A lm summary is a list containing `"r.squared"`. Can you extract it for each model?
+
+## Challenge
+
+One answer
+
+```{r}
+mtcars %>% 
+  split(.$cyl) %>% 
+  map(~ lm(hp ~ wt + mpg, data = .)) %>% 
+  map(summary) %>% 
+  map_dbl("r.squared")  # OR lapply(function(i) i$r.squared)
+```
+
+## Challenge
+
+A bonus for you to try
+
+```{r, eval = FALSE}
+mtcars %>%
+  split(.$cyl) %>%
+  map(~ lm(hp ~ wt + mpg, data = .)) %>%
+  map(summary) %>%
+  map("coefficients")
+```
