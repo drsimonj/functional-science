@@ -69,6 +69,45 @@ Write two if statements to check whether each vector `is.numeric()`.
 
 If it is, then compute the `mean()`.
 
+# Logical Operators and functions
+
+## Logical operators and functions
+
+A reminder of the logical operators and functions you're likley to use a lot:
+
+- `==`, `!=`, `<`, `>`, `<=`, `>=`
+- `&`, `|`
+- `!`
+- `all()`, `any()`
+- `%in%`
+
+## Test yourself
+
+Create the following vectors:
+
+```{r}
+x <- 1:10
+y <- 21:30
+```
+
+Print an error message if x contains a particular value (e.g., 8) and all the values in y are a particular sign (e.g., positive).
+
+# Else
+
+## Else?
+
+Say you want to do one thing if your condition is `TRUE`, but another thing if it is `FALSE`.
+
+How would you achieve this?
+
+## Else?
+
+We could write exclusive if statements.
+
+Even better, we could save our condition as a boolean variable and write two if statements that use variable and !variable.
+
+Or...
+
 ## `if else`
 
 If our condition is `FALSE`, we can run different code with `else` as follows:
@@ -141,12 +180,16 @@ Create a condition to:
 
 Trial your conditional execution with different values for `x`.
 
-## Test Yourself
+# Challenge
 
-For example sake, say that the range of valid values for `qsec` in the `mtcars` data set is 10 to 20.
+## Challenge
 
-Write an if statment that prints out "All good" or "Invalid values" depending on whether all values fall in this range or not.
+Save and work with a copy of the `mtcars` data.
 
-Tip: use `all()` to collapse boolean vectors into a single `TRUE` or `FALSE`.
+For example sake, say that the range of valid values for the variable `qsec` is 10 to 20.
 
-Bonus: Print out any invalid values should they exist.
+Write an `if` statement that checks for any invalid values in this variable.
+
+If there are, remove the rows associated with those values and print out a message that says how many rows were removed.
+
+If there are not, print out a message that says all values are invalid.
