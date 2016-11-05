@@ -77,14 +77,71 @@ add_1(a)
 
 ## How to create and use a function
 
-Example:
+Let's start with a vector of genders:
+
 
 ```{r}
-# Count the number of values equal to something
-num_of <- function(vals, equal_to) {
-  sum(vals == equal_to)
+gender <- c("m", "f", "f")
+```
+
+Without a function, how to calculate how many people are female?
+
+```{r}
+sum(gender == "f")
+```
+
+## How to create and use a function
+
+What's the general concept of this?
+
+*Checking the number of values in a vector that are equal to some value*.
+
+Let's turn this into a function.
+
+## How to create and use a function
+
+Start with our specific case:
+
+```{r}
+num_of <- function() {
+  sum(gender == "f")
+}
+num_of()
+```
+
+## How to create and use a function
+
+Abstract the vector as an argument:
+
+```{r}
+num_of <- function(vec) {
+  sum(vec == "f")
 }
 
+num_of(gender)
+
+num_of(c("m","m", "f"))
+```
+
+## How to create and use a function
+
+Abstract the value to equal:
+
+```{r}
+num_of <- function(vec, equal_to) {
+  sum(vec == equal_to)
+}
+
+num_of(gender, "f")
+
+num_of(gender, "m")
+```
+
+## How to create and use a function
+
+We can now reuse it for many checks:
+
+```{r}
 x <- c(1, 1, 3)
 y <- c("a", "a", "b")
 num_of(x, 1)
@@ -95,7 +152,7 @@ num_of(y, "z")
 
 ## Test yourself
 
-Write a function that divides a number by 2.
+Write a function that divides any number by 2.
 
 Next, adjust the function so that you can divide by any number instead of just 2.
 
@@ -116,7 +173,7 @@ It's possible, however, to reference arguments by name:
 ```{r}
 x <- c(1, 1, 3)
 num_of(x, 1)
-num_of(equal_to = 1, vals = x)
+num_of(equal_to = 1, vec = x)
 ```
 
 ## Argument defaults
@@ -193,10 +250,18 @@ For example...
 3. Open a new script, and place `source("R/functions.R")` at the top.
 4. Run this to be able to use your functions.
 
-## Test yourself
+# Challenge
 
-Write a function to count how many numeric values of a vector are outside an acceptable range.
+## Challenge
 
-For example, to check whether any values in a vector of proportions are outside the range of zero to one.
+Write a function to convert any numeric values of a vector that are outside an acceptable range to missing (`NA`).
 
-Place this function in a function R script and use `source()` to declare and use it in another script.
+Place this function in a function R script and use `source()` to declare and use it in another script on the following vectors (you decide acceptable values):
+
+```{r}
+age <- c(-1, 10, 40, 180)
+
+proportion <- c(-1, 0, 1.2, .9)
+
+id <- c("a", "b", "c", "d")
+```
