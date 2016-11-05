@@ -254,12 +254,7 @@ gd <- id %>%
   summarise(hp = mean(hp))
 
 ggplot(id, aes(x = factor(cyl), y = hp, color = cyl, fill = cyl)) +
-  geom_point() +
   geom_bar(data = gd, stat = "identity", alpha = .2) +
-  guides(color = "none", fill = "none") +
-  labs(
-    x = "Number of cylinders",
-    y = "Horsepower"
-  ) +
-  theme_bw()
+  geom_point() +
+  guides(color = "none", fill = "none")
 ```

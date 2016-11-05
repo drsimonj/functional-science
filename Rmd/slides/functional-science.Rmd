@@ -1,6 +1,6 @@
 ---
 title: "Functional Science"
-author: "Simon A Jackson"
+author: "Dr Simon Jackson"
 date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
 output:
   ioslides_presentation
@@ -14,7 +14,7 @@ library(png)
 library(grid)
 ```
 
-## Dr Simon A Jackson
+## Dr Simon Jackson
 
 ```{r, echo = FALSE, warning = FALSE, fig.width = .5, fig.height = .5}
 img <- readPNG("Rmd/img/social_media_icons/gmail.png")
