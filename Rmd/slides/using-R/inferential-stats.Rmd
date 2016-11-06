@@ -1,6 +1,6 @@
 ---
 title: "Using R: Inferential Statistics"
-author: "Simon A Jackson"
+author: "Dr Simon Jackson"
 date: "Knit on `r format(Sys.time(), '%d %B, %Y')`"
 output: ioslides_presentation
 ---
